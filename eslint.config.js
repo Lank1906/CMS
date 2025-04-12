@@ -5,9 +5,6 @@ import babelParser from '@babel/eslint-parser';
 import customNoComment from './plugin/no-comment.js';
 import removeComments from './plugin/remove-comments.js';
 
-const vietnameseCharRegex =
-  /[àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]/i;
-
 export default [
   js.configs.recommended,
   {
@@ -47,21 +44,21 @@ export default [
         'error',
         {
           selector: 'CallExpression[callee.name="require"]',
-          message: '❌ Không được dùng require. Hãy dùng import.',
+          message: '❌ No require. Lets use import.',
         },
         {
           selector: 'LineComment, BlockComment',
-          message: '❌ Không được dùng comment.',
+          message: '❌ No comment.',
         },
         {
           selector:
             'Literal[value=/[àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]/iu]',
-          message: '❌ Không được dùng tiếng Việt.',
+          message: '❌ No vietnamese.',
         },
         {
           selector:
             'TemplateLiteral[value.raw=/[àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]/iu]',
-          message: '❌ Không được dùng tiếng Việt.',
+          message: '❌ No vietnamese.',
         },
       ],
 

@@ -13,7 +13,7 @@ export default {
           for (const comment of comments) {
             context.report({
               loc: comment.loc,
-              message: '❌ Không được viết comment: "{{value}}"',
+              message: '❌ No comment: "{{value}}"',
               data: {
                 value: comment.value.trim(),
               },
