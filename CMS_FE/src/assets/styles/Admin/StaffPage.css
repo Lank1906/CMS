@@ -1,0 +1,76 @@
+
+.staff-dashboard {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fa;
+    min-height: 100vh;
+}
+
+
+.staff-dashboard .navbar {
+    background-color: #091a4d; 
+}
+
+
+.staff-dashboard .sidebar {
+    height: 100vh;
+    padding-top: 20px;
+    background-color: #f9fafb; 
+}
+
+.staff-dashboard .nav-item .nav-link {
+    color: #4e73df; 
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.staff-dashboard .nav-item .nav-link.active {
+    background-color: #8196d4;
+    color: white;
+}
+
+
+.staff-dashboard .container-fluid {
+    margin-top: 30px;
+}
+
+
+.staff-dashboard .card {
+    border: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.staff-dashboard .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.staff-dashboard .card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.staff-dashboard .card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.staff-dashboard .card-text {
+    font-size: 2rem;
+}
+
+
+.staff-dashboard .list-group-item {
+    font-size: 1.1rem;
+    padding: 12px;
+    background-color: #ffffff;
+    border: 1px solid #e2e6ea;
+}
+
+.staff-dashboard .list-group-item:first-child {
+    font-weight: bold;
+}
+
+.staff-dashboard .list-group-item:hover {
+    background-color: #f8f9fa;
+}
