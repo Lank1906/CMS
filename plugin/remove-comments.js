@@ -14,7 +14,7 @@ export default {
           for (const comment of comments) {
             context.report({
               loc: comment.loc,
-              message: '❌ N comment: "{{value}}"',
+              message: 'No comment: "{{value}}"',
               data: {
                 value: comment.value.trim(),
               },

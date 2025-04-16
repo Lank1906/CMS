@@ -44,21 +44,21 @@ export default [
         'error',
         {
           selector: 'CallExpression[callee.name="require"]',
-          message: '❌ No require. Lets use import.',
+          message: 'No require. Lets use import.',
         },
         {
           selector: 'LineComment, BlockComment',
-          message: '❌ No comment.',
+          message: 'No comment.',
         },
         {
           selector:
             'Literal[value=/[àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]/iu]',
-          message: '❌ No vietnamese.',
+          message: 'No vietnamese.',
         },
         {
           selector:
             'TemplateLiteral[value.raw=/[àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]/iu]',
-          message: '❌ No vietnamese.',
+          message: 'No vietnamese.',
         },
       ],
 
