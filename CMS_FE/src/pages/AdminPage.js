@@ -2,8 +2,10 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/styles/Admin/AdminPage.css';
 import { useAuth } from '../hooks/useAuth';
+
 const AdminDashboard = () => {
     const { user } = useAuth();
+
     return (
         <div className="admin-dashboard">
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
@@ -12,9 +14,10 @@ const AdminDashboard = () => {
                     <span className="navbar-text text-white">Welcome, {user?.user_name || 'Admin'}</span>
                 </div>
             </nav>
+
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-md-2 sidebar p-0 bg-white border-end">
+                    <div className="col-md-2 sidebar p-0 bg-light border-end">
                         <ul className="nav flex-column p-3">
                             <li className="nav-item mb-2">
                                 <a className="nav-link active" href="#">Dashboard</a>
@@ -33,17 +36,21 @@ const AdminDashboard = () => {
                             </li>
                         </ul>
                     </div>
+
+
                     <div className="col-md-10 p-4">
                         <h3 className="mb-4 fw-semibold">Admin Dashboard</h3>
                         <div className="row g-4">
+
                             <div className="col-md-4">
-                                <div className="card text-white bg-info shadow-sm rounded-4">
+                                <div className="card shadow-sm rounded-4">
                                     <div className="card-body">
                                         <h5 className="card-title">Total Contracts</h5>
-                                        <p className="card-text fs-4">120</p>
+                                        <p className="card-text">120</p>
                                     </div>
                                 </div>
                             </div>
+
                             <div className="col-md-4">
                                 <div className="card text-white bg-success shadow-sm rounded-4">
                                     <div className="card-body">
@@ -52,6 +59,7 @@ const AdminDashboard = () => {
                                     </div>
                                 </div>
                             </div>
+
                             <div className="col-md-4">
                                 <div className="card text-white bg-danger shadow-sm rounded-4">
                                     <div className="card-body">
@@ -61,7 +69,6 @@ const AdminDashboard = () => {
                                 </div>
                             </div>
                         </div>
-
                         <div className="mt-5">
                             <h5 className="mb-3">Recent Notifications</h5>
                             <div className="list-group rounded-3 shadow-sm">

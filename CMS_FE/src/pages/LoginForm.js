@@ -3,10 +3,7 @@ import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
-import { 
-    validateRequiredField, 
-    validateEmail, 
-} from '../utils/validators';
+import { validateRequiredField, validateEmail } from '../utils/validators';
 import axios from 'axios';
 import '../assets/styles/LoginForm.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -18,7 +15,7 @@ const LoginForm = () => {
     const { login } = useAuth();
     const navigate = useNavigate();
 
-    const notify = (message) => toast.error(message);  
+    const notify = (message) => toast.error(message);
 
     const handleLogin = async () => {
         const requiredEmailError = validateRequiredField(email, 'Email');
@@ -37,34 +34,28 @@ const LoginForm = () => {
             return;
         }
         try {
-            const response = await axios.post(API_URL + 'login', {
-                email,
-                password,
-            });
+            const response = await axios.post(API_URL + 'login', { email, password });
             const { token, role_id, user_name } = response.data;
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify({ role_id, user_name }));
             login({ role_id, user_name }, token);
-            if (role_id === 1) {
-                navigate('/admin');
-            } else if (role_id === 2) {
-                navigate('/pm');
-            } else if (role_id === 3) {
-                navigate('/staff');
-            } else {
-                navigate('/login');
-            }
+
+            if (role_id === 1) navigate('/admin');
+            else if (role_id === 2) navigate('/pm');
+            else if (role_id === 3) navigate('/staff');
+            else navigate('/login');
         } catch (error) {
             notify('Incorrect email or password.');
         }
     };
+
     return (
-        <div className="login-background">
-            <div className="login-container">
-                <div className="login-content row">
-                    <div className="col-12 text-login">LOGIN</div>
-                    <div className="col-12 form-group login-input">
-                        <label>Email</label>
+        <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+            <div className="w-100" style={{ maxWidth: '400px' }}>
+                <div className="border p-5 rounded shadow-sm">
+                    <h2 className="text-center mb-4">LOGIN</h2>
+                    <div className="mb-3">
+                        <label className="form-label">Email</label>
                         <input
                             type="text"
                             className="form-control"
@@ -73,8 +64,8 @@ const LoginForm = () => {
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
-                    <div className="col-12 form-group login-input">
-                        <label>Password</label>
+                    <div className="mb-3">
+                        <label className="form-label">Password</label>
                         <input
                             type="password"
                             className="form-control"
@@ -83,11 +74,9 @@ const LoginForm = () => {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <div className="col-12">
-                        <button className="btn-login" onClick={handleLogin}>
-                            LOGIN
-                        </button>
-                    </div>
+                    <button className="btn btn-success w-100" onClick={handleLogin}>
+                        LOGIN
+                    </button>
                 </div>
             </div>
         </div>

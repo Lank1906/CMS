@@ -1,7 +1,5 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../assets/styles/Admin/StaffPage.css'; // Import custom CSS for styling
-
 const StaffDashboard = () => {
     return (
         <div className="staff-dashboard">
@@ -11,9 +9,10 @@ const StaffDashboard = () => {
                     <span className="navbar-text text-white">Welcome, Staff Member</span>
                 </div>
             </nav>
+
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-md-3 sidebar p-0 bg-light border-end">
+                    <div className="col-md-3 p-0 bg-light border-end">
                         <ul className="nav flex-column p-3">
                             <li className="nav-item mb-2">
                                 <a className="nav-link active" href="#">Dashboard</a>
@@ -37,6 +36,7 @@ const StaffDashboard = () => {
                                     </div>
                                 </div>
                             </div>
+
                             <div className="col-md-4">
                                 <div className="card text-white bg-info shadow-sm rounded-4">
                                     <div className="card-body">
@@ -45,6 +45,7 @@ const StaffDashboard = () => {
                                     </div>
                                 </div>
                             </div>
+
                             <div className="col-md-4">
                                 <div className="card text-white bg-warning shadow-sm rounded-4">
                                     <div className="card-body">
