@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   mysql:
     image: my-mysql-with-data:latest
@@ -14,3 +12,11 @@ services:
       - mysql-data:/var/lib/mysql
     networks:
       - backend-net
+
+networks:
+  backend-net:
+    driver: bridge
+
+volumes:
+  mysql-data:
+    driver: local
