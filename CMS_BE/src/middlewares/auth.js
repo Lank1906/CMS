@@ -11,24 +11,20 @@ export const authMiddleware = (req, res, next) => {
   }
 
   const rawToken = authHeader.split(' ');
-  if (rawToken.length <= 1) {
-    return res.status(401).json({ message: 'Unauthorized - No token provided' });
+
+  if (rawToken.length !== 2 || rawToken[0] !== 'Bearer') {
+    return res.status(401).json({ message: 'Unauthorized - Invalid token format' });
   }
 
   const token = rawToken[1];
-  if (!token) {
-    return res.status(401).json({ message: 'Unauthorized - No token provided' });
-  }
 
-  try {
-    jwt.verify(token, process.env.SECRET_KEY, (err, payload) => {
-      if (err) {
-        return res.status(403).json({ message: 'Forbidden - Invalid token' });
-      }
-      req.user = payload;
-      next();
-    });
-  } catch {
-    return res.status(403).json({ message: 'Forbidden - Invalid token' });
-  }
+  jwt.verify(token, process.env.SECRET_KEY, (err, payload) => {
+    if (err) {
+      return res.status(403).json({ message: 'Forbidden - Invalid token' });
+    }
+
+    req.user = payload;
+
+    next();
+  });
 };
