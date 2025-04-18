@@ -2,6 +2,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.27.0",
     "@babel/preset-react": "^7.26.3",
+    "@eslint/js": "^9.24.0",
     "eslint": "^9.24.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
@@ -10,15 +11,15 @@
     "prettier": "^3.5.3"
   },
   "lint-staged": {
-  "ContractManagementSystemAPI/**/*.js": [
-    "eslint --fix",
-    "prettier --write"
-  ],
-  "FrontEnd/**/*.{js,jsx}": [
-    "eslint --fix",
-    "prettier --write"
-  ]
-},
+    "CMS_BE/**/*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "CMS_FE/**/*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
   "name": "cms",
   "version": "1.0.0",
   "description": "",

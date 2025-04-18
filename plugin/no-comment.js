@@ -8,7 +8,7 @@ export default {
     },
     create(context) {
       return {
-        Program(node) {
+        Program() {
           const comments = context.getSourceCode().getAllComments();
           for (const comment of comments) {
             context.report({

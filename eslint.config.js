@@ -1,13 +1,15 @@
-import js from '@eslint/js';
+import pkg from '@eslint/js';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import babelParser from '@babel/eslint-parser';
 import customNoComment from './plugin/no-comment.js';
 import removeComments from './plugin/remove-comments.js';
 
+const { js: jsConfig } = pkg;
+
 export default [
-  js.configs.recommended,
   {
+    ...jsConfig,
     plugins: {
       react,
       'react-hooks': reactHooks,
@@ -38,7 +40,12 @@ export default [
       'no-console': 'error',
       'no-debugger': 'error',
       'no-comment/ban-comments': 'error',
-      'no-unused-vars': ['error', { varsIgnorePattern: '^React$' }],
+      'no-unused-vars': [
+        'error',
+        {
+          varsIgnorePattern: '^[A-Z]',
+        },
+      ],
       'rm-comment/auto-delete': ['error'],
       'no-restricted-syntax': [
         'error',
@@ -61,9 +68,7 @@ export default [
           message: 'No vietnamese.',
         },
       ],
-
       'no-inline-comments': 'error',
-
       'no-warning-comments': [
         'warn',
         {
@@ -71,21 +76,23 @@ export default [
           location: 'anywhere',
         },
       ],
-
       'no-irregular-whitespace': 'error',
-
       quotes: ['error', 'single'],
       semi: ['error', 'always'],
-
       'react/prop-types': 'off',
       'react/react-in-jsx-scope': 'off',
-
       'no-undef': 'off',
     },
     settings: {
       react: {
         version: 'detect',
       },
+    },
+  },
+  {
+    files: ['eslint.config.js'],
+    rules: {
+      'no-restricted-syntax': 'off',
     },
   },
 ];
