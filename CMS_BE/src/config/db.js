@@ -1,16 +1,16 @@
-
-import mysql from "mysql2";
-import dotenv from "dotenv";
+import { Sequelize } from 'sequelize';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
-const connection = mysql.createConnection({
+const sequelize = new Sequelize({
+  host: process.env.DB_HOST,
+  dialect: 'mysql',
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  connectTimeout: 10000
+  database: process.env.DB_DATABASE,
 });
 
-export default connection;
+export default sequelize;
