@@ -1,6 +1,6 @@
 services:
   mysql:
-    image: my-mysql-with-data:latest
+    image: cms-mysql:latest
     container_name: cms-db
     restart: always
     environment:
