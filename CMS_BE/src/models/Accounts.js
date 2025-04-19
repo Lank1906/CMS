@@ -8,7 +8,7 @@ const Account = sequelize.define(
     company: { type: DataTypes.STRING(100), allowNull: false },
     contact_person: { type: DataTypes.STRING(50), allowNull: false },
     email: { type: DataTypes.STRING(50), allowNull: false },
-    phone: DataTypes.STRING(50),
+    phone: DataTypes.STRING(10),
     url: DataTypes.STRING,
     address: DataTypes.TEXT,
     created_at: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
