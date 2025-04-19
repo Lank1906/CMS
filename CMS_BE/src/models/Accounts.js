@@ -4,14 +4,15 @@ import sequelize from '../config/db.js';
 const Account = sequelize.define(
   'Account',
   {
-    account_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     company: { type: DataTypes.STRING(100), allowNull: false },
-    contact_person: DataTypes.STRING(50),
+    contact_person: { type: DataTypes.STRING(50), allowNull: false },
     email: { type: DataTypes.STRING(50), allowNull: false },
     phone: DataTypes.STRING(50),
-    web_link: DataTypes.STRING(50),
+    url: DataTypes.STRING,
     address: DataTypes.TEXT,
-    create_at: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
+    created_at: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
+    updated_at: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
   },
   { tableName: 'Accounts', timestamps: false },
 );

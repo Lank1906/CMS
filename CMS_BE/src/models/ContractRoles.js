@@ -4,12 +4,15 @@ import sequelize from '../config/db.js';
 const ContractRole = sequelize.define(
   'ContractRole',
   {
-    contract_role_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    contract_role_name: { type: DataTypes.STRING(20), allowNull: false },
-    level: { type: DataTypes.STRING, allowNull: false },
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    name: { type: DataTypes.STRING(20), allowNull: false },
+    level: {
+      type: DataTypes.ENUM('Fresher', 'Junior', 'Developer', 'Senior'),
+      allowNull: false,
+    },
     description: DataTypes.TEXT,
-    create_at: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
-    update_at: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
+    created_at: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
+    updated_at: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
   },
   { tableName: 'ContractRoles', timestamps: false },
 );

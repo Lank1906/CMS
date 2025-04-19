@@ -7,13 +7,12 @@ import ContractRole from './ContractRoles.js';
 const ContractStaff = sequelize.define(
   'ContractStaff',
   {
-    contract_staff_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     contract_id: { type: DataTypes.INTEGER, allowNull: false },
     user_id: { type: DataTypes.INTEGER, allowNull: false },
     contract_role_id: { type: DataTypes.INTEGER, allowNull: false },
-    assigned_at: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
-    create_at: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
-    update_at: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
+    created_at: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
+    updated_at: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
   },
   { tableName: 'ContractStaffs', timestamps: false },
 );
