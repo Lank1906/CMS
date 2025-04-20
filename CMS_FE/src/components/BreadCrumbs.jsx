@@ -12,7 +12,7 @@ const BreadCrumbs = () => {
                 paddingInlineStart:"0px"
             }}>
                 <li style={{}}>
-                    <Link style={{ color: "rgb(82, 82, 82)", textDecoration: "none", fontSize: "14px", margin: "0px 5px" }} to="/" className="text-blue-500">Trang chủ</Link>
+                    <Link style={{ color: "rgb(82, 82, 82)", textDecoration: "none", fontSize: "14px", margin: "0px 5px" }} to="/" className="text-blue-500">CMS</Link>
                 </li>
                 {paths.map((path, index) => {
                     const to = `/${paths.slice(0, index + 1).join("/")}`;
