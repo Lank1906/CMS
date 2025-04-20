@@ -8,10 +8,12 @@ const authMiddleware = (req, res, next) => {
     }
     const token = authHeader.split(' ')[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
+    req.user = {
+      id: decoded.id,
+      email: decoded.email,
+    };
     next();
   } catch (error) {
-    console.error('Token verification error:', error);
     if (error.name === 'TokenExpiredError') {
       return res.status(401).json({ message: 'Token has expired, please login again' });
     }
