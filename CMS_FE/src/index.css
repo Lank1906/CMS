@@ -1,0 +1,12 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: var(--main-color);
+    overflow: hidden;
+}
+:root {
+    --main-color: rgb(223, 231, 237);
+    --padding-base: 10px;
+    --color-primary: rgb(73, 93, 116);
+    --box-shadow-primary: 0px 0px 10px rgba(0, 0, 0, 0.132);
+  }

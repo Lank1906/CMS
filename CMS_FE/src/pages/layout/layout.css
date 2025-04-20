@@ -1,69 +1,106 @@
-body{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    background-color: rgb(223, 231, 237);
-    overflow: hidden;
-}
-.container{
+
+.container {
     height: 100vh;
 }
-.header-container{
+
+.header-container {
     display: flex;
     width: 100%;
     height: 50px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.132);
+    box-shadow: var(--box-shadow-primary);
     background-color: white;
     align-items: center;
     padding: 10px;
     position: fixed;
     z-index: 100;
-    margin-top: -70px;
+    top: 0;
 }
-.logo{
+
+.logo {
     display: flex;
     height: 100%;
     align-items: center;
     gap: 10px;
-    img{
+
+    img {
         width: 35px;
         height: 35px;
     }
-    p{
+
+    p {
         font-size: 19px;
-        font-weight: 570;
+        font-weight: 600;
     }
 }
 
-.main-container{
+.main-container {
     width: 100%;
     display: flex;
     height: 100%;
-    margin-top: 70px;
+    margin-top: 50px;
 }
-.nav-container{
-    width: 70px;
-    background-color: white;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
-    gap: 10px;
-    .nav-btn{
+.nav-container.extend{
+    width: 200px;
+}
+.nav-container.collapse{
+    width: 80px;
+}
+.nav-container {
+    transition-duration: 0.2s;
+    height: auto;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+    .nav-extend-btn{
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translate(50%, -50%);
+        background-color: white;
+        box-shadow: var(--box-shadow-primary);
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
         cursor: pointer;
-        width: 50px;
-        height: 40px;
+    }
+    .nav-btns {
+        padding: 10px;
+        background-color: rgb(255, 255, 255);
+        box-shadow: var(--box-shadow-primary);
+        height: 100%;
         display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 10px;
-        transition-duration: 0.2s;
-        &:hover{
-            background-color: rgb(234, 234, 234);
+        flex-direction: column;
+        padding-top: 50px;
+        gap: 10px;
+
+        .nav-btn {
+            cursor: pointer;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            border-radius: 10px;
+            transition-duration: 0.2s;
+            gap: 10px;
+            font-size: 13px;
+            padding-left: 10px;
+            &:hover {
+                background-color: rgb(234, 234, 234);
+            }
+        }
+
+        .nav-btn.active {
+            cursor: pointer;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            border-radius: 10px;
+            transition-duration: 0.2s;
+            background-color: rgb(222, 236, 251);
         }
     }
+
 }
-.main{
+
+.main {
+    width: 100%;
     height: 100%;
-    padding: 10px;
 }
