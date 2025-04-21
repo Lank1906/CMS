@@ -27,17 +27,17 @@
     height: auto;
 }
 .logo-text {
-    font-size: 20px;
-    font-weight: 600;
-    color: #3f3f3f;
+    font-size: 23px;
+    font-weight: 700;
+    color: #2D3052;
     margin-left: 8px;
 }
 
 .login-card h5 {
-    font-size: 18px;
-    font-weight: 600;
-    color: #1f2937;
-    margin-bottom: 24px;
+    font-size: 19px;
+    font-weight: 650;
+    color:  #2D3052;
+    margin-bottom: 23px;
 }
 
 .form-control {
@@ -64,14 +64,14 @@
     display: block;
 }
 .btn-primary {
-    background-color: #293e5c;
+    background-color: #2d3052;
     font-size: 16px;
     height: 48px;
     border-radius: 4px;
     font-weight: 600;
 }
 .btn-primary:hover {
-    background-color: #1f2937;
+    background-color: #2D3052;
 }
 
 .btn-outline-secondary {

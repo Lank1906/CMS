@@ -66,7 +66,7 @@ const LoginForm = () => {
           <span className="logo-text">BlueOC</span>
         </div>
 
-        <h5 className="text-center mb-4 input-font">Welcome back</h5>
+        <h5 className="text-center mb-4 input-font">Login</h5>
 
         <div className="floating-label-input mb-4">
           <input
