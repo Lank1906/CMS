@@ -1,20 +1,19 @@
 import './ui.css';
 import { useState } from 'react'
 
-const TextField = ({ value, onClick, backgroundColor, iconLeft, iconRight, borderRadius, placeholder, width }) => {
-    const [v, setValue] = useState(value || "");
+const TextField = ({ value, onClick, backgroundColor, iconLeft, iconRight, borderRadius, placeholder, width, type, onChange }) => {
     return <>
         <div
             onClick={onClick}
             style={{
-                
+                maxWidth: width,
                 backgroundColor: backgroundColor,
                 border: "1px solid rgb(172, 177, 181)",
                 outline: "none",
                 overflow: "hidden",
                 borderRadius: borderRadius,
                 padding: "6px",
-                display: "inline-flex",
+                display: "flex",
                 alignItems: "center",
                 gap: "3px"
             }}>
@@ -27,9 +26,10 @@ const TextField = ({ value, onClick, backgroundColor, iconLeft, iconRight, borde
                     border: "none",
                     outline: "none",
                 }}
+                type={type || "text"}
                 placeholder={placeholder}
-                value={v}
-                onChange={(e)=>setValue(e.target.value)}
+                value={value}
+                onChange={onChange}
             />
             {iconRight}
         </div>

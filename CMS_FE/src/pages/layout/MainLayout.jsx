@@ -3,6 +3,7 @@ import { Calendar, CalendarRange, ChevronLeft, ChevronRight, Coins, Earth, Globe
 import logoImg from '../../assets/blueoclogo.png'
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom"
+import { ToastContainer } from "react-toastify";
 
 const menuItems = [
     { page: "/", id: 1, icon: <Home color="rgb(63, 63, 63)" size={24} />, name: "Home" },
@@ -17,6 +18,7 @@ const MainLayout = () => {
     const [showNavbarDetail, toggleNavbarDetail] = useState(true);
     const nav = useNavigate();
     return <>
+        <ToastContainer />
         <div className="container">
             <div className="header-container">
                 <div className="logo">
@@ -25,7 +27,7 @@ const MainLayout = () => {
                 </div>
             </div>
             <div className="main-container">
-                <div className={`nav-container ${showNavbarDetail?"extend":"collapse"}`}>
+                <div className={`nav-container ${showNavbarDetail ? "extend" : "collapse"}`}>
                     <div className="nav-btns">
                         {menuItems.map((item) => (
                             <div
@@ -40,10 +42,10 @@ const MainLayout = () => {
                         ))}
                     </div>
                     <div className="nav-extend-btn" onClick={
-                        ()=>{toggleNavbarDetail(!showNavbarDetail)}
+                        () => { toggleNavbarDetail(!showNavbarDetail) }
                     }>
-                        {showNavbarDetail?
-                        <ChevronLeft color="#777"/>:<ChevronRight color="#777"/>
+                        {showNavbarDetail ?
+                            <ChevronLeft color="#777" /> : <ChevronRight color="#777" />
                         }
                     </div>
                 </div>

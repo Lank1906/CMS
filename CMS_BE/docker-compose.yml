@@ -4,10 +4,10 @@ services:
     container_name: cms-db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: 
+      MYSQL_DATABASE: 
     ports:
-      - "${DB_PORT}:3306"
+      - ""
     volumes:
       - mysql-data:/var/lib/mysql
     networks:

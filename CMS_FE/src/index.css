@@ -9,4 +9,9 @@ body {
     --padding-base: 10px;
     --color-primary: rgb(73, 93, 116);
     --box-shadow-primary: 0px 0px 10px rgba(0, 0, 0, 0.132);
+    --border-radius-base: 7px;
   }
+
+.asterisk{
+    color: red;
+}
