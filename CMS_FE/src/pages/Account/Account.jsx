@@ -3,19 +3,22 @@ import BreadCrumbs from '../../components/BreadCrumbs';
 import Button from '../../components/ui/Button';
 import './account.css';
 import TextField from '../../components/ui/TextField';
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import PageInput from '../../components/ui/PageInput';
 import Overlays from '../../components/Overlays/Overlays'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import ConfirmDialog from '../../components/Dialogs.jsx/ConfirmDialog';
 const Accounts = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
+  const [keyword, setKeyword] = useState("");
   const [accountDatas, setAccountDatas] = useState([]);
   const [showAddForm, toggleAddForm] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showDialog, setShowDialog] = useState(false);
 
   const [accountCreating, setAccountCreating] = useState({
     company: "",
@@ -27,8 +30,27 @@ const Accounts = () => {
   })
   useEffect(() => {
     fetchData()
-  }, [page]);
+  }, [page, limit]);
 
+  useEffect(() => {
+    searchData()
+  }, [keyword]);
+  const handleDelete = () => {
+    // gọi API xóa, hoặc logic xóa gì đó ở đây
+    console.log("Đã xác nhận xóa!");
+  };
+  const searchData = async () => {
+    setLoading(true);
+    axios.post(`http://localhost:3000/api/accounts/search-query?keyword=${keyword}`, {
+      limit: limit,
+      page: page
+    }).then(res => {
+      setAccountDatas(res.data);
+      setLoading(false)
+    }).catch(err => {
+
+    })
+  }
   const fetchData = async () => {
     setLoading(true);
     axios.get(`http://localhost:3000/api/accounts?page=${page}&limit=${limit}`).then(res => {
@@ -50,6 +72,13 @@ const Accounts = () => {
     });
   };
   return <>
+    <ConfirmDialog
+      open={showDialog}
+      onClose={() => setShowDialog(false)}
+      onConfirm={handleDelete}
+      title="Delete confirm?"
+      message="Are you sure you want to perform this action?"
+    />
     <Overlays
       title={"NEW ACCOUNT"}
       show={showAddForm}
@@ -153,9 +182,14 @@ const Accounts = () => {
           iconLeft={<><Plus size={15} /></>}
         />
         <TextField
+          type={"search"}
           placeholder={"Search by Account Name, Email,...."}
           width={300}
           borderRadius={50}
+          value={keyword}
+          onChange={(e) => {
+            setKeyword(e.target.value);
+          }}
           iconLeft={<Search size={20} color='#666' />}
         />
       </div>
@@ -178,12 +212,14 @@ const Accounts = () => {
                 <td className='id-cell'><a href='#'>{a.id} <SquareArrowOutUpRightIcon size={15} /></a></td>
                 <td>{a.company}</td>
                 <td>{a.contact_person}</td>
-                <td>{a.email}</td>
+                <td><a href={`mailto:${a.email}`}>{a.email}</a></td>
                 <td>{a.phone}</td>
                 <td>{a.created_at}</td>
                 <td className='action-cell'>
                   <Edit className='edit-btn' color='#30B376' />
-                  <Trash className='delete-btn' color='#C73535' />
+                  <button onClick={() => setShowDialog(true)} className="bg-red-600 text-white px-4 py-2 rounded">
+                    <Trash className='delete-btn' color='#C73535' />
+                  </button>
                 </td>
               </tr>
             )) : <></>}
@@ -195,19 +231,23 @@ const Accounts = () => {
       </div>
       <div className='table-controls'>
         <div className='table-page-control'>
-          <PageInput />
+          <PageInput max={accountDatas.totalPages}
+            onChange={p => {
+              setPage(p)
+            }}
+            page={page} />
         </div>
         <div>
           <label>Total Pages: {accountDatas.totalPages}</label>
         </div>
         <div className='rows-select'>
-          <select>
-            <option value="row-10">10</option>
-            <option value="row-30">30</option>
-            <option value="row-50">50</option>
-            <option value="row-70">70</option>
-            <option value="row-100">100</option>
-            <option value="row-200">200</option>
+          <select onChange={(e) => { setLimit(e.target.value) }}>
+            <option value="10">10</option>
+            <option value="30">30</option>
+            <option value="50">50</option>
+            <option value="70">70</option>
+            <option value="100">100</option>
+            <option value="200">200</option>
           </select>
         </div>
       </div>

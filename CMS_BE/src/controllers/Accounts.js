@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import Account from "../models/Accounts.js";
 
 export const createAccount = async (req, res) => {
@@ -102,5 +103,42 @@ export const getAccountById = async (req, res) => {
     } catch (error) {
         console.error('Error deleting account:', error);
         return res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
+export const searchAccounts = async (req, res) => {
+    try {
+        const { keyword } = req.query;
+        const page = parseInt(req.body.page) || 1;
+        const limit = parseInt(req.body.limit) || 10;
+        const offset = (page - 1) * limit;
+
+        const where = {
+            [Op.or]: [
+                { id: isNaN(Number(keyword)) ? -1 : Number(keyword) },
+                { contact_person: { [Op.like]: `%${keyword}%` } },
+                { phone: { [Op.like]: `%${keyword}%` } },
+                { email: { [Op.like]: `%${keyword}%` } },
+                { company: { [Op.like]: `%${keyword}%` } },
+                { address: { [Op.like]: `%${keyword}%` } },
+            ],
+        };
+
+        const { rows: results, count: total } = await Account.findAndCountAll({
+            where,
+            limit,
+            offset,
+            order: [['created_at', 'DESC']],
+        });
+
+        return res.json({
+            data: results,
+            total,
+            currentPage: page,
+            totalPages: Math.ceil(total / limit),
+        });
+    } catch (err) {
+        console.error('Search error:', err);
+        return res.status(500).json({ message: 'Internal server error' });
     }
 };

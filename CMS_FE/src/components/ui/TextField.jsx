@@ -6,7 +6,7 @@ const TextField = ({ value, onClick, backgroundColor, iconLeft, iconRight, borde
         <div
             onClick={onClick}
             style={{
-                maxWidth: width,
+                width: width,
                 backgroundColor: backgroundColor,
                 border: "1px solid rgb(172, 177, 181)",
                 outline: "none",
@@ -20,7 +20,7 @@ const TextField = ({ value, onClick, backgroundColor, iconLeft, iconRight, borde
             {iconLeft}
             <input
                 style={{
-                    width: width,
+                    width: "100%",
                     color: "black",
                     fontSize: "14px",
                     border: "none",
