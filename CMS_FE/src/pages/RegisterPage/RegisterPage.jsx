@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import styles from './RegisterPage.module.css';
+import './register.css';
 import { registerUser } from '../../services/api';
 import logo from '../../assets/logo.jpg';
+import handleError from '../../utils/handleError';
 
 import { toast } from 'react-toastify';
 
@@ -28,14 +29,14 @@ const RegisterForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (formData.password !== formData.confirmPassword) {
       toast.error('Password and confirm password do not match!');
       return;
     }
-  
+
     setIsSubmitting(true);
-  
+
     try {
       const response = await registerUser(formData);
       setFormData({
@@ -47,81 +48,71 @@ const RegisterForm = () => {
         role: 'Employee',
         address: '',
       });
-  
+
       if (response?.message) {
         toast.success(response.message);
       }
     } catch (error) {
-      if (error.response) {
-        if (error.response.status === 400) {
-          toast.error(error.response.data.message);
-        } else if (error.response.status === 409) {
-          toast.warning(error.response.data.message);
-        } else {
-          toast.error('An error occurred, please try again later!');
-        }
-      } else {
-        toast.error('An error occurred, please try again later!');
-      }
+      handleError(error);
     } finally {
       setIsSubmitting(false);
     }
   };
-  
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
-      <div className={styles.registerTitle}>
-        <div className={styles.brand}>
-          <img src={logo} alt="BluOC Logo" className={styles.logo} />
-          <span className={styles.brandName}>BluOC</span>
+    <form onSubmit={handleSubmit} className="form">
+      <div className="registerTitle">
+        <div className="brand">
+          <img src={logo} alt="BluOC Logo" className="logo" />
+          <span className="brandName">BluOC</span>
         </div>
-        <h2 className={styles.pageTitle}>Register</h2>
-      </div>
-      <div className={styles.floatingGroup}>
-        <input type="text" id="fullName" name="fullName" value={formData.fullName} onChange={handleChange} required className={styles.floatingInput} placeholder=" " />
-        <label htmlFor="fullName" className={styles.floatingLabel}>FullName</label>
+        <h2 className="pageTitle">Đăng ký</h2>
       </div>
 
-      <div className={styles.floatingGroup}>
-        <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} required className={styles.floatingInput} placeholder=" " />
-        <label htmlFor="password" className={styles.floatingLabel}>Password</label>
+      <div className="floatingGroup">
+        <input type="text" id="fullName" name="fullName" value={formData.fullName} onChange={handleChange} required className="floatingInput" placeholder=" " />
+        <label htmlFor="fullName" className="floatingLabel">Họ và tên</label>
       </div>
 
-      <div className={styles.floatingGroup}>
-        <input type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required className={styles.floatingInput} placeholder=" " />
-        <label htmlFor="confirmPassword" className={styles.floatingLabel}>Confirm Password</label>
+      <div className="floatingGroup">
+        <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} required className="floatingInput" placeholder=" " />
+        <label htmlFor="password" className="floatingLabel">Mật khẩu</label>
       </div>
 
-      <div className={styles.floatingGroup}>
-        <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required className={styles.floatingInput} placeholder=" " />
-        <label htmlFor="email" className={styles.floatingLabel}>Email</label>
+      <div className="floatingGroup">
+        <input type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required className="floatingInput" placeholder=" " />
+        <label htmlFor="confirmPassword" className="floatingLabel">Xác nhận mật khẩu</label>
       </div>
 
-      <div className={styles.floatingGroup}>
-        <input type="number" id="phone" name="phone" value={formData.phone} onChange={handleChange} required className={styles.floatingInput} placeholder=" " />
-        <label htmlFor="phone" className={styles.floatingLabel}>Phone</label>
+      <div className="floatingGroup">
+        <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required className="floatingInput" placeholder=" " />
+        <label htmlFor="email" className="floatingLabel">Email</label>
       </div>
 
-      <div className={styles.floatingGroup}>
-        <select id="role" name="role" value={formData.role} onChange={handleChange} required className={styles.floatingInput}>
-          <option value="Employee">Employee</option>
-          <option value="Manager">Manager</option>
+      <div className="floatingGroup">
+        <input type="number" id="phone" name="phone" value={formData.phone} onChange={handleChange} required className="floatingInput" placeholder=" " />
+        <label htmlFor="phone" className="floatingLabel">Số điện thoại</label>
+      </div>
+
+      <div className="floatingGroup">
+        <select id="role" name="role" value={formData.role} onChange={handleChange} required className="floatingInput">
+          <option value="Employee">Nhân viên</option>
+          <option value="Manager">Quản lý</option>
           <option value="Admin">Admin</option>
         </select>
-        <label htmlFor="role" className={styles.floatingLabel}>Role</label>
+        <label htmlFor="role" className="floatingLabel">Vai trò</label>
       </div>
 
-      <div className={styles.floatingGroup}>
-        <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} required className={styles.floatingInput} placeholder="" />
-        <label htmlFor="address" className={styles.floatingLabel}>Address</label>
+      <div className="floatingGroup">
+        <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} required className="floatingInput" placeholder=" " />
+        <label htmlFor="address" className="floatingLabel">Địa chỉ</label>
       </div>
 
-      <button type="submit" className={styles.button} disabled={isSubmitting}>
-        {isSubmitting ? (<span className={styles.loadingSpinner}></span>) : ('Register')}
+      <button type="submit" className="button" disabled={isSubmitting}>
+        {isSubmitting ? (<span className="loadingSpinner"></span>) : ('Đăng ký')}
       </button>
-
     </form>
+
   );
 };
 

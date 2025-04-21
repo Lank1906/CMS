@@ -6,70 +6,79 @@ import Role from '../models/Roles.js';
 
 export const registerUser = async (req, res) => {
     const { fullName, password, email, phone, address, role } = req.body;
-  
+
     try {
-      const existingUser = await User.findOne({ where: { email: email } });
-      if (existingUser) {
-        return res.status(409).json({ message: 'Email is already in use.' });
-      }
-  
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const newUser = await User.create({
-        full_name: fullName,
-        password: hashedPassword,
-        email: email,
-        phone: phone,
-        role_id: req.roleId,
-        address: address,
-        is_active: false,
-      });
-  
-      const token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET, { expiresIn: '3600s' });
-  
-      try {
-        await sendConfirmationEmail(email, token);
-        console.log('Confirmation email sent successfully to', email);
-      } catch (emailError) {
-        console.error('Error sending confirmation email:', emailError);
-        return res.status(500).json({ message: 'Error sending confirmation email.' });
-      }
-  
-      return res.status(200).json({
-        message: 'Registration successful! Please check your email to confirm your account.',
-      });
-  
+        const verifiedUser = await User.findOne({ where: { email: email, is_active: true } });
+        if (verifiedUser) {
+            return res.status(409).json({ message: 'Email is already in use.' });
+        }
+
+        const unverifiedUser = await User.findOne({ where: { email: email, is_active: false } });
+        if (unverifiedUser) {
+            await unverifiedUser.destroy(); 
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newUser = await User.create({
+            full_name: fullName,
+            password: hashedPassword,
+            email: email,
+            phone: phone,
+            role_id: req.roleId,
+            address: address,
+            is_active: false,
+        });
+
+        const token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+        try {
+            await sendConfirmationEmail(email, token);
+        } catch (emailError) {
+            return res.status(500).json({ message: 'Error sending confirmation email.' });
+        }
+
+        return res.status(200).json({
+            message: 'Registration successful! Please check your email to confirm your account.',
+        });
+
     } catch (err) {
-      console.error('Error during registration:', err);
-      return res.status(500).json({ message: 'Error processing registration.' });
+        console.error(err);
+        return res.status(500).json({ message: 'Error during registration process.' });
     }
-  };
-  
+};
+
 
 export const confirmAccount = async (req, res) => {
     const token = req.query.token;
-
+  
     if (!token) {
-        return res.status(400).send('Missing token.');
+      return res.redirect(`${process.env.FRONTEND_URL}/auth/verify-failed`);
     }
-
+  
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findByPk(decoded.userId);
-
-        if (!user) {
-            return res.status(404).send('User not found.');
-        }
-
-        if (user.is_active) {
-            return res.redirect(`${process.env.FRONTEND_URL}/auth/verify-success`);
-        }
-
-        user.is_active = true;
-        await user.save();
-
-        return res.redirect(`${process.env.FRONTEND_URL}/auth/verify-success`);
+     
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  
+      const user = await User.findByPk(decoded.userId);
+  
+      if (!user) {
+        return res.redirect(`${process.env.FRONTEND_URL}/auth/verify-failed`);
+      }
+  
+      if (user.is_active) {
+        return res.redirect(`${process.env.FRONTEND_URL}/auth/verify-failed`);
+      }
+  
+      user.is_active = true;
+      await user.save();
+  
+      return res.redirect(`${process.env.FRONTEND_URL}/auth/verify-success`);
     } catch (err) {
-        console.error('Token verification failed:', err.message);
-        return res.status(400).send('Confirmation link is invalid or has expired.');
+     
+      return res.redirect(`${process.env.FRONTEND_URL}/auth/verify-failed`);
     }
-};
+  };
+  
+  
+

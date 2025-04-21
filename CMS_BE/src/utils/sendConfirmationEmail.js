@@ -13,7 +13,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-
 const sendConfirmationEmail = async (toEmail, token) => {
   const backendUrl = process.env.BACKEND_URL;
 
@@ -24,7 +23,7 @@ const sendConfirmationEmail = async (toEmail, token) => {
   const link = `${backendUrl}/api/confirm?token=${token}`;
 
   try {
-    const info = await transporter.sendMail({
+    await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: toEmail,
       subject: 'Confirm account registration',
@@ -34,10 +33,7 @@ const sendConfirmationEmail = async (toEmail, token) => {
         <a href="${link}">Verify account</a>
       `
     });
-
-    console.log("Email has been sent:", info.messageId);
   } catch (err) {
-    console.error("Email sending failed:", err);
     throw err;
   }
 };

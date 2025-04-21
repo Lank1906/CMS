@@ -1,18 +1,19 @@
 import Role from '../models/Roles.js';
 
-
 export const validateRegister = async (req, res, next) => {
   const { fullName, password, email, phone, role, address } = req.body;
 
   if (!fullName || !password || !email || !phone || !role || !address) {
     return res.status(400).json({ message: 'Please fill in all information.' });
   }
+
   const nameRegex = /^[A-Za-z][A-Za-z0-9_]{2,49}$/;
   if (!nameRegex.test(fullName)) {
     return res.status(400).json({
       message: 'Full name must be 3-50 characters long and contain only letters, numbers, spaces, or underscores.'
     });
   }
+
   const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+$/;
   if (!emailRegex.test(email)) {
     return res.status(400).json({
@@ -41,7 +42,6 @@ export const validateRegister = async (req, res, next) => {
     req.roleId = roleData.id;
     next();
   } catch (err) {
-    console.error(err);
     return res.status(500).json({ message: 'Server error while checking role.' });
   }
 };
