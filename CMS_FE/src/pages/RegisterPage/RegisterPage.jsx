@@ -66,22 +66,22 @@ const RegisterForm = () => {
           <img src={logo} alt="BluOC Logo" className="logo" />
           <span className="brandName">BluOC</span>
         </div>
-        <h2 className="pageTitle">Đăng ký</h2>
+        <h2 className="pageTitle">Register</h2>
       </div>
 
       <div className="floatingGroup">
         <input type="text" id="fullName" name="fullName" value={formData.fullName} onChange={handleChange} required className="floatingInput" placeholder=" " />
-        <label htmlFor="fullName" className="floatingLabel">Họ và tên</label>
+        <label htmlFor="fullName" className="floatingLabel">Full Name</label>
       </div>
 
       <div className="floatingGroup">
         <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} required className="floatingInput" placeholder=" " />
-        <label htmlFor="password" className="floatingLabel">Mật khẩu</label>
+        <label htmlFor="password" className="floatingLabel">Password</label>
       </div>
 
       <div className="floatingGroup">
         <input type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required className="floatingInput" placeholder=" " />
-        <label htmlFor="confirmPassword" className="floatingLabel">Xác nhận mật khẩu</label>
+        <label htmlFor="confirmPassword" className="floatingLabel">Confirm Password</label>
       </div>
 
       <div className="floatingGroup">
@@ -91,25 +91,25 @@ const RegisterForm = () => {
 
       <div className="floatingGroup">
         <input type="number" id="phone" name="phone" value={formData.phone} onChange={handleChange} required className="floatingInput" placeholder=" " />
-        <label htmlFor="phone" className="floatingLabel">Số điện thoại</label>
+        <label htmlFor="phone" className="floatingLabel">Phone Number</label>
       </div>
 
       <div className="floatingGroup">
         <select id="role" name="role" value={formData.role} onChange={handleChange} required className="floatingInput">
-          <option value="Employee">Nhân viên</option>
-          <option value="Manager">Quản lý</option>
+          <option value="Employee">Employee</option>
+          <option value="Manager">Manager</option>
           <option value="Admin">Admin</option>
         </select>
-        <label htmlFor="role" className="floatingLabel">Vai trò</label>
+        <label htmlFor="role" className="floatingLabel">Role</label>
       </div>
 
       <div className="floatingGroup">
         <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} required className="floatingInput" placeholder=" " />
-        <label htmlFor="address" className="floatingLabel">Địa chỉ</label>
+        <label htmlFor="address" className="floatingLabel">Address</label>
       </div>
 
       <button type="submit" className="button" disabled={isSubmitting}>
-        {isSubmitting ? (<span className="loadingSpinner"></span>) : ('Đăng ký')}
+        {isSubmitting ? (<span className="loadingSpinner"></span>) : ('Register')}
       </button>
     </form>
 
