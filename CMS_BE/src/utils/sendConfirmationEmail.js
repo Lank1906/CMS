@@ -28,7 +28,7 @@ const sendConfirmationEmail = async (toEmail, token) => {
       to: toEmail,
       subject: 'Confirm account registration',
       html: `
-        <h3>Welcome to BluOC!</h3>
+        <h3>Welcome to BlueOC!</h3>
         <p>Thank you for joining us! We're excited to have you on board. To get started, please confirm your account by clicking the link below:</p>
         <a href="${link}">Verify account</a>
         <p>Please note: This verification link will expire in 1 hour.</p>

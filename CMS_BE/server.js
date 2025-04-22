@@ -4,16 +4,17 @@ dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import authRoutes from './src/routers/auth.js';
+import projectRoutes from './src/routers/project.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: 'http://localhost:3000',
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type'],
-  }),
+    origin: process.env.FRONTEND_URL,
+    methods: ['GET', 'POST', 'PUT'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
 );
 
 app.use(express.json());
@@ -23,7 +24,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api', authRoutes);
-
+app.use('/api/projects', projectRoutes);
 app.listen(PORT, () => {
   process.stdout.write(`✅ Server is running at http://localhost:${PORT}\n`);
 });

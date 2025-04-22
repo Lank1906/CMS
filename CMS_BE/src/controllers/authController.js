@@ -2,7 +2,6 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import sendConfirmationEmail from '../utils/sendConfirmationEmail.js';
 import User from '../models/Users.js';
-import Role from '../models/Roles.js';
 
 export const registerUser = async (req, res) => {
   const { fullName, password, email, phone, address } = req.body;
@@ -13,36 +12,31 @@ export const registerUser = async (req, res) => {
       return res.status(409).json({ message: 'Email is already in use.' });
     }
 
-    const unverifiedUser = await User.findOne({ where: { email: email, is_active: false } });
-    if (unverifiedUser) {
-      await unverifiedUser.destroy();
-    }
-
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = await User.create({
-      full_name: fullName,
-      password: hashedPassword,
-      email: email,
-      phone: phone,
-      role_id: req.roleId,
-      address: address,
-      is_active: false,
-    });
-
-    const token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign(
+      {
+        fullName,
+        password: hashedPassword,
+        email,
+        phone,
+        address,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
 
     try {
       await sendConfirmationEmail(email, token);
     } catch {
-      return res.status(500).json({ message: 'Error sending confirmation email.' });
+      return res.status(500).json({ message: 'Failed to send confirmation email.' });
     }
 
     return res.status(200).json({
       message: 'Registration successful! Please check your email to confirm your account.',
     });
   } catch {
-    return res.status(500).json({ message: 'Error during registration process.' });
+    return res.status(500).json({ message: 'An error occurred during the registration process.' });
   }
 };
 
@@ -56,14 +50,20 @@ export const confirmAccount = async (req, res) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    const user = await User.findByPk(decoded.userId);
-
-    if (!user || user.is_active) {
+    const existingUser = await User.findOne({ where: { email: decoded.email } });
+    if (existingUser) {
       return res.redirect(`${process.env.FRONTEND_URL}/auth/verify-failed`);
     }
 
-    user.is_active = true;
-    await user.save();
+    await User.create({
+      full_name: decoded.fullName,
+      password: decoded.password,
+      email: decoded.email,
+      phone: decoded.phone,
+      address: decoded.address,
+      role_id: 3,
+      is_active: true,
+    });
 
     return res.redirect(`${process.env.FRONTEND_URL}/auth/verify-success`);
   } catch {
