@@ -11,4 +11,5 @@
   "bracketSameLine": false,
   "arrowParens": "always",
   "endOfLine": "auto"
+  
 }
