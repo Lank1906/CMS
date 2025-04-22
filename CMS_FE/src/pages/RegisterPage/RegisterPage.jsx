@@ -64,55 +64,132 @@ const RegisterForm = () => {
       <div className="registerTitle">
         <div className="brand">
           <img src={logo} alt="BluOC Logo" className="logo" />
-          <span className="brandName">BluOC</span>
+          <span className="brandName">BlueOC</span>
         </div>
         <h2 className="pageTitle">Register</h2>
       </div>
 
       <div className="floatingGroup">
-        <input type="text" id="fullName" name="fullName" value={formData.fullName} onChange={handleChange} required className="floatingInput" placeholder=" " />
-        <label htmlFor="fullName" className="floatingLabel">Full Name</label>
+        <input
+          type="text"
+          id="fullName"
+          name="fullName"
+          value={formData.fullName}
+          onChange={handleChange}
+          required
+          className="floatingInput"
+          placeholder=" "
+        />
+        <label htmlFor="fullName" className="floatingLabel">
+          Full Name
+        </label>
       </div>
 
       <div className="floatingGroup">
-        <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} required className="floatingInput" placeholder=" " />
-        <label htmlFor="password" className="floatingLabel">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+          className="floatingInput"
+          placeholder=" "
+        />
+        <label htmlFor="password" className="floatingLabel">
+          Password
+        </label>
       </div>
 
       <div className="floatingGroup">
-        <input type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required className="floatingInput" placeholder=" " />
-        <label htmlFor="confirmPassword" className="floatingLabel">Confirm Password</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          name="confirmPassword"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          required
+          className="floatingInput"
+          placeholder=" "
+        />
+        <label htmlFor="confirmPassword" className="floatingLabel">
+          Confirm Password
+        </label>
       </div>
 
       <div className="floatingGroup">
-        <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required className="floatingInput" placeholder=" " />
-        <label htmlFor="email" className="floatingLabel">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+          className="floatingInput"
+          placeholder=" "
+        />
+        <label htmlFor="email" className="floatingLabel">
+          Email
+        </label>
       </div>
 
       <div className="floatingGroup">
-        <input type="number" id="phone" name="phone" value={formData.phone} onChange={handleChange} required className="floatingInput" placeholder=" " />
-        <label htmlFor="phone" className="floatingLabel">Phone Number</label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          value={formData.phone}
+          onChange={handleChange}
+          required
+          className="floatingInput"
+          placeholder=" "
+        />
+        <label htmlFor="phone" className="floatingLabel">
+          Phone Number
+        </label>
       </div>
 
       <div className="floatingGroup">
-        <select id="role" name="role" value={formData.role} onChange={handleChange} required className="floatingInput">
+        <select
+          id="role"
+          name="role"
+          value={formData.role}
+          onChange={handleChange}
+          required
+          className="floatingInput"
+        >
           <option value="Employee">Employee</option>
           <option value="Manager">Manager</option>
           <option value="Admin">Admin</option>
         </select>
-        <label htmlFor="role" className="floatingLabel">Role</label>
+        <label htmlFor="role" className="floatingLabel">
+          Role
+        </label>
       </div>
 
       <div className="floatingGroup">
-        <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} required className="floatingInput" placeholder=" " />
-        <label htmlFor="address" className="floatingLabel">Address</label>
+        <input
+          type="text"
+          id="address"
+          name="address"
+          value={formData.address}
+          onChange={handleChange}
+          required
+          className="floatingInput"
+          placeholder=" "
+        />
+        <label htmlFor="address" className="floatingLabel">
+          Address
+        </label>
       </div>
 
       <button type="submit" className="button" disabled={isSubmitting}>
-        {isSubmitting ? (<span className="loadingSpinner"></span>) : ('Register')}
+        <span className={`button-content ${isSubmitting ? 'loading' : ''}`}>
+          {isSubmitting && <span className="loadingSpinner"></span>}
+          {isSubmitting ? 'Submitting...' : 'Register'}
+        </span>
       </button>
     </form>
-
   );
 };
 

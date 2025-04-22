@@ -1,12 +1,18 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home/Home';
+import React from 'react';
+import AppRouter from './router/AppRouter';
+import { AuthProvider } from './context/AuthContext';
+import { ToastProvider } from './context/ToastContext';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <ToastProvider>
+        <AppRouter />
+        <ToastContainer position="top-right" autoClose={3000} />
+      </ToastProvider>
+    </AuthProvider>
   );
 }
 
