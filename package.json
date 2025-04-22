@@ -12,11 +12,12 @@
   },
   "lint-staged": {
     "CMS_BE/**/*.js": [
-      "eslint --fix",
-      "prettier --write"
+      "eslint --fix"
     ],
     "CMS_FE/**/*.{js,jsx}": [
-      "eslint --fix",
+      "eslint --fix"
+    ],
+    "**/*.{js,jsx,ts,tsx,json,md,yml,yaml,css,scss,html}": [
       "prettier --write"
     ]
   },
