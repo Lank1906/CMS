@@ -19,6 +19,7 @@ const Accounts = () => {
   const [showAddForm, toggleAddForm] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showDialog, setShowDialog] = useState(false);
+  const [selectAccountId, setSelectAccountId] = useState(0);
 
   const [accountCreating, setAccountCreating] = useState({
     company: "",
@@ -36,8 +37,12 @@ const Accounts = () => {
     searchData()
   }, [keyword]);
   const handleDelete = () => {
-    // gọi API xóa, hoặc logic xóa gì đó ở đây
-    console.log("Đã xác nhận xóa!");
+    axios.delete(`http://localhost:3000/api/accounts/${selectAccountId}`).then(res => {
+      fetchData();
+      toast.info(`Account deleted!`)
+    }).catch(err => {
+      toast.error(err.response?.data?.message || err.status + ": Account api error!");
+    });
   };
   const searchData = async () => {
     setLoading(true);
@@ -48,7 +53,7 @@ const Accounts = () => {
       setAccountDatas(res.data);
       setLoading(false)
     }).catch(err => {
-
+      toast.error(err.response?.data?.message || err.status + ": Account api error!");
     })
   }
   const fetchData = async () => {
@@ -57,7 +62,7 @@ const Accounts = () => {
       setAccountDatas(res.data);
       setLoading(false)
     }).catch(err => {
-
+      toast.error(err.response?.data?.message || err.status + ": Account api error!");
     })
   }
 
@@ -214,10 +219,15 @@ const Accounts = () => {
                 <td>{a.contact_person}</td>
                 <td><a href={`mailto:${a.email}`}>{a.email}</a></td>
                 <td>{a.phone}</td>
-                <td>{a.created_at}</td>
+                <td>{new Date(a.created_at).toUTCString()}</td>
                 <td className='action-cell'>
-                  <Edit className='edit-btn' color='#30B376' />
-                  <button onClick={() => setShowDialog(true)} className="bg-red-600 text-white px-4 py-2 rounded">
+                  <button >
+                    <Edit className='edit-btn' color='#30B376' />
+                  </button>
+                  <button onClick={() => {
+                    setSelectAccountId(a.id);
+                    setShowDialog(true)
+                  }}>
                     <Trash className='delete-btn' color='#C73535' />
                   </button>
                 </td>
