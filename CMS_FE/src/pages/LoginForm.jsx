@@ -44,11 +44,9 @@ const LoginForm = () => {
       const decoded = jwtDecode(token);
       const { role_id, user_name, user_id } = decoded;
       const userData = { user_id, role_id, full_name: user_name };
-
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(userData));
       login(userData, token);
-
       if (role_id === 1) navigate('/admin');
       else if (role_id === 2) navigate('/pm');
       else if (role_id === 3) navigate('/staff');
@@ -57,7 +55,6 @@ const LoginForm = () => {
       notify('Incorrect email or password.');
     }
   };
-
   return (
     <div className="login-page d-flex align-items-center justify-content-center">
       <div className="login-card bg-white p-4">

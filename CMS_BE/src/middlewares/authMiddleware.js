@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-
 const authMiddleware = (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
@@ -21,5 +20,4 @@ const authMiddleware = (req, res, next) => {
     return res.status(403).json({ message: 'Invalid token or unauthorized' });
   }
 };
-
 export default authMiddleware;
