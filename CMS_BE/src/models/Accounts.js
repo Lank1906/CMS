@@ -9,6 +9,7 @@ const Account = sequelize.define(
     contact_person: { type: DataTypes.STRING(50), allowNull: false },
     email: { type: DataTypes.STRING(50), allowNull: false },
     phone: DataTypes.STRING(10),
+    status: {type: DataTypes.ENUM('contract', 'pending', 'active', 'inactive'), defaultValue: "contract"},
     url: DataTypes.STRING,
     address: DataTypes.TEXT,
     created_at: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
