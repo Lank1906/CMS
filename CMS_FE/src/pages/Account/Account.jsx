@@ -167,9 +167,10 @@ const Accounts = () => {
         </div>
         <div className='form-control-container'>
           <Button
+            type={"submit"}
             disable={loading}
             value={"Add"}
-            backgroundColor="rgb(71, 94, 131)" />
+            backgroundColor="var(--color-primary)" />
         </div>
       </form>
     </Overlays>
@@ -180,10 +181,9 @@ const Accounts = () => {
       </div>
       <div className='controls-container'>
         <Button
-          type={"submit"}
           value={"ADD"}
           onClick={() => toggleAddForm(true)}
-          backgroundColor="rgb(71, 94, 131)"
+          backgroundColor="var(--color-primary)"
           iconLeft={<><Plus size={15} /></>}
         />
         <TextField
@@ -222,7 +222,7 @@ const Accounts = () => {
                 <td>{new Date(a.created_at).toUTCString()}</td>
                 <td className='action-cell'>
                   <button >
-                    <Edit className='edit-btn' color='#30B376' />
+                    <Edit className='edit-btn' color='var(--color-primary)' />
                   </button>
                   <button onClick={() => {
                     setSelectAccountId(a.id);

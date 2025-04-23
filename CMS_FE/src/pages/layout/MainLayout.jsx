@@ -1,6 +1,5 @@
 import "./layout.css";
-import { Calendar, CalendarRange, ChevronLeft, ChevronRight, Coins, Earth, Globe, Home, ReceiptText, Settings, User } from 'lucide-react'
-import logoImg from '../../assets/blueoclogo.png'
+import { Bell, Calendar, CalendarRange, ChevronLeft, ChevronRight, Coins, Earth, Globe, Home, Lightbulb, ReceiptText, Settings, Sun, User } from 'lucide-react'
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom"
 import { ToastContainer } from "react-toastify";
@@ -16,14 +15,32 @@ const menuItems = [
 const MainLayout = () => {
     const [page, openPage] = useState(1);
     const [showNavbarDetail, toggleNavbarDetail] = useState(true);
+    const [showLangSelect, toggleLangSelect] = useState(false);
     const nav = useNavigate();
     return <>
         <ToastContainer />
         <div className="container">
             <div className="header-container">
                 <div className="logo">
-                    <img src={logoImg} />
+                    <img src='/blueoclogo.png' />
                     <p>Contract Management</p>
+                </div>
+                <div className="header-utility-bar">
+                    <div className="lang-select-container" onClick={()=>toggleLangSelect(!showLangSelect)}>
+                        <img src="/united_states.png" /><p>ENG</p>
+                        <ul className={`lang-select ${showLangSelect?"show":"hide"}`}>
+                            <li><img src="/united_states.png" /><p>ENG</p></li>
+                            <li><img src="/vietnam.png" /><p>VIE</p></li>
+                        </ul>
+                    </div>
+                    <div className="theme-toggle"><Sun color="rgb(88, 88, 88)" /></div>
+                    <div className="notification-container">
+                        <div className="notification-icon"><Bell color="rgb(88, 88, 88)" /></div>
+                        <div className="notification-amount">1</div>
+                    </div>
+                    <div className="user-option">
+                        SA
+                    </div>
                 </div>
             </div>
             <div className="main-container">
