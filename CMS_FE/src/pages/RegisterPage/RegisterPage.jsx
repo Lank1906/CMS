@@ -5,6 +5,7 @@ import logo from '../../assets/logo.jpg';
 import handleError from '../../utils/handleError';
 import { Eye, EyeOff } from 'lucide-react';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
@@ -182,6 +183,12 @@ const RegisterForm = () => {
           {isSubmitting ? 'Submitting...' : 'Register'}
         </span>
       </button>
+      <p>
+        Already have an account?{' '}
+        <Link to="/login">
+          <span>Sign in</span>
+        </Link>
+      </p>
     </form>
   );
 };

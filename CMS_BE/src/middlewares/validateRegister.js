@@ -7,7 +7,7 @@ export const validateRegister = async (req, res, next) => {
   }
 
   const nameRegexLength = /^.{3,50}$/;
-  const nameRegexChars = /^[A-Za-z][A-Za-z0-9_]{2,49}$/;
+  const nameRegexChars = /^[^@#$%^&*()!]+$/;
   if (!nameRegexLength.test(fullName)) {
     return res.status(400).json({
       message: 'Full name must be 3-50 characters long.',
@@ -15,7 +15,7 @@ export const validateRegister = async (req, res, next) => {
   }
   if (!nameRegexChars.test(fullName)) {
     return res.status(400).json({
-      message: 'Full name must contain only letters, numbers, spaces, or underscores.',
+      message: 'Full name cannot contain special characters',
     });
   }
 
