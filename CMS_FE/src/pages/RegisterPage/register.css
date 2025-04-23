@@ -65,6 +65,10 @@ input:-webkit-autofill {
   box-shadow: 0 0 0px 1000px white inset !important;
   -webkit-text-fill-color: #000 !important;
 }
+.center-text {
+  margin-top: 5px;
+  text-align: center;
+}
 
 .floatingInput {
   width: 100%;

@@ -183,7 +183,7 @@ const RegisterForm = () => {
           {isSubmitting ? 'Submitting...' : 'Register'}
         </span>
       </button>
-      <p>
+      <p class="center-text">
         Already have an account?{' '}
         <Link to="/login">
           <span>Sign in</span>
