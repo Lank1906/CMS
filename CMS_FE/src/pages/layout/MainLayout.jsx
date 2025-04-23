@@ -18,17 +18,20 @@ const MainLayout = () => {
     const [showLangSelect, toggleLangSelect] = useState(false);
     const nav = useNavigate();
     return <>
-        <ToastContainer />
-        <div className="container">
+        <ToastContainer style={{ zIndex: 10000 }} />
+        <div className="container" onClick={(e) => { toggleLangSelect(false) }}>
             <div className="header-container">
                 <div className="logo">
                     <img src='/blueoclogo.png' />
                     <p>Contract Management</p>
                 </div>
                 <div className="header-utility-bar">
-                    <div className="lang-select-container" onClick={()=>toggleLangSelect(!showLangSelect)}>
+                    <div className="lang-select-container" onClick={(e) => {
+                        e.stopPropagation();
+                        toggleLangSelect(!showLangSelect);
+                    }}>
                         <img src="/united_states.png" /><p>ENG</p>
-                        <ul className={`lang-select ${showLangSelect?"show":"hide"}`}>
+                        <ul className={`lang-select ${showLangSelect ? "show" : "hide"}`}>
                             <li><img src="/united_states.png" /><p>ENG</p></li>
                             <li><img src="/vietnam.png" /><p>VIE</p></li>
                         </ul>

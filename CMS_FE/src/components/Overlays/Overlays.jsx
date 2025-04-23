@@ -1,12 +1,12 @@
 import { X } from 'lucide-react';
 import './overlay.css';
-const Overlays = ({ title, children, show, onClose }) => {
+const Overlays = ({ title, children, show, onClose, closeWhenClickOverlay }) => {
 
     return (
         <>
             <div
                 className={`form-overlay ${show ? "show" : "hide"}`}
-                onClick={onClose}
+                onClick={closeWhenClickOverlay?onClose:()=>{}}
             >
                 <div className='children-container' onClick={(e) => e.stopPropagation()}>
                     <div className='close-form' onClick={onClose}><X /></div>

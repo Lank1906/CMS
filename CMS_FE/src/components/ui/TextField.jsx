@@ -1,9 +1,10 @@
 import './ui.css';
 import { useState } from 'react'
 
-const TextField = ({ value, onClick, backgroundColor, iconLeft, iconRight, borderRadius, placeholder, width, type, onChange }) => {
+const TextField = ({ value, onClick, backgroundColor, iconLeft, iconRight, borderRadius, placeholder, width, type, onChange, ref }) => {
     return <>
         <div
+            ref={ref}
             onClick={onClick}
             style={{
                 width: width,

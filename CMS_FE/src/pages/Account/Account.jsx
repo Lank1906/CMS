@@ -3,7 +3,7 @@ import BreadCrumbs from '../../components/BreadCrumbs';
 import Button from '../../components/ui/Button';
 import './account.css';
 import TextField from '../../components/ui/TextField';
-import { use, useEffect, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import PageInput from '../../components/ui/PageInput';
 import Overlays from '../../components/Overlays/Overlays'
 import PhoneInput from 'react-phone-input-2'
@@ -20,6 +20,9 @@ const Accounts = () => {
   const [loading, setLoading] = useState(true);
   const [showDialog, setShowDialog] = useState(false);
   const [selectAccountId, setSelectAccountId] = useState(0);
+  const companyInputRef = useRef();
+  const contactPersonInputRef = useRef();
+  const emailInputRef = useRef();
 
   const [accountCreating, setAccountCreating] = useState({
     company: "",
@@ -53,7 +56,7 @@ const Accounts = () => {
       setAccountDatas(res.data);
       setLoading(false)
     }).catch(err => {
-      toast.error(err.response?.data?.message || err.status + ": Account api error!");
+      toast.error(err.response?.data?.message || err.status + ": Account api error!", { position: "bottom-right" });
     })
   }
   const fetchData = async () => {
@@ -62,18 +65,30 @@ const Accounts = () => {
       setAccountDatas(res.data);
       setLoading(false)
     }).catch(err => {
-      toast.error(err.response?.data?.message || err.status + ": Account api error!");
+      toast.error(err.response?.data?.message || err.status + ": Account api error!", { position: "bottom-right" });
     })
   }
 
   const accountCreateSubmit = (event) => {
     event.preventDefault();
+    const inputs = [companyInputRef, contactPersonInputRef, emailInputRef];
+    inputs.forEach((input) => {
+      const value = input.current.querySelector("input").value;
+      if (value.trim() === "") {
+        input.current.style.borderColor = "red";
+        input.current.style.boxShadow = "0px 0px 10px rgba(255, 0, 0, 0.24)";
+        return;
+      } else {
+        input.current.style.borderColor = "";
+        input.current.style.boxShadow = "none";
+      }
+    });
     axios.post(`http://localhost:3000/api/accounts`, accountCreating).then(res => {
       toast.success("Account create successfully!");
       fetchData();
       return toggleAddForm(false);
     }).catch(err => {
-      toast.error(err.response?.data?.message || "Account create error!");
+      toast.error(err.response?.data?.message || "Account create error!", { position: "bottom-right" });
     });
   };
   return <>
@@ -87,6 +102,7 @@ const Accounts = () => {
     <Overlays
       title={"NEW ACCOUNT"}
       show={showAddForm}
+      closeWhenClickOverlay={false}
       onClose={() => toggleAddForm(false)}>
       <form
         className='account-add-form-container'
@@ -96,7 +112,7 @@ const Accounts = () => {
           <div className='label-container'>
             <label>Company</label><label className='asterisk' title='Required field'> *</label>
           </div>
-          <TextField borderRadius={3} placeholder={"Company"}
+          <TextField ref={companyInputRef} borderRadius={3} placeholder={"Company"}
             value={accountCreating.company}
             onChange={(e) => setAccountCreating({
               ...accountCreating,
@@ -108,7 +124,7 @@ const Accounts = () => {
           <div className='label-container'>
             <label>Contact Person</label><label className='asterisk' title='Required field'> *</label>
           </div>
-          <TextField borderRadius={3} placeholder={"Contact Person"}
+          <TextField ref={contactPersonInputRef} borderRadius={3} placeholder={"Contact Person"}
             value={accountCreating.contact_person}
             onChange={(e) => setAccountCreating({
               ...accountCreating,
@@ -120,7 +136,7 @@ const Accounts = () => {
           <div className='label-container'>
             <label>Email</label><label className='asterisk' title='Required field'> *</label>
           </div>
-          <TextField type={"email"} borderRadius={3} placeholder={"examle@gmail.com"}
+          <TextField ref={emailInputRef} type={"email"} borderRadius={3} placeholder={"examle@gmail.com"}
             value={accountCreating.email}
             onChange={(e) => setAccountCreating({
               ...accountCreating,
@@ -143,7 +159,7 @@ const Accounts = () => {
         </div>
         <div className='input-field-container'>
           <div className='label-container'>
-            <label>Url</label>
+            <label>URL</label>
           </div>
           <TextField borderRadius={3} placeholder={"https//facebook.com/example.vn"}
             value={accountCreating.url}
@@ -251,7 +267,10 @@ const Accounts = () => {
           <label>Total Pages: {accountDatas.totalPages}</label>
         </div>
         <div className='rows-select'>
-          <select onChange={(e) => { setLimit(e.target.value) }}>
+          <select onChange={(e) => {
+            setPage(1);
+            setLimit(e.target.value);
+          }}>
             <option value="10">10</option>
             <option value="30">30</option>
             <option value="50">50</option>

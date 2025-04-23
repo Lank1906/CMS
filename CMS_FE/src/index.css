@@ -1,8 +1,12 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
+    padding: 0;
     background-color: var(--main-color);
     overflow: hidden;
+}
+#root{
+    min-height: 100vh;
 }
 :root {
     --main-color: rgb(223, 231, 237);
@@ -10,7 +14,7 @@ body {
     --color-primary: #2D3052;
     --box-shadow-primary: 0px 0px 10px rgba(0, 0, 0, 0.132);
     --border-radius-base: 7px;
-  }
+}
 
 .asterisk{
     color: red;
