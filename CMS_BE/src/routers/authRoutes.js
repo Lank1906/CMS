@@ -6,7 +6,7 @@ import {
   registerUser,
   confirmAccount,
 } from '../controllers/authController.js';
-import { validateRegister } from '../middlewares/validateRegister.js';
+import { validateRegister } from '../validates/validateRegister.js';
 const router = express.Router();
 
 router.post('/login', login);

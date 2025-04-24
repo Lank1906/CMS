@@ -128,6 +128,10 @@ const Accounts = () => {
           });
         });
     } else {
+      delete accountCreating.created_at;
+      delete accountCreating.id;
+      delete accountCreating.status;
+      delete accountCreating.updated_at;
       axios
         .post(`${process.env.REACT_APP_BACKEND_URL}/accounts`, accountCreating)
         .then(() => {
