@@ -1,16 +1,16 @@
-import "./layout.css";
-import { Bell, Calendar, CalendarRange, ChevronLeft, ChevronRight, Coins, Earth, Globe, Home, Lightbulb, ReceiptText, Settings, Sun, User } from 'lucide-react'
-import { useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom"
-import { ToastContainer } from "react-toastify";
+import './layout.css';
+import { Bell, CalendarRange, ChevronLeft, ChevronRight, Coins, Earth, Home, ReceiptText, Sun, User } from 'lucide-react';
+import { useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 const menuItems = [
-    { page: "/", id: 1, icon: <Home color="rgb(63, 63, 63)" size={24} />, name: "Home" },
-    { page: "/accounts", id: 2, icon: <User color="rgb(63, 63, 63)" size={24} />, name: "Accounts" },
-    { page: "/projects", id: 3, icon: <Earth color="rgb(63, 63, 63)" size={24} />, name: "Projects" },
-    { page: "/timesheet", id: 4, icon: <CalendarRange color="rgb(63, 63, 63)" size={24} />, name: "Timesheet" },
-    { page: "/", id: 5, icon: <Coins color="rgb(63, 63, 63)" size={24} />, name: "Expense" },
-    { page: "/invoices", id: 6, icon: <ReceiptText color="rgb(63, 63, 63)" size={24} />, name: "Invoices" }
+    { page: '/cms', id: 1, icon: <Home color="rgb(63, 63, 63)" size={24} />, name: 'Home' },
+    { page: '/cms/accounts', id: 2, icon: <User color="rgb(63, 63, 63)" size={24} />, name: 'Accounts' },
+    { page: '/cms/projects', id: 3, icon: <Earth color="rgb(63, 63, 63)" size={24} />, name: 'Projects' },
+    { page: '/cms/timesheet', id: 4, icon: <CalendarRange color="rgb(63, 63, 63)" size={24} />, name: 'Timesheet' },
+    { page: '/cms/', id: 5, icon: <Coins color="rgb(63, 63, 63)" size={24} />, name: 'Expense' },
+    { page: '/cms/invoices', id: 6, icon: <ReceiptText color="rgb(63, 63, 63)" size={24} />, name: 'Invoices' }
 ];
 const MainLayout = () => {
     const [page, openPage] = useState(1);
@@ -19,7 +19,7 @@ const MainLayout = () => {
     const nav = useNavigate();
     return <>
         <ToastContainer style={{ zIndex: 10000 }} />
-        <div className="container" onClick={(e) => { toggleLangSelect(false) }}>
+        <div className="container" onClick={() => { toggleLangSelect(false); }}>
             <div className="header-container">
                 <div className="logo">
                     <img src='/blueoclogo.png' />
@@ -31,7 +31,7 @@ const MainLayout = () => {
                         toggleLangSelect(!showLangSelect);
                     }}>
                         <img src="/united_states.png" /><p>ENG</p>
-                        <ul className={`lang-select ${showLangSelect ? "show" : "hide"}`}>
+                        <ul className={`lang-select ${showLangSelect ? 'show' : 'hide'}`}>
                             <li><img src="/united_states.png" /><p>ENG</p></li>
                             <li><img src="/vietnam.png" /><p>VIE</p></li>
                         </ul>
@@ -47,22 +47,22 @@ const MainLayout = () => {
                 </div>
             </div>
             <div className="main-container">
-                <div className={`nav-container ${showNavbarDetail ? "extend" : "collapse"}`}>
+                <div className={`nav-container ${showNavbarDetail ? 'extend' : 'collapse'}`}>
                     <div className="nav-btns">
                         {menuItems.map((item) => (
                             <div
                                 key={item.id}
-                                className={`nav-btn ${page === item.id ? "active" : ""}`}
-                                onClick={() => { nav(item.page); openPage(item.id) }}>
+                                className={`nav-btn ${page === item.id ? 'active' : ''}`}
+                                onClick={() => { nav(item.page); openPage(item.id); }}>
                                 <div>{item.icon}</div>
-                                <div style={{ display: showNavbarDetail ? "flex" : "none" }}>
+                                <div style={{ display: showNavbarDetail ? 'flex' : 'none' }}>
                                     {item.name}
                                 </div>
                             </div>
                         ))}
                     </div>
                     <div className="nav-extend-btn" onClick={
-                        () => { toggleNavbarDetail(!showNavbarDetail) }
+                        () => { toggleNavbarDetail(!showNavbarDetail); }
                     }>
                         {showNavbarDetail ?
                             <ChevronLeft color="#777" /> : <ChevronRight color="#777" />
@@ -74,6 +74,6 @@ const MainLayout = () => {
                 </div>
             </div>
         </div>
-    </>
-}
+    </>;
+};
 export default MainLayout;
