@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
 import { useAuth } from '../hooks/useAuth.js';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { validateRequiredField, validateEmail } from '../utils/validators.js';
 import axios from 'axios';
 import '../assets/styles/LoginForm.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { API_URL } from '../config/config.js';
 import { jwtDecode } from 'jwt-decode';
-
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
-
   const notify = (message) => toast.error(message);
   const toggleShow = () => setShowPassword((prev) => !prev);
-
   const handleLogin = async () => {
     const requiredEmailError = validateRequiredField(email, 'Email');
     if (requiredEmailError) {
@@ -31,19 +27,20 @@ const LoginForm = () => {
       notify(emailError);
       return;
     }
-
     const requiredPasswordError = validateRequiredField(password, 'Password');
     if (requiredPasswordError) {
       notify(requiredPasswordError);
       return;
     }
-
     try {
-      const response = await axios.post(API_URL + 'login', { email, password });
+      const response = await axios.post(process.env.REACT_APP_BACKEND_URL + 'login', {
+        email,
+        password,
+      });
       const { token } = response.data;
       const decoded = jwtDecode(token);
-      const { role_id, user_name, user_id } = decoded;
-      const userData = { user_id, role_id, full_name: user_name };
+      const { role_id, full_name, user_id } = decoded;
+      const userData = { user_id, role_id, full_name: full_name };
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(userData));
       login(userData, token);
@@ -52,7 +49,7 @@ const LoginForm = () => {
       else if (role_id === 3) navigate('/staff');
       else navigate('/');
     } catch {
-      notify('Incorrect email or password.');
+      notify('Incorrect Email or Password.');
     }
   };
   return (
@@ -62,9 +59,7 @@ const LoginForm = () => {
           <img src="/images/logo.webp" alt="Logo" className="logo" />
           <span className="logo-text">BlueOC</span>
         </div>
-
         <h5 className="text-center mb-4 input-font">Login</h5>
-
         <div className="floating-label-input mb-4">
           <input
             type="text"
@@ -75,7 +70,6 @@ const LoginForm = () => {
           />
           <label htmlFor="email">Email</label>
         </div>
-
         <div className="floating-label-input mb-4 position-relative">
           <input
             id="password"
@@ -87,14 +81,22 @@ const LoginForm = () => {
           <label htmlFor="password">Password</label>
           <span className="password-toggle" onClick={toggleShow}></span>
         </div>
-
-        <div className="d-flex justify-content-between links mb-4">
-          <a href="/forgot-password">Forgot password</a>
+        <div className="d-flex justify-content-end mb-3">
+          <Link to="/forgot-password" className="text-nowrap custom-link">
+            Forgot password?
+          </Link>
         </div>
-
         <button className="btn btn-primary btn-lg w-100 mb-3" onClick={handleLogin}>
           Login
         </button>
+        <div className="text-center">
+          <span className="text-nowrap">
+            Don’t have an account?{' '}
+            <Link to="/register" className="register-link">
+              Register
+            </Link>
+          </span>
+        </div>
       </div>
     </div>
   );

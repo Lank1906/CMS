@@ -4,14 +4,13 @@ import sequelize from './src/config/db.js';
 import cors from 'cors';
 import authRouters from './src/routers/authRoutes.js';
 dotenv.config();
-
 const app = express();
 app.use(express.json());
 app.use(
   cors({
     origin: process.env.FRONTEND_URL,
     credentials: true,
-  }),
+  })
 );
 app.use('/api', authRouters);
 app.get('/', (req, res) => {
