@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/Users.js';
 import nodemailer from 'nodemailer';
+import sendConfirmationEmail from '../utils/sendConfirmationEmail.js';
 export const login = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -55,7 +56,7 @@ export const forgotPassword = async (req, res) => {
             <div style="background-color: #f4f4f7; padding: 40px 0; font-family: Arial, sans-serif;">
               <div style="max-width: 600px; margin: auto; background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); color: #333; line-height: 1.6;">
                 <div style="text-align: center; margin-bottom: 30px;">
-                  <img src="#" alt="BlueOC Logo" style="height: 48px; margin-bottom: 10px;" />
+                  <img src="" alt="BlueOC Logo" style="height: 48px; margin-bottom: 10px;" />
                   <div style="font-size: 24px; color: #2D3052; font-weight: bold;">BlueOC</div>
                   <h2 style="color: #2D3052; margin: 0;">Reset Your Password</h2>
                 </div>
@@ -97,5 +98,72 @@ export const resetPassword = async (req, res) => {
     return res.json({ message: 'Password updated successfully.' });
   } catch {
     return res.status(400).json({ message: 'Token is invalid or expired.' });
+  }
+};
+export const registerUser = async (req, res) => {
+  const { fullName, password, email, phone, address } = req.body;
+
+  try {
+    const verifiedUser = await User.findOne({ where: { email: email, is_active: true } });
+    if (verifiedUser) {
+      return res.status(409).json({ message: 'Email is already in use.' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const token = jwt.sign(
+      {
+        fullName,
+        password: hashedPassword,
+        email,
+        phone,
+        address,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+
+    try {
+      await sendConfirmationEmail(email, token);
+    } catch {
+      return res.status(500).json({ message: 'Failed to send confirmation email.' });
+    }
+
+    return res.status(200).json({
+      message: 'Registration successful! Please check your email to confirm your account.',
+    });
+  } catch {
+    return res.status(500).json({ message: 'An error occurred during the registration process.' });
+  }
+};
+
+export const confirmAccount = async (req, res) => {
+  const token = req.query.token;
+
+  if (!token) {
+    return res.redirect(`${process.env.FRONTEND_URL}/verify-failed`);
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const existingUser = await User.findOne({ where: { email: decoded.email } });
+    if (existingUser) {
+      return res.redirect(`${process.env.FRONTEND_URL}/verify-failed`);
+    }
+
+    await User.create({
+      full_name: decoded.fullName,
+      password: decoded.password,
+      email: decoded.email,
+      phone: decoded.phone,
+      address: decoded.address,
+      role_id: 3,
+      is_active: true,
+    });
+
+    return res.redirect(`${process.env.FRONTEND_URL}/verify-success`);
+  } catch {
+    return res.redirect(`${process.env.FRONTEND_URL}/verify-failed`);
   }
 };

@@ -7,7 +7,7 @@ const ForgotPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${process.env.REACT_APP_BACKEND_URL}forgot-password`, { email });
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/forgot-password`, { email });
       toast.success('Check your email for the reset link!');
     } catch (err) {
       toast.error(err.response?.data?.message || 'Error sending reset email');

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useAuth } from '../hooks/useAuth.js';
+import { useAuth } from '../../hooks/useAuth.js';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { validateRequiredField, validateEmail } from '../utils/validators.js';
+import { validateRequiredField, validateEmail } from '../../utils/validators.js';
 import axios from 'axios';
-import '../assets/styles/LoginForm.css';
+import './LoginForm.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { jwtDecode } from 'jwt-decode';
 const LoginForm = () => {
@@ -33,7 +33,7 @@ const LoginForm = () => {
       return;
     }
     try {
-      const response = await axios.post(process.env.REACT_APP_BACKEND_URL + 'login', {
+      const response = await axios.post(process.env.REACT_APP_BACKEND_URL + '/login', {
         email,
         password,
       });

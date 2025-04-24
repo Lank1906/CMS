@@ -13,8 +13,8 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuthStatus = () => {
       try {
-        const storedToken = localStorage.getItem('token');
-        const storedUser = localStorage.getItem('user');
+        const storedToken = localStorage.getItem('cms_token');
+        const storedUser = localStorage.getItem('cms_user');
         if (storedToken && storedUser) {
           setToken(storedToken);
           const userData = JSON.parse(storedUser);
@@ -36,8 +36,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (userData, authToken) => {
     try {
-      localStorage.setItem('token', authToken);
-      localStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem('cms_token', authToken);
+      localStorage.setItem('cms_user', JSON.stringify(userData));
       setToken(authToken);
       setUser(userData);
       setRoleId(userData.role_id);
@@ -50,8 +50,8 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     try {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      localStorage.removeItem('cms_token');
+      localStorage.removeItem('cms_user');
       setToken(null);
       setUser(null);
       setRoleId(null);
