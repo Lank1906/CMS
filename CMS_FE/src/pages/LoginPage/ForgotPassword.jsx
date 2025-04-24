@@ -4,13 +4,17 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const handleSubmit = async (e) => {
+    setIsSubmitting(true);
     e.preventDefault();
     try {
       await axios.post(`${process.env.REACT_APP_BACKEND_URL}/forgot-password`, { email });
       toast.success('Check your email for the reset link!');
+      setIsSubmitting(false);
     } catch (err) {
       toast.error(err.response?.data?.message || 'Error sending reset email');
+      setIsSubmitting(false);
     }
   };
   return (
@@ -33,8 +37,15 @@ const ForgotPassword = () => {
             />
             <label htmlFor="floatingEmail">Email</label>
           </div>
-          <button type="submit" className="btn btn-primary btn-lg w-100 mb-3">
-            Send Password Reset Link
+          <button
+            type="submit"
+            className="btn btn-primary btn-lg w-100 mb-3"
+            disabled={isSubmitting}
+          >
+            <span className={`button-content ${isSubmitting ? 'loading' : ''}`}>
+              {isSubmitting && <span className="loadingSpinner"></span>}
+              {isSubmitting ? 'Submitting...' : 'Send Password Reset Link'}
+            </span>
           </button>
         </form>
         <div className="d-flex justify-content-center">

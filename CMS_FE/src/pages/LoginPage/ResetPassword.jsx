@@ -7,27 +7,34 @@ const ResetPassword = () => {
   const token = searchParams.get('token');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
+    setIsSubmitting(true);
     e.preventDefault();
     if (newPassword !== confirmPassword) {
       toast.error('Passwords do not match');
+      setIsSubmitting(false);
       return;
     }
     if (newPassword.length < 8) {
       toast.error('Password must be at 8 characters long');
+      setIsSubmitting(false);
       return;
     }
     if (!/\d/.test(newPassword)) {
       toast.error('Password must be at least 1 digit (0-9).');
+      setIsSubmitting(false);
       return;
     }
     if (!/[A-Z]/.test(newPassword)) {
       toast.error('Password must be at least 1 uppercase letter (A-Z).');
+      setIsSubmitting(false);
       return;
     }
     if (/[^a-zA-Z0-9]/.test(newPassword)) {
       toast.error('Password must not contain special characters');
+      setIsSubmitting(false);
       return;
     }
     try {
@@ -39,6 +46,7 @@ const ResetPassword = () => {
       setTimeout(() => navigate('/login'), 3000);
     } catch (err) {
       toast.error(err.response?.data?.message || 'Reset failed');
+      setIsSubmitting(false);
     }
   };
   return (
@@ -72,8 +80,15 @@ const ResetPassword = () => {
             />
             <label htmlFor="confirmPassword">Confirm Password</label>
           </div>
-          <button type="submit" className="btn btn-primary btn-lg w-100 mb-3">
-            Update Password
+          <button
+            type="submit"
+            className="btn btn-primary btn-lg w-100 mb-3"
+            disabled={isSubmitting}
+          >
+            <span className={`button-content ${isSubmitting ? 'loading' : ''}`}>
+              {isSubmitting && <span className="loadingSpinner"></span>}
+              {isSubmitting ? 'Submitting...' : 'Update Password'}
+            </span>
           </button>
         </form>
       </div>

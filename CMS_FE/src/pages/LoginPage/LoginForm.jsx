@@ -12,24 +12,29 @@ const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
   const notify = (message) => toast.error(message);
   const toggleShow = () => setShowPassword((prev) => !prev);
   const handleLogin = async () => {
+    setIsSubmitting(true);
     const requiredEmailError = validateRequiredField(email, 'Email');
     if (requiredEmailError) {
       notify(requiredEmailError);
+      setIsSubmitting(false);
       return;
     }
     const emailError = validateEmail(email);
     if (emailError) {
       notify(emailError);
+      setIsSubmitting(false);
       return;
     }
     const requiredPasswordError = validateRequiredField(password, 'Password');
     if (requiredPasswordError) {
       notify(requiredPasswordError);
+      setIsSubmitting(false);
       return;
     }
     try {
@@ -50,6 +55,7 @@ const LoginForm = () => {
       else navigate('/');
     } catch {
       notify('Incorrect Email or Password.');
+      setIsSubmitting(false);
     }
   };
   return (
@@ -86,8 +92,15 @@ const LoginForm = () => {
             Forgot password?
           </Link>
         </div>
-        <button className="btn btn-primary btn-lg w-100 mb-3" onClick={handleLogin}>
-          Login
+        <button
+          className="btn btn-primary btn-lg w-100 mb-3"
+          onClick={handleLogin}
+          disabled={isSubmitting}
+        >
+          <span className={`button-content ${isSubmitting ? 'loading' : ''}`}>
+            {isSubmitting && <span className="loadingSpinner"></span>}
+            {isSubmitting ? 'Submitting...' : 'Login'}
+          </span>
         </button>
         <div className="text-center">
           <span className="text-nowrap">

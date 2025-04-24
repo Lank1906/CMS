@@ -47,6 +47,9 @@ export const forgotPassword = async (req, res) => {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
+      tls: {
+        rejectUnauthorized: false,
+      },
     });
     await transporter.sendMail({
       from: `"CMS System" <${process.env.EMAIL_USER}>`,
@@ -56,7 +59,6 @@ export const forgotPassword = async (req, res) => {
             <div style="background-color: #f4f4f7; padding: 40px 0; font-family: Arial, sans-serif;">
               <div style="max-width: 600px; margin: auto; background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); color: #333; line-height: 1.6;">
                 <div style="text-align: center; margin-bottom: 30px;">
-                  <img src="" alt="BlueOC Logo" style="height: 48px; margin-bottom: 10px;" />
                   <div style="font-size: 24px; color: #2D3052; font-weight: bold;">BlueOC</div>
                   <h2 style="color: #2D3052; margin: 0;">Reset Your Password</h2>
                 </div>
