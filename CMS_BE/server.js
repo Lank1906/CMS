@@ -1,28 +1,21 @@
 import dotenv from 'dotenv';
-dotenv.config();
-
-import express from 'express';
 import cors from 'cors';
-import authRoutes from './src/routers/auth.js';
-
+import express from 'express';
+import authRouters from './src/routers/authRoutes.js';
+dotenv.config();
 const app = express();
+app.use(express.json());
 const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
     origin: process.env.FRONTEND_URL,
-    methods: ['GET', 'POST', 'PATCH'],
+    methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
   })
 );
-
-app.use(express.json());
-
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
-
-app.use('/api', authRoutes);
+app.use('/api', authRouters);
 app.listen(PORT, () => {
-  process.stdout.write(`✅ Server is running at http://localhost:${PORT}\n`);
+  process.stdout.write(`Server is running at http://localhost:${PORT}\n`);
 });

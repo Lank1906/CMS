@@ -3,7 +3,6 @@ import './register.css';
 import { registerUser } from '../../services/api';
 import logo from '../../assets/logo.jpg';
 import handleError from '../../utils/handleError';
-import { Eye, EyeOff } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 
@@ -19,8 +18,6 @@ const RegisterForm = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -90,7 +87,7 @@ const RegisterForm = () => {
 
       <div className="floatingGroup input-wrapper">
         <input
-          type={showPassword ? 'text' : 'password'}
+          type="password"
           id="password"
           name="password"
           value={formData.password}
@@ -102,14 +99,12 @@ const RegisterForm = () => {
         <label htmlFor="password" className="floatingLabel">
           Password
         </label>
-        <span className="toggle-visibility" onClick={() => setShowPassword(!showPassword)}>
-          {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-        </span>
+        {}
       </div>
 
       <div className="floatingGroup input-wrapper">
         <input
-          type={showConfirmPassword ? 'text' : 'password'}
+          type="password"
           id="confirmPassword"
           name="confirmPassword"
           value={formData.confirmPassword}
@@ -121,12 +116,7 @@ const RegisterForm = () => {
         <label htmlFor="confirmPassword" className="floatingLabel">
           Confirm Password
         </label>
-        <span
-          className="toggle-visibility"
-          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-        >
-          {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-        </span>
+        {}
       </div>
 
       <div className="floatingGroup">

@@ -1,16 +1,16 @@
-import { toast } from 'react-toastify';  
+import { toast } from 'react-toastify';
 
 const handleError = (error) => {
   if (error.response) {
     if (error.response.status === 400) {
-      toast.error(error.response.data.message);  
+      toast.error(error.response.data.message);
     } else if (error.response.status === 409) {
-      toast.warning(error.response.data.message);  
+      toast.warning(error.response.data.message);
     } else {
-      toast.error('An error occurred, please try again later!');  
+      toast.error('An error occurred, please try again later!');
     }
   } else {
-    toast.error('An error occurred, please try again later!');  
+    toast.error('An error occurred, please try again later!');
   }
 };
 

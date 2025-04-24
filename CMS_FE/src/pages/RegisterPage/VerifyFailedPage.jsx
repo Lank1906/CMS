@@ -14,7 +14,7 @@ function VerifyFailedPage() {
   }, []);
 
   const handleRedirect = () => {
-    navigate('/auth/register');
+    navigate('/register');
   };
 
   return (
