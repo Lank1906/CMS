@@ -20,6 +20,7 @@ const Accounts = () => {
   const [loading, setLoading] = useState(true);
   const [showDialog, setShowDialog] = useState(false);
   const [selectAccountId, setSelectAccountId] = useState(0);
+  const [isEdit, setEdit] = useState(false);
   const companyInputRef = useRef();
   const contactPersonInputRef = useRef();
   const emailInputRef = useRef();
@@ -36,20 +37,31 @@ const Accounts = () => {
     fetchData()
   }, [page, limit]);
 
+  const fetchDataById = async (id) => {
+    setLoading(true);
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/accounts/${id}`).then(res => {
+      setAccountCreating(res.data.data);
+      setLoading(false)
+    }).catch(err => {
+      toast.error(err.response?.data?.message || err.status + ": Account api error!", { position: "bottom-right" });
+    })
+  }
+
   useEffect(() => {
     searchData()
   }, [keyword]);
+
   const handleDelete = () => {
-    axios.delete(`http://localhost:3000/api/accounts/${selectAccountId}`).then(res => {
+    axios.delete(`${process.env.REACT_APP_BACKEND_URL}/accounts/${selectAccountId}`).then(res => {
       fetchData();
-      toast.info(`Account deleted!`)
+      toast.info(`Account deleted!`, { position: "bottom-right" })
     }).catch(err => {
       toast.error(err.response?.data?.message || err.status + ": Account api error!");
     });
   };
   const searchData = async () => {
     setLoading(true);
-    axios.post(`http://localhost:3000/api/accounts/search-query?keyword=${keyword}`, {
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/accounts/search-query?keyword=${keyword}`, {
       limit: limit,
       page: page
     }).then(res => {
@@ -61,7 +73,7 @@ const Accounts = () => {
   }
   const fetchData = async () => {
     setLoading(true);
-    axios.get(`http://localhost:3000/api/accounts?page=${page}&limit=${limit}`).then(res => {
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/accounts?page=${page}&limit=${limit}`).then(res => {
       setAccountDatas(res.data);
       setLoading(false)
     }).catch(err => {
@@ -77,19 +89,30 @@ const Accounts = () => {
       if (value.trim() === "") {
         input.current.style.borderColor = "red";
         input.current.style.boxShadow = "0px 0px 10px rgba(255, 0, 0, 0.24)";
-        return;
       } else {
         input.current.style.borderColor = "";
         input.current.style.boxShadow = "none";
       }
     });
-    axios.post(`http://localhost:3000/api/accounts`, accountCreating).then(res => {
-      toast.success("Account create successfully!");
-      fetchData();
-      return toggleAddForm(false);
-    }).catch(err => {
-      toast.error(err.response?.data?.message || "Account create error!", { position: "bottom-right" });
-    });
+    if (isEdit) {
+      delete accountCreating.created_at;
+      delete accountCreating.id;
+      axios.patch(`${process.env.REACT_APP_BACKEND_URL}/accounts/${selectAccountId}`, accountCreating).then(res => {
+        toast.success("Account update successfully!", { position: "bottom-right" });
+        fetchData();
+        return toggleAddForm(false);
+      }).catch(err => {
+        toast.error(err.response?.data?.message || "Account create error!", { position: "bottom-right" });
+      });
+    } else {
+      axios.post(`${process.env.REACT_APP_BACKEND_URL}/accounts`, accountCreating).then(res => {
+        toast.success("Account create successfully!", { position: "bottom-right" });
+        fetchData();
+        return toggleAddForm(false);
+      }).catch(err => {
+        toast.error(err.response?.data?.message || "Account create error!", { position: "bottom-right" });
+      });
+    }
   };
   return <>
     <ConfirmDialog
@@ -100,7 +123,7 @@ const Accounts = () => {
       message="Are you sure you want to perform this action?"
     />
     <Overlays
-      title={"NEW ACCOUNT"}
+      title={isEdit ? "UPDATE ACCOUNT" : "NEW ACCOUNT"}
       show={showAddForm}
       closeWhenClickOverlay={false}
       onClose={() => toggleAddForm(false)}>
@@ -185,7 +208,7 @@ const Accounts = () => {
           <Button
             type={"submit"}
             disable={loading}
-            value={"Add"}
+            value={isEdit ? "Update" : "Add"}
             backgroundColor="var(--color-primary)" />
         </div>
       </form>
@@ -198,7 +221,7 @@ const Accounts = () => {
       <div className='controls-container'>
         <Button
           value={"ADD"}
-          onClick={() => toggleAddForm(true)}
+          onClick={() => { setEdit(false); toggleAddForm(true) }}
           backgroundColor="var(--color-primary)"
           iconLeft={<><Plus size={15} /></>}
         />
@@ -234,10 +257,15 @@ const Accounts = () => {
                 <td>{a.company}</td>
                 <td>{a.contact_person}</td>
                 <td><a href={`mailto:${a.email}`}>{a.email}</a></td>
-                <td>{a.phone}</td>
+                <td>+{a.phone}</td>
                 <td>{new Date(a.created_at).toUTCString()}</td>
                 <td className='action-cell'>
-                  <button >
+                  <button onClick={() => {
+                    setEdit(true);
+                    fetchDataById(a.id);
+                    setSelectAccountId(a.id);
+                    toggleAddForm(true);
+                  }}>
                     <Edit className='edit-btn' color='var(--color-primary)' />
                   </button>
                   <button onClick={() => {
