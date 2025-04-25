@@ -70,6 +70,7 @@
     }
 
     .lang-select {
+      width: 100px;
       position: absolute;
       bottom: -120px;
       list-style: none;

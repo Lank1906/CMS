@@ -1,6 +1,13 @@
+.register-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
 .form {
   width: 28%;
-  margin: 27px auto;
+  margin: auto auto;
   padding: 16px;
   background-color: #fff;
   border-radius: 8px;

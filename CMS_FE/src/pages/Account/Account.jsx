@@ -303,7 +303,7 @@ const Accounts = () => {
           />
           <TextField
             type={'search'}
-            placeholder={'Search by Account Name, Email,....'}
+            placeholder={'Search by Contact Person, Email,....'}
             width={300}
             borderRadius={50}
             value={keyword}
@@ -317,12 +317,11 @@ const Accounts = () => {
           <table>
             <thead>
               <tr className="table-header">
-                <th>ID</th>
                 <th>Company</th>
                 <th>Contact Person</th>
                 <th>Email</th>
                 <th>Phone</th>
-                <th>Created At</th>
+                <th>Created Date</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -330,18 +329,15 @@ const Accounts = () => {
               {accountDatas.data ? (
                 accountDatas.data.map((a) => (
                   <tr className="table-row" key={a.id}>
-                    <td className="id-cell">
-                      <a href="#">
-                        {a.id} <SquareArrowOutUpRightIcon size={15} />
-                      </a>
+                    <td>
+                      <a href={`/cms/accounts/${a.id}`}>{a.company}</a>
                     </td>
-                    <td>{a.company}</td>
                     <td>{a.contact_person}</td>
                     <td>
                       <a href={`mailto:${a.email}`}>{a.email}</a>
                     </td>
                     <td>+{a.phone}</td>
-                    <td>{new Date(a.created_at).toUTCString()}</td>
+                    <td>{new Date(a.created_at).toLocaleDateString()}</td>
                     <td className="action-cell">
                       <button
                         onClick={() => {

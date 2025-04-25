@@ -81,14 +81,14 @@ const LoginForm = () => {
           <label htmlFor="password">Password</label>
           <span className="password-toggle" onClick={toggleShow}></span>
         </div>
-        <div className="d-flex justify-content-end mb-3">
-          <Link to="/forgot-password" className="text-nowrap custom-link">
-            Forgot password?
-          </Link>
-        </div>
         <button className="btn-primary-login btn-lg w-100 mb-3" onClick={handleLogin}>
           Login
         </button>
+        <div className="d-flex justify-content-center mb-3">
+          <Link to="/forgot-password" className="text-nowrap ">
+            Forgot password?
+          </Link>
+        </div>
         <div className="text-center">
           <span className="text-nowrap">
             Don’t have an account?{' '}

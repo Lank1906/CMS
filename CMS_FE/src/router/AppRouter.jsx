@@ -1,7 +1,6 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import LoginForm from '../pages/LoginPage/LoginForm';
-import { useAuth } from '../hooks/useAuth';
 import ForgotPassword from '../pages/LoginPage/ForgotPassword';
 import ResetPassword from '../pages/LoginPage/ResetPassword';
 import RegisterPage from '../pages/RegisterPage/RegisterPage';
@@ -11,15 +10,16 @@ import Accounts from '../pages/Account/Account';
 import Projects from '../pages/Projects/Projects';
 import Home from '../pages/Home/Home';
 import MainLayout from '../pages/layout/MainLayout';
+import AccountDetails from '../pages/Account/AccountDetails';
 const AppRouter = () => {
-  const { isAuthenticated } = useAuth();
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/login" />} />
       <Route path="/login" element={<LoginForm />} />
-      <Route path="/cms" element={isAuthenticated ? <MainLayout /> : <Navigate to="/login" />}>
+      <Route path="/cms" element={<MainLayout />}>
         <Route path="/cms/" index element={<Home />} />
         <Route path="/cms/accounts" element={<Accounts />} />
+        <Route path="/cms/accounts/:id" element={<AccountDetails />} />
         <Route path="/cms/projects" element={<Projects />} />
       </Route>
       <Route path="/forgot-password" element={<ForgotPassword />} />

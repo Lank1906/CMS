@@ -19,9 +19,12 @@ const Project = sequelize.define(
     created_at: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
     updated_at: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
   },
-  { tableName: 'Projects', timestamps: false },
+  { tableName: 'Projects', timestamps: false }
 );
 
-Project.belongsTo(Account, { foreignKey: 'account_id' });
+(async () => {
+  const { default: Account } = await import('./Accounts.js');
+  Project.belongsTo(Account, { foreignKey: 'account_id', as: 'account' });
+})();
 
 export default Project;
