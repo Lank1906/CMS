@@ -96,7 +96,7 @@ const MainLayout = () => {
           </div>
         </div>
         <div className="main-container">
-          <div className={`nav-container ${showNavbarDetail ? 'extend' : 'collapse'}`}>
+          <div className={`nav-container nav-${showNavbarDetail ? 'extend' : 'collapse'}`}>
             <div className="nav-btns">
               {menuItems.map((item) => (
                 <div

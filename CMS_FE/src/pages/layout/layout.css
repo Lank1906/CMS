@@ -146,11 +146,11 @@
   margin-top: 50px;
 }
 
-.nav-container.extend {
+.nav-container.nav-extend {
   width: 200px;
 }
 
-.nav-container.collapse {
+.nav-container.nav-collapse {
   width: 70px;
 }
 

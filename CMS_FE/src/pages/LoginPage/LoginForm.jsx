@@ -86,7 +86,7 @@ const LoginForm = () => {
             Forgot password?
           </Link>
         </div>
-        <button className="btn btn-primary btn-lg w-100 mb-3" onClick={handleLogin}>
+        <button className="btn-primary-login btn-lg w-100 mb-3" onClick={handleLogin}>
           Login
         </button>
         <div className="text-center">
