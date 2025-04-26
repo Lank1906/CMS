@@ -16,28 +16,28 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 const menuItems = [
-  { page: '/cms', id: 1, icon: <Home color="rgb(63, 63, 63)" size={24} />, name: 'Home' },
+  { page: '/home', id: 1, icon: <Home color="rgb(63, 63, 63)" size={24} />, name: 'Home' },
   {
-    page: '/cms/accounts',
+    page: '/home/accounts',
     id: 2,
     icon: <User color="rgb(63, 63, 63)" size={24} />,
     name: 'Accounts',
   },
   {
-    page: '/cms/projects',
+    page: '/home/projects',
     id: 3,
     icon: <Earth color="rgb(63, 63, 63)" size={24} />,
     name: 'Projects',
   },
   {
-    page: '/cms/timesheet',
+    page: '/home/timesheet',
     id: 4,
     icon: <CalendarRange color="rgb(63, 63, 63)" size={24} />,
     name: 'Timesheet',
   },
-  { page: '/cms/', id: 5, icon: <Coins color="rgb(63, 63, 63)" size={24} />, name: 'Expense' },
+  { page: '/', id: 5, icon: <Coins color="rgb(63, 63, 63)" size={24} />, name: 'Expense' },
   {
-    page: '/cms/invoices',
+    page: '/home/invoices',
     id: 6,
     icon: <ReceiptText color="rgb(63, 63, 63)" size={24} />,
     name: 'Invoices',
@@ -47,6 +47,8 @@ const MainLayout = () => {
   const [page, openPage] = useState(1);
   const [showNavbarDetail, toggleNavbarDetail] = useState(true);
   const [showLangSelect, toggleLangSelect] = useState(false);
+  const [langSelected, selectLang] = useState('es');
+
   const nav = useNavigate();
   return (
     <>
@@ -70,14 +72,32 @@ const MainLayout = () => {
                 toggleLangSelect(!showLangSelect);
               }}
             >
-              <img src="/united_states.png" />
-              ENG
+              {langSelected == 'es' ? (
+                <>
+                  <img src="/united_states.png" />
+                  ENG
+                </>
+              ) : (
+                <>
+                  <img src="/vietnam.png" />
+                  VIE
+                </>
+              )}
+
               <ul className={`lang-select ${showLangSelect ? 'show' : 'hide'}`}>
-                <li>
+                <li
+                  onClick={() => {
+                    selectLang('es');
+                  }}
+                >
                   <img src="/united_states.png" />
                   ENG
                 </li>
-                <li>
+                <li
+                  onClick={() => {
+                    selectLang('vi');
+                  }}
+                >
                   <img src="/vietnam.png" />
                   VIE
                 </li>

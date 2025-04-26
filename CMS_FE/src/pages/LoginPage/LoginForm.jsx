@@ -44,9 +44,9 @@ const LoginForm = () => {
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(userData));
       login(userData, token);
-      if (role_id === 1) navigate('/cms');
-      else if (role_id === 2) navigate('/cms');
-      else if (role_id === 3) navigate('/cms');
+      if (role_id === 1) navigate('/home');
+      else if (role_id === 2) navigate('/home');
+      else if (role_id === 3) navigate('/home');
       else navigate('/');
     } catch {
       notify('Incorrect Email or Password.');
@@ -55,11 +55,11 @@ const LoginForm = () => {
   return (
     <div className="login-page d-flex align-items-center justify-content-center">
       <div className="login-card bg-white p-4">
-        <div className="text-center mb-4">
+        <div className="text-center mb-2">
           <img src="/images/logo.webp" alt="Logo" className="logo" />
           <span className="logo-text">BlueOC</span>
         </div>
-        <h5 className="text-center mb-4 input-font">Login</h5>
+        <h5 className="text-center mb-4 input-font">LOGIN</h5>
         <div className="floating-label-input mb-4">
           <input
             type="text"

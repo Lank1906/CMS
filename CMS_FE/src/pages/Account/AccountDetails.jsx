@@ -8,6 +8,7 @@ import PageInput from '../../components/ui/PageInput';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import dayjs from 'dayjs';
+import BreadCrumbs from '../../components/BreadCrumbs';
 
 const AccountDetails = () => {
   const { id } = useParams();
@@ -71,13 +72,13 @@ const AccountDetails = () => {
 
   return (
     <div className="w-auto h-screen pl-6 pt-2 bg-white">
-      <h1 className="sm:text-base lg:text-base">
-        CMS &gt; Account Management &gt; Account Details
-      </h1>
+      <div className="breadcrumbs-container">
+        <BreadCrumbs />
+      </div>
       <div className="w-full max-h-[85%] flex flex-col lg:flex-row gap-[20px] mt-4 mb-20">
         <div className="w-[30%] rounded-[16px] border border-gray-300 p-4">
           <h3 className="font-bold text-base">ACCOUNT INFORMATION</h3>
-          <div className="grid grid-cols-[auto_auto] gap-3">
+          <div className="grid grid-cols-[auto_auto] gap-3 text-[14px]">
             {[
               { label: 'Email', value: account?.email },
               { label: 'Address', value: account?.address },
@@ -88,7 +89,7 @@ const AccountDetails = () => {
               { label: 'Status', value: account?.status },
             ].map((item, i) => (
               <div key={i} className="flex flex-col">
-                <label className="mb-1 text-gray-700">{item.label}</label>
+                <label className="mb-1 text-gray-700 font-[550]">{item.label}</label>
                 <InputCopy value={item.value} showButton={item.showButton ?? false} />
               </div>
             ))}
@@ -105,12 +106,12 @@ const AccountDetails = () => {
                 <table className="text-sm w-full border-collapse">
                   <thead className="sticky top-0 bg-[var(--color-primary)] text-white z-10">
                     <tr className="h-[20%]">
-                      <th className="p-4 border">Project Name</th>
-                      <th className="p-4 border">Status</th>
-                      <th className="p-4 border">Start Date</th>
-                      <th className="p-4 border">End Date</th>
-                      <th className="p-4 border">Description</th>
-                      <th className="p-4 border">Action</th>
+                      <th className="p-2.5 border">Project Name</th>
+                      <th className="p-2.5 border">Status</th>
+                      <th className="p-2.5 border">Start Date</th>
+                      <th className="p-2.5 border">End Date</th>
+                      <th className="p-2.5 border">Description</th>
+                      <th className="p-2.5 border">Action</th>
                     </tr>
                   </thead>
                   <tbody>

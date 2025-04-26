@@ -1,4 +1,4 @@
-.register-container {
+.form-container {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -171,6 +171,7 @@ select.floatingInput:valid + .floatingLabel {
 }
 
 .button-content {
+  font-size: 16px;
   display: inline-flex;
   align-items: center;
 }
@@ -305,4 +306,22 @@ select.floatingInput:valid + .floatingLabel {
 
 .verify-success-button:hover {
   background-color: #15803d;
+}
+
+.floatingGroup.error .floatingInput {
+  border-color: #e00;
+}
+
+.floatingGroup.error .floatingInput::placeholder {
+  color: transparent;
+}
+
+.floatingGroup.error .floatingLabel {
+  color: #e00;
+}
+
+.error-message {
+  color: #e00;
+  font-size: 12px;
+  margin-top: 5px;
 }
