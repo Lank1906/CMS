@@ -1,4 +1,4 @@
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/Users.js';
 import nodemailer from 'nodemailer';
@@ -38,7 +38,7 @@ export const forgotPassword = async (req, res) => {
   const { email } = req.body;
   try {
     const user = await User.findOne({ where: { email } });
-    if (!user) return res.status(404).json({ message: 'Email not found!' });
+    if (!user) return res.status(200).json({ message: 'Password reset email has been sent.' });
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '15m' });
     const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${token}`;
     const transporter = nodemailer.createTransport({
@@ -63,7 +63,7 @@ export const forgotPassword = async (req, res) => {
                   <h2 style="color: #2D3052; margin: 0;">Reset Your Password</h2>
                 </div>
                 <p>Hi <strong>${user.full_name}</strong>,</p>   
-                <p>We received a request to reset your password for your CMS account. Click the button below to proceed:</p>
+                <p>We received a request to reset your password for your CMS account. Click the button below to process:</p>
                 <div style="text-align: center; margin: 30px 0;">
                   <a href="${resetLink}"
                     style="display: inline-block; padding: 14px 28px; background-color: #2D3052; color: #fff; text-decoration: none; border-radius: 5px; font-weight: bold;">

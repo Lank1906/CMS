@@ -49,9 +49,9 @@ const LoginForm = () => {
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(userData));
       login(userData, token);
-      if (role_id === 1) navigate('/admin');
-      else if (role_id === 2) navigate('/pm');
-      else if (role_id === 3) navigate('/staff');
+      if (role_id === 1) navigate('/home');
+      else if (role_id === 2) navigate('/home');
+      else if (role_id === 3) navigate('/home');
       else navigate('/');
     } catch {
       notify('Incorrect Email or Password.');
@@ -61,11 +61,11 @@ const LoginForm = () => {
   return (
     <div className="login-page d-flex align-items-center justify-content-center">
       <div className="login-card bg-white p-4">
-        <div className="text-center mb-4">
+        <div className="text-center mb-2">
           <img src="/images/logo.webp" alt="Logo" className="logo" />
           <span className="logo-text">BlueOC</span>
         </div>
-        <h5 className="text-center mb-4 input-font">Login</h5>
+        <h5 className="text-center mb-4 input-font">LOGIN</h5>
         <div className="floating-label-input mb-4">
           <input
             type="text"
@@ -87,21 +87,14 @@ const LoginForm = () => {
           <label htmlFor="password">Password</label>
           <span className="password-toggle" onClick={toggleShow}></span>
         </div>
-        <div className="d-flex justify-content-end mb-3">
-          <Link to="/forgot-password" className="text-nowrap custom-link">
+        <button className="btn-primary-login btn-lg w-100 mb-3" onClick={handleLogin}>
+          Login
+        </button>
+        <div className="d-flex justify-content-center mb-3">
+          <Link to="/forgot-password" className="text-nowrap ">
             Forgot password?
           </Link>
         </div>
-        <button
-          className="btn btn-primary btn-lg w-100 mb-3"
-          onClick={handleLogin}
-          disabled={isSubmitting}
-        >
-          <span className={`button-content ${isSubmitting ? 'loading' : ''}`}>
-            {isSubmitting && <span className="loadingSpinner"></span>}
-            {isSubmitting ? 'Submitting...' : 'Login'}
-          </span>
-        </button>
         <div className="text-center">
           <span className="text-nowrap">
             Don’t have an account?{' '}

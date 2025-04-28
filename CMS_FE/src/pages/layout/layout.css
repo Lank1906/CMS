@@ -1,0 +1,218 @@
+.main-layout-container {
+  height: 100vh;
+  background-color: var(--main-color);
+}
+
+.header-container {
+  display: flex;
+  width: 100vw;
+  height: 50px;
+  box-shadow: var(--box-shadow-primary);
+  background-color: white;
+  align-items: center;
+  padding: 5px;
+  box-sizing: border-box;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  justify-content: space-between;
+}
+
+.main-layout-logo {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  gap: 10px;
+  margin-left: 10px;
+
+  img {
+    width: 35px;
+    height: 35px;
+  }
+
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.header-utility-bar {
+  margin-right: 10px;
+  display: flex;
+  gap: 20px;
+  height: 100%;
+  align-items: center;
+
+  .lang-select-container {
+    padding: 10px;
+    box-sizing: border-box;
+    height: 30px;
+    border-radius: var(--border-radius-base);
+    background-color: rgb(242, 242, 242);
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 550;
+    color: rgb(71, 71, 71);
+
+    img {
+      width: 30px;
+      object-fit: contain;
+    }
+
+    .lang-select.show {
+      display: block;
+    }
+
+    .lang-select.hide {
+      display: none;
+    }
+
+    .lang-select {
+      width: 100px;
+      position: absolute;
+      bottom: -120px;
+      list-style: none;
+      padding: 10px;
+      right: 50%;
+      transform: translateX(50%);
+      background-color: white;
+      border-radius: var(--border-radius-base);
+      box-shadow: var(--box-shadow-primary);
+
+      li {
+        display: flex;
+        gap: 10px;
+        padding: 5px;
+        height: 30px;
+        align-items: center;
+
+        border-radius: var(--border-radius-base);
+
+        &:hover {
+          background-color: rgb(245, 245, 245);
+        }
+      }
+    }
+  }
+
+  .theme-toggle {
+    cursor: pointer;
+  }
+
+  .notification-container {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    .notification-amount {
+      width: 16px;
+      height: 16px;
+      background-color: rgb(213, 11, 11);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      font-size: 10px;
+      right: 0;
+      top: 0;
+    }
+  }
+
+  .user-option {
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    background-color: rgb(242, 242, 242);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 550;
+    color: rgb(88, 88, 88);
+  }
+}
+
+.main-container {
+  width: 100%;
+  display: flex;
+  height: 100%;
+  margin-top: 50px;
+}
+
+.nav-container.nav-extend {
+  width: 200px;
+}
+
+.nav-container.nav-collapse {
+  width: 70px;
+}
+
+.nav-container {
+  transition-duration: 0.2s;
+  height: auto;
+  background-color: rgb(255, 255, 255);
+  position: relative;
+
+  .nav-extend-btn {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(50%, -50%);
+    background-color: white;
+    box-shadow: var(--box-shadow-primary);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+
+  .nav-btns {
+    padding: 10px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: var(--box-shadow-primary);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 50px;
+    gap: 10px;
+
+    .nav-btn {
+      cursor: pointer;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      border-radius: 10px;
+      transition-duration: 0.2s;
+      gap: 10px;
+      font-size: 13px;
+      padding-left: 10px;
+
+      &:hover {
+        background-color: rgb(234, 234, 234);
+      }
+    }
+
+    .nav-btn.active {
+      cursor: pointer;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      border-radius: 10px;
+      transition-duration: 0.2s;
+      background-color: rgb(222, 236, 251);
+    }
+  }
+}
+
+.main {
+  width: 100%;
+  height: 100%;
+}

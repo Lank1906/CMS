@@ -1,0 +1,50 @@
+.dialog-backdrop.show {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialog-backdrop.hide {
+  display: none;
+}
+
+.dialog-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.317);
+}
+
+.dialog-container {
+  position: relative;
+  width: 500px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+.dialog-icon {
+  width: 50px;
+  height: 50px;
+}
+
+.dialog-title {
+  display: flex;
+  gap: 5px;
+  font-size: 20px;
+  color: rgb(72, 72, 72);
+  align-items: center;
+  font-weight: 600;
+}
+.dialog-message {
+  min-height: 100px;
+}
+.dialog-btns {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+}

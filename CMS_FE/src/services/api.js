@@ -12,3 +12,5 @@ export const registerUser = async (userData) => {
     throw error;
   }
 };
+
+export default api;

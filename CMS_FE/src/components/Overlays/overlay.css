@@ -1,0 +1,46 @@
+.form-overlay.show {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-overlay.hide {
+    display: none;
+}
+
+.form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    background: linear-gradient(rgba(0, 0, 0, 0.251), rgba(4, 4, 4, 0.414));
+}
+.children-container{
+    box-shadow: var(--box-shadow-primary);
+    border-radius: var(--border-radius-base);
+    overflow: hidden;
+    position: relative;
+    background-color: white;
+    padding: 10px;
+}
+.close-form{
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+.form-title{
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    margin: 10px auto;
+}
+.child-container{
+    overflow: hidden;
+    max-height: 600px;
+    overflow-y: auto;
+}
