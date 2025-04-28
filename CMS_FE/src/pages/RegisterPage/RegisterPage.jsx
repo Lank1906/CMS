@@ -99,7 +99,13 @@ export default function RegisterForm() {
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit} className="form">
-        <ToastContainer position="top-right" newestOnTop closeOnClick pauseOnHover />
+        <ToastContainer
+          position="top-right"
+          autoClose={4000}
+          newestOnTop
+          closeOnClick
+          pauseOnHover
+        />
         <div className="registerTitle">
           <div className="brand">
             <img src={logo} alt="BluOC Logo" className="logo" />

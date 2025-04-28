@@ -7,7 +7,6 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [isLoading, setIsloading] = useState(false);
   const handleSubmit = async (e) => {
-    setIsSubmitting(true);
     e.preventDefault();
     setIsloading(true);
     try {
@@ -15,9 +14,8 @@ const ForgotPassword = () => {
       toast.success('Check your email for the reset link!');
       navigate('/send-mail-forgot-password-success');
       setIsloading(false);
-          } catch (err) {
+    } catch (err) {
       toast.error(err.response?.data?.message || 'Error sending reset email');
-      setIsSubmitting(false);
     }
   };
   return (
@@ -48,7 +46,6 @@ const ForgotPassword = () => {
             <span className={`button-content ${isLoading ? 'loading' : ''}`}>
               {isLoading && <span className="loadingSpinner"></span>}
               {isLoading ? 'Sending...' : 'Send Password Reset Link'}
-
             </span>
           </button>
         </form>
