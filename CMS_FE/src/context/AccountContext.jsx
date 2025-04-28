@@ -4,6 +4,12 @@ import { toast } from 'react-toastify';
 
 export const AccountContext = createContext();
 
+const headerAPI = {
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('cms_token') || ''}`,
+  },
+};
+
 export const AccountProvider = ({ children }) => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
@@ -31,7 +37,7 @@ export const AccountProvider = ({ children }) => {
   const fetchDataById = async (id) => {
     setLoading(true);
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/accounts/${id}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/accounts/${id}`, headerAPI)
       .then((res) => {
         setAccountCreating(res.data.data);
         setLoading(false);
@@ -44,7 +50,7 @@ export const AccountProvider = ({ children }) => {
   };
   const handleDelete = () => {
     axios
-      .delete(`${process.env.REACT_APP_BACKEND_URL}/accounts/${selectAccountId}`)
+      .delete(`${process.env.REACT_APP_BACKEND_URL}/accounts/${selectAccountId}`, headerAPI)
       .then(() => {
         fetchData();
         toast.info('Account deleted!', { position: 'bottom-right' });
@@ -56,10 +62,14 @@ export const AccountProvider = ({ children }) => {
   const searchData = async () => {
     setLoading(true);
     axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/accounts/search-query?keyword=${keyword}`, {
-        limit: limit,
-        page: page,
-      })
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/accounts/search-query?keyword=${keyword}`,
+        {
+          limit: limit,
+          page: page,
+        },
+        headerAPI
+      )
       .then((res) => {
         setAccountDatas(res.data);
         setLoading(false);
@@ -73,7 +83,7 @@ export const AccountProvider = ({ children }) => {
   const fetchData = async () => {
     setLoading(true);
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/accounts?page=${page}&limit=${limit}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/accounts?page=${page}&limit=${limit}`, headerAPI)
       .then((res) => {
         setAccountDatas(res.data);
         setLoading(false);
@@ -102,7 +112,11 @@ export const AccountProvider = ({ children }) => {
       delete accountCreating.created_at;
       delete accountCreating.id;
       axios
-        .patch(`${process.env.REACT_APP_BACKEND_URL}/accounts/${selectAccountId}`, accountCreating)
+        .patch(
+          `${process.env.REACT_APP_BACKEND_URL}/accounts/${selectAccountId}`,
+          accountCreating,
+          headerAPI
+        )
         .then(() => {
           toast.success('Account update successfully!', { position: 'bottom-right' });
           fetchData();
@@ -119,7 +133,7 @@ export const AccountProvider = ({ children }) => {
       delete accountCreating.status;
       delete accountCreating.updated_at;
       axios
-        .post(`${process.env.REACT_APP_BACKEND_URL}/accounts`, accountCreating)
+        .post(`${process.env.REACT_APP_BACKEND_URL}/accounts`, accountCreating, headerAPI)
         .then(() => {
           toast.success('Account create successfully!', { position: 'bottom-right' });
           fetchData();
