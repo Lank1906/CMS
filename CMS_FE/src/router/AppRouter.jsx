@@ -8,6 +8,7 @@ import ResetPassword from '../pages/LoginPage/ResetPassword';
 import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import VerifySuccessPage from '../pages/RegisterPage/VerifySuccessPage';
 import VerifyFailedPage from '../pages/RegisterPage/VerifyFailedPage';
+import ForgotPasswordPage from '../pages/LoginPage/ForgotPasswordSuccessPage';
 const AppRouter = () => {
   const { isAuthenticated } = useAuth();
   return (
@@ -20,6 +21,7 @@ const AppRouter = () => {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/verify-success" element={<VerifySuccessPage />} />
       <Route path="/verify-failed" element={<VerifyFailedPage />} />
+      <Route path="/send-mail-forgot-password-success" element={<ForgotPasswordPage />} />
     </Routes>
   );
 };

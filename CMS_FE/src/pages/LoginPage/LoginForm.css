@@ -32,8 +32,8 @@
   margin-left: 8px;
 }
 .login-card h5 {
-  font-size: 19px;
-  font-weight: 650;
+  font-size: 16px;
+  font-weight: 600;
   color: #2d3052;
   margin-bottom: 23px;
 }
@@ -59,15 +59,14 @@
   margin-bottom: 4px;
   display: block;
 }
-.btn-primary {
+.btn-primary-login {
   background-color: #2d3052;
   font-size: 16px;
   height: 48px;
   border-radius: 4px;
   font-weight: 600;
-}
-.btn-primary:hover {
-  background-color: #2d3052;
+  color: white;
+  border: none;
 }
 .btn-outline-secondary {
   background: #fff;
@@ -94,7 +93,7 @@
   color: #2d3052;
 }
 .register-link {
-  color: #2d3052;
+  color: #007bff;
   transition: color 0.2s ease;
 }
 .floating-label-input {
