@@ -44,3 +44,18 @@ code {
     -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
     'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
+.description-header-cell {
+  width: 200px;
+}
+.description-cell > div {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  max-height: 50px;
+}
+.detail-info-container {
+  box-shadow: var(--box-shadow-primary);
+}

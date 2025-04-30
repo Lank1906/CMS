@@ -1,0 +1,84 @@
+.project-add-form-container {
+  width: 600px;
+  background-color: white;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.project-inputs.project-name-input {
+  flex: 3;
+}
+
+.project-inputs.project-account-input {
+  flex: 2;
+}
+
+.project-inputs.project-date-picker {
+  flex: 1;
+}
+
+.project-inputs.project-description-input {
+  flex: 1;
+}
+
+.project-track-select {
+  flex: 2;
+}
+
+.project-input-field-container {
+  width: 100%;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .project-label-container {
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+}
+
+.form-control-container {
+  display: flex;
+  justify-content: end;
+}
+
+.account-select-container.show {
+  display: block;
+}
+
+.account-select-container.hide {
+  display: none;
+}
+
+.account-select-container {
+  background-color: white;
+  width: 390px;
+  max-height: 260px;
+  position: absolute;
+  box-shadow: var(--box-shadow-primary);
+  box-sizing: border-box;
+  overflow-y: auto;
+  right: 0;
+  border-radius: 5px;
+
+  & > div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 40px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e8e8e8;
+    color: rgb(72, 72, 72);
+    cursor: pointer;
+    padding: 8px;
+    box-sizing: border-box;
+    font-size: 14px;
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
+}

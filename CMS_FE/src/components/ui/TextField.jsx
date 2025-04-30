@@ -10,6 +10,7 @@ const TextField = ({
   type,
   onChange,
   ref,
+  mutiline = false,
 }) => {
   return (
     <>
@@ -17,12 +18,13 @@ const TextField = ({
         ref={ref}
         onClick={onClick}
         style={{
-          width: width,
+          width: width || '100%',
           backgroundColor: backgroundColor,
-          border: '1px solid rgb(172, 177, 181)',
+          border: '1px solid rgb(196, 200, 203)',
           outline: 'none',
           overflow: 'hidden',
           borderRadius: borderRadius,
+          boxSizing: 'border-box',
           padding: '6px',
           display: 'flex',
           alignItems: 'center',
@@ -30,19 +32,38 @@ const TextField = ({
         }}
       >
         {iconLeft}
-        <input
-          style={{
-            width: '100%',
-            color: 'black',
-            fontSize: '14px',
-            border: 'none',
-            outline: 'none',
-          }}
-          type={type || 'text'}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-        />
+        {mutiline ? (
+          <textarea
+            rows={4}
+            maxLength={255}
+            style={{
+              maxHeight: '300px',
+              width: '100%',
+              color: 'black',
+              fontSize: '14px',
+              border: 'none',
+              outline: 'none',
+            }}
+            placeholder={placeholder}
+            value={value}
+            onChange={onChange}
+          ></textarea>
+        ) : (
+          <input
+            style={{
+              width: '100%',
+              color: 'black',
+              fontSize: '14px',
+              border: 'none',
+              outline: 'none',
+            }}
+            type={type || 'text'}
+            placeholder={placeholder}
+            value={value}
+            onChange={onChange}
+          />
+        )}
+
         {iconRight}
       </div>
     </>
