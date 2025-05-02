@@ -63,7 +63,7 @@
   right: 0;
   border-radius: 5px;
 
-  & > div {
+  & > .account-select-item {
     overflow: hidden;
     text-overflow: ellipsis;
     height: 40px;
@@ -81,4 +81,18 @@
       background-color: #f0f0f0;
     }
   }
+}
+.account-search-result-title {
+  font-size: 13px;
+  color: #888888;
+  margin: 10px 10px;
+}
+.account-new-header {
+  font-size: 13px;
+  color: #6f6f6f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f6f6f6;
+  height: 30px;
 }

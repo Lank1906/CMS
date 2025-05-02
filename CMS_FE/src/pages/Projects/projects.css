@@ -18,6 +18,7 @@
   max-height: 65%;
   overflow: hidden;
   overflow-y: auto;
+  border-bottom: 1px solid #eaeaea;
 
   table .table-row:nth-child(even) {
     background-color: #fcfcfc;
@@ -31,7 +32,6 @@
     font-size: 13px;
     width: 100%;
     border-collapse: collapse;
-
     .table-header {
       position: sticky;
       background-color: var(--color-primary);

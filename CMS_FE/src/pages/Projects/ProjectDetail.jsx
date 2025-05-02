@@ -88,7 +88,7 @@ const ProjectDetails = () => {
                   { label: 'Project name', value: project?.name },
                   { label: 'Track', value: project?.track },
                   { label: 'Start date', value: project?.start_date },
-                  { label: 'Last update', value: project?.updated_at },
+                  { label: 'Created Date', value: new Date(project?.created_at).toUTCString() },
                 ].map((item, i) => (
                   <div key={i} className="flex flex-col">
                     <label className="mb-1 text-gray-700 font-[550]">{item.label}</label>
@@ -101,7 +101,7 @@ const ProjectDetails = () => {
                   { label: 'Account Company', value: project?.account.company },
                   { label: 'Account Contact Person', value: project?.account.contact_person },
                   { label: 'End date', value: project?.start_date },
-                  { label: 'Last update', value: project?.updated_at },
+                  { label: 'Last update', value: new Date(project?.updated_at).toUTCString() },
                 ].map((item, i) => (
                   <div key={i} className="flex flex-col">
                     <label className="mb-1 text-gray-700 font-[550]">{item.label}</label>
@@ -129,11 +129,11 @@ const ProjectDetails = () => {
                 <table className="text-sm w-full border-collapse">
                   <thead className="sticky top-0 bg-[var(--color-primary)] text-white z-10">
                     <tr className="h-[20%]">
-                      <th className="p-4 border">Title</th>
-                      <th className="p-4 border">Signed Date</th>
-                      <th className="p-4 border">Total Amount</th>
-                      <th className="p-4 border">Working Days</th>
-                      <th className="p-4 border">Action</th>
+                      <th className="p-2 border">Title</th>
+                      <th className="p-2 border">Signed Date</th>
+                      <th className="p-2 border">Total Amount</th>
+                      <th className="p-2 border">Working Days</th>
+                      <th className="p-2 border">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -182,11 +182,11 @@ const ProjectDetails = () => {
                 <table className="text-sm w-full border-collapse">
                   <thead className="sticky top-0 bg-[var(--color-primary)] text-white z-10">
                     <tr>
-                      <th className="p-4 border">Title</th>
-                      <th className="p-4 border">Signed Date</th>
-                      <th className="p-4 border">Total Amount</th>
-                      <th className="p-4 border">Working Days</th>
-                      <th className="p-4 border">Action</th>
+                      <th className="p-2 border">Title</th>
+                      <th className="p-2 border">Signed Date</th>
+                      <th className="p-2 border">Total Amount</th>
+                      <th className="p-2 border">Working Days</th>
+                      <th className="p-2 border">Action</th>
                     </tr>
                   </thead>
                 </table>
@@ -195,7 +195,7 @@ const ProjectDetails = () => {
                 </div>
               </>
             )}
-            <div className="flex justify-end items-center p-2.5 gap-5">
+            <div className="flex justify-end items-center p-2.5 gap-3">
               <PageInput max={projectDatas.totalPages} onChange={(p) => setPage(p)} page={page} />
               <span className="text-sm font-semibold">Total Pages: {projectDatas.totalPages}</span>
               <select

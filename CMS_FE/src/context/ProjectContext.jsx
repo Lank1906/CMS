@@ -21,6 +21,7 @@ export const ProjectProvider = ({ children }) => {
   const [selectProjectId, setSelectProjectId] = useState(0);
   const [isEdit, setEdit] = useState(false);
   const [accountDatas, setAccountDatas] = useState([]);
+  const [newAccountDatas, setNewAccountDatas] = useState([]);
 
   const [accountSearchKeyword, setAccountSearchKeyword] = useState('');
 
@@ -103,6 +104,7 @@ export const ProjectProvider = ({ children }) => {
         });
       });
   };
+
   const fetchData = async () => {
     setLoading(true);
     axios
@@ -117,7 +119,20 @@ export const ProjectProvider = ({ children }) => {
         });
       });
   };
-
+  const fetchNewAccountData = async () => {
+    setLoading(true);
+    axios
+      .get(`${process.env.REACT_APP_BACKEND_URL}/accounts?page=${1}&limit=${8}`, headerAPI)
+      .then((res) => {
+        setNewAccountDatas(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        toast.error(err.response?.data?.message || err.status + ': Project api error!', {
+          position: 'bottom-right',
+        });
+      });
+  };
   const projectCreateSubmit = (event) => {
     event.preventDefault();
     const inputs = [nameInputRef, accountInputRef];
@@ -205,6 +220,9 @@ export const ProjectProvider = ({ children }) => {
         searchAccountData,
         accountSearchKeyword,
         setAccountSearchKeyword,
+        newAccountDatas,
+        setNewAccountDatas,
+        fetchNewAccountData,
       }}
     >
       {children}

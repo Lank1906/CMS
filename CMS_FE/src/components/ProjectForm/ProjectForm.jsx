@@ -2,7 +2,7 @@ import { ProjectContext } from '../../context/ProjectContext';
 import TextField from '../ui/TextField';
 import Select from '../ui/Select';
 import Overlays from '../Overlays/Overlays';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Button from '../ui/Button';
 import './projectForm.css';
 import { ChevronDown } from 'lucide-react';
@@ -22,11 +22,17 @@ const ProjectForm = ({}) => {
     searchAccountData,
     accountSearchKeyword,
     setAccountSearchKeyword,
+    newAccountDatas,
+    fetchNewAccountData,
   } = useContext(ProjectContext);
   const [showAccountSelect, toggleAccountSelect] = useState(false);
   useEffect(() => {
     searchAccountData();
   }, [accountSearchKeyword]);
+  useEffect(() => {
+    fetchNewAccountData();
+  }, []);
+  const endateInputRef = useRef();
 
   return (
     <>
@@ -34,6 +40,7 @@ const ProjectForm = ({}) => {
         title={isEdit ? 'UPDATE PROJECT' : 'NEW PROJECT'}
         show={showAddForm}
         closeWhenClickOverlay={false}
+        onClick={() => toggleAccountSelect(false)}
         onClose={() => {
           toggleAddForm(false);
         }}
@@ -61,10 +68,7 @@ const ProjectForm = ({}) => {
                 }
               />
             </div>
-            <div
-              className="project-inputs project-account-input"
-              onClick={() => toggleAccountSelect(!showAccountSelect)}
-            >
+            <div className="project-inputs project-account-input">
               <div className="project-label-container">
                 <label>Account</label>
                 <label className="asterisk" title="Required field">
@@ -73,6 +77,10 @@ const ProjectForm = ({}) => {
                 </label>
               </div>
               <TextField
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleAccountSelect(true);
+                }}
                 placeholder={'Contact person, Company,..'}
                 ref={accountInputRef}
                 borderRadius={3}
@@ -84,18 +92,48 @@ const ProjectForm = ({}) => {
                 iconRight={<ChevronDown color="#555" />}
               />
               <div className={`account-select-container ${showAccountSelect ? 'show' : 'hide'}`}>
+                <p className="account-search-result-title">
+                  Search results for {`'${accountSearchKeyword}'`} - total: {accountDatas.total}
+                </p>
                 {accountDatas.data ? (
                   accountDatas.data?.map((item) => {
                     return (
                       <>
                         <div
                           className="account-select-item"
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.stopPropagation();
                             setProjectCreating({
                               ...projectCreating,
                               account_id: item.id,
                             });
                             setAccountSearchKeyword(`${item.contact_person}`);
+                            toggleAccountSelect(false);
+                          }}
+                        >
+                          {`${item.contact_person} (${item.company}): ${item.email}`}
+                        </div>
+                      </>
+                    );
+                  })
+                ) : (
+                  <></>
+                )}
+                <div className="account-new-header">-- new account --</div>
+                {newAccountDatas.data ? (
+                  newAccountDatas.data?.map((item) => {
+                    return (
+                      <>
+                        <div
+                          className="account-select-item"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setProjectCreating({
+                              ...projectCreating,
+                              account_id: item.id,
+                            });
+                            setAccountSearchKeyword(`${item.contact_person}`);
+                            toggleAccountSelect(false);
                           }}
                         >
                           {`${item.contact_person} (${item.company}): ${item.email}`}
@@ -124,11 +162,11 @@ const ProjectForm = ({}) => {
                   })
                 }
               >
-                <option>Planning</option>
-                <option>Completed</option>
-                <option>InProgress</option>
-                <option>Cancelled</option>
-                <option>Overdue</option>
+                <option value={'Planning'}>Planning</option>
+                <option value={'Completed'}>Completed</option>
+                <option value={'InProgress'}>InProgress</option>
+                <option value={'Cancelled'}>Cancelled</option>
+                <option value={'Overdue'}>Overdue</option>
               </Select>
             </div>
             <div className="project-inputs project-date-picker">
@@ -139,12 +177,15 @@ const ProjectForm = ({}) => {
                 type={'date'}
                 borderRadius={3}
                 value={projectCreating.start_date}
-                onChange={(e) =>
+                onChange={(e) => {
                   setProjectCreating({
                     ...projectCreating,
                     start_date: e.target.value,
-                  })
-                }
+                  });
+                  setTimeout(() => {
+                    endateInputRef.current?.querySelector('input')?.showPicker?.();
+                  }, 100);
+                }}
               />
             </div>
             <div className="project-inputs project-date-picker">
@@ -152,6 +193,7 @@ const ProjectForm = ({}) => {
                 <label>End Date</label>
               </div>
               <TextField
+                ref={endateInputRef}
                 type={'date'}
                 borderRadius={3}
                 value={projectCreating.end_date}

@@ -38,6 +38,7 @@ const Select = ({
             fontSize: '14px',
             border: 'none',
             outline: 'none',
+            backgroundColor: 'transparent',
           }}
           type={type || 'text'}
           value={value}

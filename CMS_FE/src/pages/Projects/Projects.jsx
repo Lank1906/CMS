@@ -10,6 +10,23 @@ import ConfirmDialog from '../../components/Dialogs.jsx/ConfirmDialog';
 import { useNavigate } from 'react-router-dom';
 import { ProjectContext } from '../../context/ProjectContext';
 import ProjectForm from '../../components/ProjectForm/ProjectForm';
+import Select from '../../components/ui/Select';
+const getBackgroundColor = (track) => {
+  switch (track) {
+    case 'Planning':
+      return 'rgb(221, 206, 92)';
+    case 'Completed':
+      return 'rgb(141, 210, 143)';
+    case 'InProgress':
+      return 'rgb(129, 171, 205)';
+    case 'Cancelled':
+      return 'rgb(240, 151, 116)';
+    case 'Overdue':
+      return 'rgb(139, 139, 139)';
+    default:
+      return 'white'; 
+  }
+};
 const Projects = () => {
   const nav = useNavigate();
   const {
@@ -109,7 +126,16 @@ const Projects = () => {
                       </a>
                     </td>
                     <td>{`${item.account.contact_person} (${item.account.company})`}</td>
-                    <td>{item.track}</td>
+                    <td>
+                      <div
+                        className="text-white rounded-2xl py-1 font-semibold"
+                        style={{
+                          backgroundColor: getBackgroundColor(item.track),
+                        }}
+                      >
+                        {item.track}
+                      </div>
+                    </td>
                     <td>
                       {item.start_date ? new Date(item.start_date).toLocaleDateString() : 'N/A'}
                     </td>
