@@ -11,10 +11,15 @@ const ContractStaff = sequelize.define(
     contract_id: { type: DataTypes.INTEGER, allowNull: false },
     user_id: { type: DataTypes.INTEGER, allowNull: false },
     contract_role_id: { type: DataTypes.INTEGER, allowNull: false },
+    is_active: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+    },
     created_at: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
     updated_at: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
   },
-  { tableName: 'ContractStaffs', timestamps: false },
+  { tableName: 'ContractStaffs', timestamps: false }
 );
 
 ContractStaff.belongsTo(Contract, { foreignKey: 'contract_id' });
