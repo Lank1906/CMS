@@ -11,6 +11,7 @@ const ResetPassword = () => {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (newPassword !== confirmPassword) {
       toast.error('Passwords do not match');
       return;
@@ -34,7 +35,9 @@ const ResetPassword = () => {
       toast.error(`Password contains forbidden sequence "${bad}".`);
       return;
     }
+
     setIsLoading(true);
+
     try {
       await axios.post(`${process.env.REACT_APP_BACKEND_URL}/reset-password`, {
         token,

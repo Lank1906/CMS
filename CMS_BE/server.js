@@ -1,5 +1,7 @@
 import dotenv from 'dotenv';
 import cors from 'cors';
+import accountRouter from './src/routers/Accounts.js';
+import contractRouter from './src/routers/Contracts.js';
 import express from 'express';
 import authRouters from './src/routers/authRoutes.js';
 dotenv.config();
@@ -16,6 +18,9 @@ app.use(
   })
 );
 app.use('/api', authRouters);
+app.use('/api/accounts', accountRouter);
+app.use('/api/contracts', contractRouter);
+
 app.listen(PORT, () => {
   process.stdout.write(`Server is running at http://localhost:${PORT}\n`);
 });
