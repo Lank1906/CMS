@@ -11,10 +11,15 @@ const ContractRole = sequelize.define(
       allowNull: false,
     },
     description: DataTypes.TEXT,
+    is_active: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+    },
     created_at: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
     updated_at: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
   },
-  { tableName: 'ContractRoles', timestamps: false },
+  { tableName: 'ContractRoles', timestamps: false }
 );
 
 export default ContractRole;
