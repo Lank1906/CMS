@@ -1,6 +1,3 @@
-import { Op } from 'sequelize';
-import Account from '../models/Accounts.js';
-import Project from '../models/Projects.js';
 import ProjectService from '../services/Projects.js';
 
 export const projectCreate = async (req, res) => {
@@ -35,8 +32,19 @@ export const getProjects = async (req, res) => {
 export const updateProject = async (req, res) => {
   try {
     const { id } = req.params;
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: 'Missing \'id\' parameter in request',
+      });
+    }
     const updateData = req.body;
-
+    if (!updateData) {
+      return res.status(400).json({
+        success: false,
+        message: 'Request body is invalid or missing',
+      });
+    }
     const project = await ProjectService.update(id, updateData);
     return res.status(201).json({
       message: 'Project updated successfully!',
@@ -52,7 +60,12 @@ export const updateProject = async (req, res) => {
 export const deleteProject = async (req, res) => {
   try {
     const { id } = req.params;
-
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: 'Missing \'id\' parameter in request',
+      });
+    }
     const message = await ProjectService.softRemove(id);
     return res.status(200).json({
       message: message,
@@ -67,6 +80,12 @@ export const deleteProject = async (req, res) => {
 export const getProjectById = async (req, res) => {
   try {
     const { id } = req.params;
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: 'Missing \'id\' parameter in request',
+      });
+    }
     const project = await ProjectService.getById(id);
     return res.status(201).json({ message: 'Project find successfully', data: project });
   } catch (err) {
@@ -80,8 +99,8 @@ export const getProjectById = async (req, res) => {
 export const searchProjects = async (req, res) => {
   try {
     const { keyword } = req.query;
-    const page = parseInt(req.body.page) || 1;
-    const limit = parseInt(req.body.limit) || 10;
+    const page = parseInt(req.body?.page) || 1;
+    const limit = parseInt(req.body?.limit) || 10;
     const results = await ProjectService.search(keyword, page, limit);
     return res.status(200).json(results);
   } catch (err) {

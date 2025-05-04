@@ -1,67 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Trash, Edit } from 'lucide-react';
 import InputCopy from '../../components/ui/InputCopy';
 import { useParams } from 'react-router-dom';
-import api from '../../services/api';
 import Button from '../../components/ui/Button';
 import PageInput from '../../components/ui/PageInput';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import dayjs from 'dayjs';
 import BreadCrumbs from '../../components/BreadCrumbs';
+import { ProjectContext } from '../../context/ProjectContext';
+import { dateFormater } from '../../services/HelpersService';
 
 const ProjectDetails = () => {
   const { id } = useParams();
-  const [project, setProject] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [projectDatas, setProjectDatas] = useState({ data: [], totalPages: 0 });
 
-  useEffect(() => {
-    const fetchProjectDetail = async () => {
-      if (!id) return;
-      setLoading(true);
-      try {
-        const response = await api.get(`/projects/${id}/?page=${page}&limit=${limit}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('cms_token') || ''}`,
-          },
-        });
-        const acc = response.data.data;
-        if (!acc) {
-          toast.error('Project not found!');
-        }
-
-        setProject(acc);
-        setProjectDatas({
-          data: acc?.projects || [],
-          totalPages: response.data.projectsPagination?.totalPages || 0,
-        });
-      } catch (error) {
-        const errorMessage = error?.message || 'Failed to fetch project details!';
-        toast.error(`Error: ${errorMessage}`);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProjectDetail();
-  }, [id, page, limit]);
+  const { fetchDataById, projectCreating, loading } = useContext(ProjectContext);
 
   useEffect(() => {
-    if (!loading && !project) {
+    if (!id) return;
+    fetchDataById(id);
+    setProjectDatas({ data: [], totalPages: 0 });
+  }, [id]);
+
+  useEffect(() => {
+    if (!loading && !projectCreating) {
       toast.error('Project not found!');
     } else if (loading) {
       toast.info('Loading data...');
     }
-  }, [loading, project]);
+  }, [loading, projectCreating]);
 
   if (loading) {
     return <div className="flex justify-center items-center h-screen text-lg">Loading data...</div>;
   }
 
-  if (!project) {
+  if (!projectCreating) {
     return (
       <div className="flex justify-center items-center h-screen text-lg text-red-500">
         Project not found!
@@ -85,10 +61,10 @@ const ProjectDetails = () => {
             <div className="flex w-full gap-3">
               <div className="flex-1 grid gap-2 text-sm">
                 {[
-                  { label: 'Project name', value: project?.name },
-                  { label: 'Track', value: project?.track },
-                  { label: 'Start date', value: project?.start_date },
-                  { label: 'Created Date', value: new Date(project?.created_at).toUTCString() },
+                  { label: 'Project name', value: projectCreating?.name },
+                  { label: 'Track', value: projectCreating?.track },
+                  { label: 'Start date', value: dateFormater(projectCreating?.start_date) },
+                  { label: 'Created Date', value: dateFormater(projectCreating?.created_at) },
                 ].map((item, i) => (
                   <div key={i} className="flex flex-col">
                     <label className="mb-1 text-gray-700 font-[550]">{item.label}</label>
@@ -98,10 +74,13 @@ const ProjectDetails = () => {
               </div>
               <div className="flex-1 grid gap-2 text-sm">
                 {[
-                  { label: 'Account Company', value: project?.account.company },
-                  { label: 'Account Contact Person', value: project?.account.contact_person },
-                  { label: 'End date', value: project?.start_date },
-                  { label: 'Last update', value: new Date(project?.updated_at).toUTCString() },
+                  { label: 'Account Company', value: projectCreating?.account?.company },
+                  {
+                    label: 'Account Contact Person',
+                    value: projectCreating?.account?.contact_person,
+                  },
+                  { label: 'End date', value: dateFormater(projectCreating?.start_date) },
+                  { label: 'Last update', value: dateFormater(projectCreating?.updated_at) },
                 ].map((item, i) => (
                   <div key={i} className="flex flex-col">
                     <label className="mb-1 text-gray-700 font-[550]">{item.label}</label>
@@ -113,7 +92,7 @@ const ProjectDetails = () => {
             <div key={9} className="flex flex-col">
               <label className="mb-1 text-sm text-gray-700 font-[550]">Description</label>
               <div className="bg-gray-200 text-sm flex items-center justify-between border border-gray-300 rounded-md overflow-hidden p-2">
-                {project.description}
+                {projectCreating?.description}
               </div>
             </div>
           </div>

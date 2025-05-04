@@ -10,6 +10,7 @@ const Select = ({
   onChange,
   ref,
   children,
+  name,
 }) => {
   return (
     <>
@@ -40,6 +41,7 @@ const Select = ({
             outline: 'none',
             backgroundColor: 'transparent',
           }}
+          name={name}
           type={type || 'text'}
           value={value}
           onChange={onChange}

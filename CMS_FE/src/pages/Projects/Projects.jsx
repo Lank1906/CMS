@@ -10,7 +10,6 @@ import ConfirmDialog from '../../components/Dialogs.jsx/ConfirmDialog';
 import { useNavigate } from 'react-router-dom';
 import { ProjectContext } from '../../context/ProjectContext';
 import ProjectForm from '../../components/ProjectForm/ProjectForm';
-import Select from '../../components/ui/Select';
 const getBackgroundColor = (track) => {
   switch (track) {
     case 'Planning':

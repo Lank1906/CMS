@@ -34,6 +34,26 @@ const ProjectForm = ({}) => {
   }, []);
   const endateInputRef = useRef();
 
+  const setValue = (e) => {
+    const { name, value } = e.target;
+    setProjectCreating({
+      ...projectCreating,
+      [name]: value,
+    });
+  };
+
+  const accountSelectItemClick = (e) => {
+    const { id } = e.target;
+    const contact = e.target.dataset.contact;
+
+    e.stopPropagation();
+    setProjectCreating({
+      ...projectCreating,
+      account_id: id,
+    });
+    setAccountSearchKeyword(`${contact}`);
+    toggleAccountSelect(false);
+  };
   return (
     <>
       <Overlays
@@ -56,16 +76,12 @@ const ProjectForm = ({}) => {
                 </label>
               </div>
               <TextField
+                name={'name'}
                 ref={nameInputRef}
                 borderRadius={3}
                 placeholder={'Project name'}
                 value={projectCreating.name}
-                onChange={(e) =>
-                  setProjectCreating({
-                    ...projectCreating,
-                    name: e.target.value,
-                  })
-                }
+                onChange={setValue}
               />
             </div>
             <div className="project-inputs project-account-input">
@@ -101,15 +117,9 @@ const ProjectForm = ({}) => {
                       <>
                         <div
                           className="account-select-item"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setProjectCreating({
-                              ...projectCreating,
-                              account_id: item.id,
-                            });
-                            setAccountSearchKeyword(`${item.contact_person}`);
-                            toggleAccountSelect(false);
-                          }}
+                          id={item.id}
+                          data-contact={item.contact_person}
+                          onClick={accountSelectItemClick}
                         >
                           {`${item.contact_person} (${item.company}): ${item.email}`}
                         </div>
@@ -126,15 +136,9 @@ const ProjectForm = ({}) => {
                       <>
                         <div
                           className="account-select-item"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setProjectCreating({
-                              ...projectCreating,
-                              account_id: item.id,
-                            });
-                            setAccountSearchKeyword(`${item.contact_person}`);
-                            toggleAccountSelect(false);
-                          }}
+                          id={item.id}
+                          data-contact={item.contact_person}
+                          onClick={accountSelectItemClick}
                         >
                           {`${item.contact_person} (${item.company}): ${item.email}`}
                         </div>
@@ -153,14 +157,10 @@ const ProjectForm = ({}) => {
                 <label>Project Track</label>
               </div>
               <Select
+                name={'track'}
                 borderRadius={3}
                 value={projectCreating.track}
-                onChange={(e) =>
-                  setProjectCreating({
-                    ...projectCreating,
-                    track: e.target.value,
-                  })
-                }
+                onChange={setValue}
               >
                 <option value={'Planning'}>Planning</option>
                 <option value={'Completed'}>Completed</option>
@@ -174,14 +174,12 @@ const ProjectForm = ({}) => {
                 <label>Start Date</label>
               </div>
               <TextField
+                name={'start_date'}
                 type={'date'}
                 borderRadius={3}
                 value={projectCreating.start_date}
                 onChange={(e) => {
-                  setProjectCreating({
-                    ...projectCreating,
-                    start_date: e.target.value,
-                  });
+                  setValue(e);
                   setTimeout(() => {
                     endateInputRef.current?.querySelector('input')?.showPicker?.();
                   }, 100);
@@ -193,16 +191,12 @@ const ProjectForm = ({}) => {
                 <label>End Date</label>
               </div>
               <TextField
+                name={'end_date'}
                 ref={endateInputRef}
                 type={'date'}
                 borderRadius={3}
                 value={projectCreating.end_date}
-                onChange={(e) =>
-                  setProjectCreating({
-                    ...projectCreating,
-                    end_date: e.target.value,
-                  })
-                }
+                onChange={setValue}
               />
             </div>
           </div>
@@ -213,16 +207,12 @@ const ProjectForm = ({}) => {
               </div>
 
               <TextField
+                name={'description'}
                 mutiline={true}
                 borderRadius={3}
                 placeholder={'Project description'}
                 value={projectCreating.description}
-                onChange={(e) =>
-                  setProjectCreating({
-                    ...projectCreating,
-                    description: e.target.value,
-                  })
-                }
+                onChange={setValue}
               />
               <label className="project-helper-description">
                 {Number(255 - projectCreating.description.length)} characters left

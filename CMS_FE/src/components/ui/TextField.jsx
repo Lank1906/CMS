@@ -11,6 +11,7 @@ const TextField = ({
   onChange,
   ref,
   mutiline = false,
+  name,
 }) => {
   return (
     <>
@@ -47,6 +48,7 @@ const TextField = ({
             placeholder={placeholder}
             value={value}
             onChange={onChange}
+            name={name}
           ></textarea>
         ) : (
           <input
@@ -57,6 +59,7 @@ const TextField = ({
               border: 'none',
               outline: 'none',
             }}
+            name={name}
             type={type || 'text'}
             placeholder={placeholder}
             value={value}

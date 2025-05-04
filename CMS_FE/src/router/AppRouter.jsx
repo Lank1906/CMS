@@ -40,7 +40,14 @@ const AppRouter = () => {
             </ProjectProvider>
           }
         />
-        <Route path="/home/projects/:id" element={<ProjectDetails />} />
+        <Route
+          path="/home/projects/:id"
+          element={
+            <ProjectProvider>
+              <ProjectDetails />
+            </ProjectProvider>
+          }
+        />
       </Route>
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
