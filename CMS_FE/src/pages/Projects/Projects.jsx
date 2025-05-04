@@ -24,7 +24,7 @@ const getBackgroundColor = (track) => {
     case 'Overdue':
       return 'rgb(139, 139, 139)';
     default:
-      return 'white'; 
+      return 'white';
   }
 };
 const Projects = () => {
@@ -128,7 +128,7 @@ const Projects = () => {
                     <td>{`${item.account.contact_person} (${item.account.company})`}</td>
                     <td>
                       <div
-                        className="text-white rounded-2xl py-1 font-semibold"
+                        className="text-white rounded-2xl py-0.5 font-semibold"
                         style={{
                           backgroundColor: getBackgroundColor(item.track),
                         }}
