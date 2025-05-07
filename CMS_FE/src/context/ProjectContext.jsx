@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { createContext, useRef, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { toast } from 'react-toastify';
 
 export const ProjectContext = createContext();
@@ -25,15 +25,10 @@ export const ProjectProvider = ({ children }) => {
 
   const [accountSearchKeyword, setAccountSearchKeyword] = useState('');
 
-  const nameInputRef = useRef();
-  const accountInputRef = useRef();
-
   const [projectCreating, setProjectCreating] = useState({
     name: '',
     account_id: '',
     description: '',
-    start_date: '',
-    end_date: '',
   });
 
   const fetchDataById = async (id) => {
@@ -135,18 +130,6 @@ export const ProjectProvider = ({ children }) => {
   };
   const projectCreateSubmit = (event) => {
     event.preventDefault();
-    const inputs = [nameInputRef, accountInputRef];
-    for (const input of inputs) {
-      const value = input.current.querySelector('input').value;
-      if (value.trim() === '') {
-        input.current.style.borderColor = 'red';
-        input.current.style.boxShadow = '0px 0px 10px rgba(255, 0, 0, 0.24)';
-        return;
-      } else {
-        input.current.style.borderColor = '';
-        input.current.style.boxShadow = 'none';
-      }
-    }
     if (isEdit) {
       delete projectCreating.created_at;
       delete projectCreating.id;
@@ -210,8 +193,6 @@ export const ProjectProvider = ({ children }) => {
         searchData,
         projectCreateSubmit,
         fetchData,
-        nameInputRef,
-        accountInputRef,
         fetchDataById,
         projectCreating,
         setProjectCreating,

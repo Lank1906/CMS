@@ -10,22 +10,8 @@ import ConfirmDialog from '../../components/Dialogs.jsx/ConfirmDialog';
 import { useNavigate } from 'react-router-dom';
 import { ProjectContext } from '../../context/ProjectContext';
 import ProjectForm from '../../components/ProjectForm/ProjectForm';
-const getBackgroundColor = (track) => {
-  switch (track) {
-    case 'Planning':
-      return 'rgb(221, 206, 92)';
-    case 'Completed':
-      return 'rgb(141, 210, 143)';
-    case 'InProgress':
-      return 'rgb(129, 171, 205)';
-    case 'Cancelled':
-      return 'rgb(240, 151, 116)';
-    case 'Overdue':
-      return 'rgb(139, 139, 139)';
-    default:
-      return 'white';
-  }
-};
+import { getBackgroundColor } from '../../services/HelpersService';
+
 const Projects = () => {
   const nav = useNavigate();
   const {
@@ -45,6 +31,8 @@ const Projects = () => {
     searchData,
     fetchData,
     fetchDataById,
+    setProjectCreating,
+    setAccountSearchKeyword,
   } = useContext(ProjectContext);
 
   useEffect(() => {
@@ -74,6 +62,15 @@ const Projects = () => {
           <Button
             value={'ADD'}
             onClick={() => {
+              setProjectCreating({
+                name: '',
+                account_id: '',
+                description: '',
+                start_date: null,
+                end_date: null,
+                track: 'Planning',
+              });
+              setAccountSearchKeyword('');
               setEdit(false);
               toggleAddForm(true);
             }}
@@ -120,7 +117,7 @@ const Projects = () => {
                           nav(`/home/Projects/${item.id}`);
                         }}
                       >
-                        {item.name}
+                        {`${item.name} (${item.id})`}
                         <ArrowUpRightFromSquare size={15} />
                       </a>
                     </td>
@@ -140,7 +137,10 @@ const Projects = () => {
                     </td>
                     <td>{item.end_date ? new Date(item.end_date).toLocaleDateString() : 'N/A'}</td>
                     <td>{new Date(item.created_at).toLocaleDateString()}</td>
-                    <td className="description-cell">
+                    <td
+                      className="description-cell"
+                      title={item.description?.length > 25 ? item.description : ''}
+                    >
                       <div>{item.description}</div>
                     </td>
 

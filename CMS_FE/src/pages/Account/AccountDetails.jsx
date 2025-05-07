@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Trash, Edit } from 'lucide-react';
+import { Trash, Edit, ArrowUpRightFromSquare } from 'lucide-react';
 import InputCopy from '../../components/ui/InputCopy';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../services/api';
 import Button from '../../components/ui/Button';
 import PageInput from '../../components/ui/PageInput';
@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import dayjs from 'dayjs';
 import BreadCrumbs from '../../components/BreadCrumbs';
+import { getBackgroundColor } from '../../services/HelpersService';
 
 const AccountDetails = () => {
   const { id } = useParams();
@@ -17,7 +18,7 @@ const AccountDetails = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [accountDatas, setAccountDatas] = useState({ data: [], totalPages: 0 });
-
+  const nav = useNavigate();
   useEffect(() => {
     const fetchAccountDetail = async () => {
       if (!id) return;
@@ -124,10 +125,26 @@ const AccountDetails = () => {
                         key={a.id}
                         className="table-row even:bg-[#fcfcfc] odd:bg-white hover:bg-[#f1f1f1]"
                       >
-                        <td className="p-2 border border-gray-300">
-                          <div className="line-clamp-3">{a.name}</div>
+                        <td className="border border-gray-300 project-detail-link">
+                          <a
+                            onClick={() => {
+                              nav(`/home/Projects/${a.id}`);
+                            }}
+                          >
+                            {`${a.name} (${a.id})`}
+                            <ArrowUpRightFromSquare size={15} />
+                          </a>
                         </td>
-                        <td className="p-2 border border-gray-300 text-center">{a.track}</td>
+                        <td className="p-2 border border-gray-300 text-center">
+                          <div
+                            className="text-white rounded-2xl py-0.5 font-semibold"
+                            style={{
+                              backgroundColor: getBackgroundColor(a.track),
+                            }}
+                          >
+                            {a.track}
+                          </div>
+                        </td>
                         <td className="p-2 border border-gray-300 text-center">
                           {formatDate(a.start_date)}
                         </td>

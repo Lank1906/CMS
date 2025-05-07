@@ -12,6 +12,7 @@ const TextField = ({
   ref,
   mutiline = false,
   name,
+  error = false,
 }) => {
   return (
     <>
@@ -21,7 +22,8 @@ const TextField = ({
         style={{
           width: width || '100%',
           backgroundColor: backgroundColor,
-          border: '1px solid rgb(196, 200, 203)',
+          border: `1px solid ${error ? 'rgb(228, 0, 0)' : 'rgb(196, 200, 203)'}`,
+          boxShadow: error ? '0px 0px 5px rgba(228, 0, 0, 0.39)' : 'none',
           outline: 'none',
           overflow: 'hidden',
           borderRadius: borderRadius,

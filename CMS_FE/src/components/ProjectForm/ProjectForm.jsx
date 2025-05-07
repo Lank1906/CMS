@@ -14,8 +14,6 @@ const ProjectForm = ({}) => {
     loading,
     isEdit,
     projectCreateSubmit,
-    nameInputRef,
-    accountInputRef,
     projectCreating,
     setProjectCreating,
     accountDatas,
@@ -77,9 +75,9 @@ const ProjectForm = ({}) => {
               </div>
               <TextField
                 name={'name'}
-                ref={nameInputRef}
                 borderRadius={3}
                 placeholder={'Project name'}
+                error={!projectCreating?.name}
                 value={projectCreating.name}
                 onChange={setValue}
               />
@@ -98,9 +96,9 @@ const ProjectForm = ({}) => {
                   toggleAccountSelect(true);
                 }}
                 placeholder={'Contact person, Company,..'}
-                ref={accountInputRef}
                 borderRadius={3}
                 value={accountSearchKeyword}
+                error={!projectCreating?.account_id}
                 onChange={(e) => {
                   toggleAccountSelect(true);
                   setAccountSearchKeyword(e.target.value);
@@ -222,7 +220,7 @@ const ProjectForm = ({}) => {
           <div className="form-control-container">
             <Button
               type={'submit'}
-              disable={loading}
+              disable={loading || !projectCreating?.name || !projectCreating?.account_id}
               value={isEdit ? 'Update' : 'Add'}
               backgroundColor="var(--color-primary)"
             />
