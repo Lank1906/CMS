@@ -7,7 +7,7 @@ import Button from '../ui/Button';
 import './projectForm.css';
 import { ChevronDown } from 'lucide-react';
 
-const ProjectForm = ({}) => {
+const ProjectForm = ({ forDetail = false }) => {
   const {
     showAddForm,
     toggleAddForm,
@@ -82,7 +82,10 @@ const ProjectForm = ({}) => {
                 onChange={setValue}
               />
             </div>
-            <div className="project-inputs project-account-input">
+            <div
+              className="project-inputs project-account-input"
+              style={{ display: forDetail ? 'none' : '' }}
+            >
               <div className="project-label-container">
                 <label>Account</label>
                 <label className="asterisk" title="Required field">

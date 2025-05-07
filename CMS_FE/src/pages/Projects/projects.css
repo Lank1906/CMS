@@ -127,3 +127,22 @@
   font-size: 13px;
   color: #515151;
 }
+.filter-radio {
+  width: 70px;
+  height: 35px;
+  border: 1px solid #ccc;
+  border-radius: 100px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 550;
+  color: #515151;
+}
+
+.filter-radio.checked {
+  background-color: var(--color-primary);
+  color: white;
+  border: 1px solid #424242;
+}

@@ -1,9 +1,9 @@
-import { ArrowUpRightFromSquare, Edit, Plus, Search, Trash } from 'lucide-react';
+import { ArrowUpRightFromSquare, Edit, Plus, Search, Trash, Trash2 } from 'lucide-react';
 import BreadCrumbs from '../../components/BreadCrumbs';
 import Button from '../../components/ui/Button';
 import './projects.css';
 import TextField from '../../components/ui/TextField';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import PageInput from '../../components/ui/PageInput';
 import 'react-phone-input-2/lib/style.css';
 import ConfirmDialog from '../../components/Dialogs.jsx/ConfirmDialog';
@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { ProjectContext } from '../../context/ProjectContext';
 import ProjectForm from '../../components/ProjectForm/ProjectForm';
 import { getBackgroundColor } from '../../services/HelpersService';
+import Select from '../../components/ui/Select';
 
 const Projects = () => {
   const nav = useNavigate();
@@ -42,7 +43,7 @@ const Projects = () => {
   useEffect(() => {
     searchData();
   }, [keyword]);
-
+  const [sortFilter, setSortFilter] = useState('newest');
   return (
     <>
       <ProjectForm show={() => toggleAddForm(true)} />
@@ -81,17 +82,66 @@ const Projects = () => {
               </>
             }
           />
-          <TextField
-            type={'search'}
-            placeholder={'Search by Name...'}
-            width={300}
-            borderRadius={50}
-            value={keyword}
-            onChange={(e) => {
-              setKeyword(e.target.value);
-            }}
-            iconLeft={<Search size={20} color="#666" />}
-          />
+          <div className="flex gap-2 items-center">
+            <label className="text-sm">Show by</label>
+            <div className="project-list-controls flex gap-2 items-center">
+              <Select borderRadius={50} backgroundColor={'var(--color-primary)'} color={'white'}>
+                <option className="text-black" value={'Default'}>
+                  Default
+                </option>
+                <option className="text-black" value={'Planning'}>
+                  Planning
+                </option>
+                <option className="text-black" value={'Completed'}>
+                  Completed
+                </option>
+                <option className="text-black" value={'InProgress'}>
+                  InProgress
+                </option>
+                <option className="text-black" value={'Cancelled'}>
+                  Cancelled
+                </option>
+                <option className="text-black" value={'Overdue'}>
+                  Overdue
+                </option>
+              </Select>
+              <div className="filter-bar flex gap-1">
+                <div
+                  className={`filter-radio latest-container ${sortFilter === 'newest' ? 'checked' : ''}`}
+                  onClick={() => {
+                    setSortFilter('newest');
+                  }}
+                >
+                  Latest
+                </div>
+                <div
+                  className={`filter-radio oldest-container ${sortFilter === 'oldest' ? 'checked' : ''}`}
+                  onClick={() => {
+                    setSortFilter('oldest');
+                  }}
+                >
+                  Oldest
+                </div>
+              </div>
+            </div>
+            <TextField
+              type={'search'}
+              placeholder={'Search by Name...'}
+              width={300}
+              borderRadius={50}
+              value={keyword}
+              onChange={(e) => {
+                setKeyword(e.target.value);
+              }}
+              iconLeft={<Search size={20} color="#666" />}
+            />
+            <div className="notification-container">
+              <div className="notification-icon">
+                <Trash2 color="rgb(88, 88, 88)" />
+              </div>
+              <div className="notification-amount">1</div>
+            </div>
+          </div>
         </div>
         <div className="project-data-container">
           <table>

@@ -31,7 +31,14 @@ const AppRouter = () => {
             </AccountProvider>
           }
         />
-        <Route path="/home/accounts/:id" element={<AccountDetails />} />
+        <Route
+          path="/home/accounts/:id"
+          element={
+            <ProjectProvider>
+              <AccountDetails />
+            </ProjectProvider>
+          }
+        />
         <Route
           path="/home/projects"
           element={
