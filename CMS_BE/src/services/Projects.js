@@ -17,8 +17,8 @@ class ProjectService {
     } = body;
 
     const missingFields = [];
-    if (!name) missingFields.push('name');
-    if (!account_id) missingFields.push('account_id');
+    if (!name) missingFields.push('Name');
+    if (!account_id) missingFields.push('Account');
 
     if (missingFields.length > 0) {
       throw new Error(`Missing required field(s): ${missingFields.join(', ')}`);
