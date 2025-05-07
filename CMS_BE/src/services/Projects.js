@@ -36,14 +36,14 @@ class ProjectService {
     return project;
   }
 
-  static async get(page, limit) {
+  static async get(page, limit, isActive) {
     const offset = (page - 1) * limit;
     const { rows, count } = await Project.findAndCountAll({
       limit: parseInt(limit),
       offset: parseInt(offset),
       order: [['created_at', 'DESC']],
       where: {
-        is_active: true,
+        is_active: isActive == 1 ? true : false,
       },
       include: [
         {

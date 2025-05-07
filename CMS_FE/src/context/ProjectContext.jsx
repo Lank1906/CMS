@@ -22,6 +22,7 @@ export const ProjectProvider = ({ children }) => {
   const [isEdit, setEdit] = useState(false);
   const [accountDatas, setAccountDatas] = useState([]);
   const [newAccountDatas, setNewAccountDatas] = useState([]);
+  const [showIsActiveItems, setShowIsActiveItems] = useState(1);
 
   const [accountSearchKeyword, setAccountSearchKeyword] = useState('');
 
@@ -103,7 +104,10 @@ export const ProjectProvider = ({ children }) => {
   const fetchData = async () => {
     setLoading(true);
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/projects?page=${page}&limit=${limit}`, headerAPI)
+      .get(
+        `${process.env.REACT_APP_BACKEND_URL}/projects?page=${page}&limit=${limit}&is_active=${showIsActiveItems}`,
+        headerAPI
+      )
       .then((res) => {
         setProjectDatas(res.data);
         setLoading(false);
@@ -204,6 +208,8 @@ export const ProjectProvider = ({ children }) => {
         newAccountDatas,
         setNewAccountDatas,
         fetchNewAccountData,
+        showIsActiveItems,
+        setShowIsActiveItems,
       }}
     >
       {children}

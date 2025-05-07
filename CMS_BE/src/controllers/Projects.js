@@ -18,8 +18,8 @@ export const projectCreate = async (req, res) => {
 
 export const getProjects = async (req, res) => {
   try {
-    const { page = 1, limit = 10 } = req.query;
-    const projects = await ProjectService.get(page, limit);
+    const { page = 1, limit = 10, is_active = 1 } = req.query;
+    const projects = await ProjectService.get(page, limit, is_active);
     res.status(201).json(projects);
   } catch (err) {
     res.status(400).json({

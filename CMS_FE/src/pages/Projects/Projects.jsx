@@ -1,4 +1,14 @@
-import { ArrowUpRightFromSquare, Edit, Plus, Search, Trash, Trash2 } from 'lucide-react';
+import {
+  ArrowUpRightFromSquare,
+  Edit,
+  Plus,
+  RotateCcw,
+  Search,
+  SquareArrowUpLeft,
+  Trash,
+  Trash2,
+  XCircle,
+} from 'lucide-react';
 import BreadCrumbs from '../../components/BreadCrumbs';
 import Button from '../../components/ui/Button';
 import './projects.css';
@@ -34,11 +44,13 @@ const Projects = () => {
     fetchDataById,
     setProjectCreating,
     setAccountSearchKeyword,
+    setShowIsActiveItems,
+    showIsActiveItems,
   } = useContext(ProjectContext);
 
   useEffect(() => {
     fetchData();
-  }, [page, limit]);
+  }, [page, limit, showIsActiveItems]);
 
   useEffect(() => {
     searchData();
@@ -135,9 +147,18 @@ const Projects = () => {
               }}
               iconLeft={<Search size={20} color="#666" />}
             />
-            <div className="notification-container">
+            <div
+              className="notification-container"
+              onClick={() => {
+                setShowIsActiveItems(showIsActiveItems == 1 ? 0 : 1);
+              }}
+            >
               <div className="notification-icon">
-                <Trash2 color="rgb(88, 88, 88)" />
+                {showIsActiveItems == 1 ? (
+                  <Trash2 color="rgb(88, 88, 88)" />
+                ) : (
+                  <SquareArrowUpLeft color="rgb(57, 56, 64)" />
+                )}
               </div>
               <div className="notification-amount">1</div>
             </div>
@@ -160,7 +181,11 @@ const Projects = () => {
             <tbody>
               {projectDatas.data ? (
                 projectDatas.data.map((item) => (
-                  <tr className="table-row" key={item.id}>
+                  <tr
+                    className="table-row"
+                    key={item.id}
+                    style={{ color: showIsActiveItems ? 'black' : 'rgb(153, 0, 0)' }}
+                  >
                     <td className="project-detail-link">
                       <a
                         onClick={() => {
@@ -191,7 +216,7 @@ const Projects = () => {
                       className="description-cell"
                       title={item.description?.length > 25 ? item.description : ''}
                     >
-                      <div>{item.description}</div>
+                      <div>{item.description || 'N/A'}</div>
                     </td>
 
                     <td className="action-cell">
@@ -203,7 +228,11 @@ const Projects = () => {
                           toggleAddForm(true);
                         }}
                       >
-                        <Edit className="edit-btn" color="var(--color-primary)" />
+                        {showIsActiveItems ? (
+                          <Edit className="edit-btn" color="var(--color-primary)" />
+                        ) : (
+                          <RotateCcw className="edit-btn" color="var(--color-primary)" />
+                        )}
                       </button>
                       <button
                         onClick={() => {
@@ -211,7 +240,11 @@ const Projects = () => {
                           setShowDialog(true);
                         }}
                       >
-                        <Trash className="delete-btn" color="#C73535" />
+                        {showIsActiveItems ? (
+                          <Trash className="delete-btn" color="#C73535" />
+                        ) : (
+                          <XCircle className="delete-btn" color="#C73535" />
+                        )}
                       </button>
                     </td>
                   </tr>

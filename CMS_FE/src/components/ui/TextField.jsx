@@ -22,8 +22,8 @@ const TextField = ({
         style={{
           width: width || '100%',
           backgroundColor: backgroundColor,
-          border: `1px solid ${error ? 'rgb(228, 0, 0)' : 'rgb(196, 200, 203)'}`,
-          boxShadow: error ? '0px 0px 5px rgba(228, 0, 0, 0.39)' : 'none',
+          border: 'var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important',
+          boxShadow: 'none',
           outline: 'none',
           overflow: 'hidden',
           borderRadius: borderRadius,
@@ -66,6 +66,15 @@ const TextField = ({
             placeholder={placeholder}
             value={value}
             onChange={onChange}
+            onBlur={(e) => {
+              if (error) {
+                e.target.parentElement.style.border = ' 1px solid rgb(228, 0, 0) ';
+                e.target.parentElement.style.boxShadow = ' 0px 0px 5px rgba(228, 0, 0, 0.39)';
+              } else {
+                e.target.parentElement.style.border = ' 1px solid rgb(196, 200, 203) ';
+                e.target.parentElement.style.boxShadow = ' none';
+              }
+            }}
           />
         )}
 
