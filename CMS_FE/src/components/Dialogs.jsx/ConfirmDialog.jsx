@@ -13,9 +13,9 @@ const ConfirmDialog = ({
   title = 'Confirm',
   message = 'Are you sure you want to perform this action?',
 }) => {
-  const [delay, setDelay] = useState(delayConfirm || 5);
+  const [delay, setDelay] = useState(delayConfirm || 3);
   useEffect(() => {
-    setDelay(delayConfirm || 5);
+    setDelay(delayConfirm || 3);
     const interval = setInterval(() => {
       setDelay((prev) => {
         if (prev === 0) return 0;

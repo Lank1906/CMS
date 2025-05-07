@@ -14,6 +14,8 @@ import AccountDetails from '../pages/Account/AccountDetails';
 import RegisterSuccessPage from '../pages/RegisterPage/RegisterSuccessPage';
 import { AccountProvider } from '../context/AccountContext';
 import ForgotPasswordPage from '../pages/LoginPage/ForgotPasswordSuccessPage';
+import { ProjectProvider } from '../context/ProjectContext';
+import ProjectDetails from '../pages/Projects/ProjectDetail';
 const AppRouter = () => {
   return (
     <Routes>
@@ -29,8 +31,30 @@ const AppRouter = () => {
             </AccountProvider>
           }
         />
-        <Route path="/home/accounts/:id" element={<AccountDetails />} />
-        <Route path="/home/projects" element={<Projects />} />
+        <Route
+          path="/home/accounts/:id"
+          element={
+            <ProjectProvider>
+              <AccountDetails />
+            </ProjectProvider>
+          }
+        />
+        <Route
+          path="/home/projects"
+          element={
+            <ProjectProvider>
+              <Projects />
+            </ProjectProvider>
+          }
+        />
+        <Route
+          path="/home/projects/:id"
+          element={
+            <ProjectProvider>
+              <ProjectDetails />
+            </ProjectProvider>
+          }
+        />
       </Route>
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
