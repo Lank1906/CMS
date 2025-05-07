@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { createContext, useRef, useState, useContext } from 'react';
+import React, { createContext, useState } from 'react';
 import { toast } from 'react-toastify';
 
 export const ContractContext = createContext();
@@ -8,9 +8,6 @@ const headerAPI = {
   headers: {
     Authorization: `Bearer ${localStorage.getItem('cms_token') || ''}`,
   },
-};
-export const useContractContext = () => {
-  return useContext(ContractContext);
 };
 export const ContractProvider = ({ children }) => {
   const [page, setPage] = useState(1);
@@ -22,15 +19,6 @@ export const ContractProvider = ({ children }) => {
   const [showDialog, setShowDialog] = useState(false);
   const [selectContractId, setSelectContractId] = useState();
   const [isEdit, setEdit] = useState(false);
-  const [setProjectDatas] = useState([]);
-  const titleInputRef = useRef();
-  const signedDateInputRef = useRef();
-  const projectIdInputRef = useRef();
-  const totalAmountInputRef = useRef();
-  const workingDaysInputRef = useRef();
-  const startDateInputRef = useRef();
-  const endDateInputRef = useRef();
-  const [accountSearchKeyword, setAccountSearchKeyword] = useState('');
   const [projectList, setProjectList] = useState([]);
   const [contractCreating, setContractCreating] = useState({
     title: '',
@@ -49,39 +37,6 @@ export const ContractProvider = ({ children }) => {
     start_date: '',
     end_date: '',
   });
-  const fetchProjects = async () => {
-    setLoading(true);
-    try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/projects?search=${accountSearchKeyword}`,
-        headerAPI
-      );
-      setProjectList(res.data.data || []);
-    } catch (err) {
-      toast.error(err.response?.data?.message || 'Error fetching project data');
-    } finally {
-      setLoading(false);
-    }
-  };
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/contracts?page=${page}&limit=${limit}`,
-        headerAPI
-      );
-      setContractDatas({
-        data: res.data.data || [],
-        totalPages: res.data.totalPages || 1,
-      });
-    } catch (err) {
-      toast.error(err.response?.data?.message || 'Error fetching contracts', {
-        position: 'bottom-right',
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
   const fetchProjectDataById = async (id) => {
     setLoading(true);
     try {
@@ -114,7 +69,7 @@ export const ContractProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/contracts?projectId=${projectId}&page=${page}&limit=${limit}`,
+        `${process.env.REACT_APP_BACKEND_URL}/contracts/project/${projectId}&page=${page}&limit=${limit}`,
         headerAPI
       );
       setContractDatas({
@@ -129,23 +84,6 @@ export const ContractProvider = ({ children }) => {
       setLoading(false);
     }
   };
-  const fetchAllProjects = async () => {
-    setLoading(true);
-    try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/projects?page=${page}&limit=${limit}`,
-        headerAPI
-      );
-      setProjectDatas({
-        data: res.data.data || [],
-        totalPages: res.data.totalPages || 1,
-      });
-    } catch (err) {
-      toast.error(err.response?.data?.message || 'Error fetching all projects');
-    } finally {
-      setLoading(false);
-    }
-  };
   const addContract = async (contractData) => {
     setLoading(true);
     try {
@@ -153,10 +91,9 @@ export const ContractProvider = ({ children }) => {
       delete contractData.is_active;
       delete contractData.created_at;
       delete contractData.updated_at;
-
       await axios.post(`${process.env.REACT_APP_BACKEND_URL}/contracts`, contractData, headerAPI);
       toast.success('Contract added successfully');
-      fetchData();
+      fetchContractsByProject(contractData.project_id);
       toggleAddForm(false);
     } catch (err) {
       toast.error(err.response?.data?.message || 'Error adding contract', {
@@ -185,7 +122,7 @@ export const ContractProvider = ({ children }) => {
       .then(() => {
         contractData.id = contractId;
         toast.success('Contract updated successfully');
-        fetchData();
+        fetchContractsByProject(contractData.project_id);
         return toggleAddForm(false);
       })
       .catch((err) => {
@@ -201,8 +138,9 @@ export const ContractProvider = ({ children }) => {
         `${process.env.REACT_APP_BACKEND_URL}/contracts/${selectContractId}`,
         headerAPI
       );
+
       toast.success('Contract deleted successfully');
-      fetchData();
+      fetchContractsByProject(contractCreating.project_id);
     } catch (err) {
       toast.error(err.response?.data?.message || 'Error deleting contract', {
         position: 'bottom-right',
@@ -211,26 +149,6 @@ export const ContractProvider = ({ children }) => {
       setLoading(false);
     }
   };
-  const searchContracts = async () => {
-    setLoading(true);
-    try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/contracts/search?keyword=${keyword}&page=${page}&limit=${limit}`,
-        headerAPI
-      );
-      setContractDatas({
-        data: res.data.data || [],
-        totalPages: res.data.totalPages || 1,
-      });
-    } catch (err) {
-      toast.error(err.response?.data?.message || 'Error searching contracts', {
-        position: 'bottom-right',
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <ContractContext.Provider
       value={{
@@ -251,28 +169,15 @@ export const ContractProvider = ({ children }) => {
         setSelectContractId,
         isEdit,
         setEdit,
-        fetchData,
         fetchProjectDataById,
         fetchContractsByProject,
         addContract,
         updateContract,
         deleteContract,
-        searchContracts,
         contractCreating,
         setContractCreating,
-        titleInputRef,
-        projectIdInputRef,
-        signedDateInputRef,
-        totalAmountInputRef,
-        workingDaysInputRef,
-        startDateInputRef,
-        endDateInputRef,
-        fetchAllProjects,
-        accountSearchKeyword,
-        setAccountSearchKeyword,
         projectList,
         setProjectList,
-        fetchProjects,
         fetchContractDataById,
         setProjectDetail,
         projectDetail,
