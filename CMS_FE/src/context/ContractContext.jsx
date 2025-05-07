@@ -183,6 +183,7 @@ export const ContractProvider = ({ children }) => {
         headerAPI
       )
       .then(() => {
+        contractData.id = contractId;
         toast.success('Contract updated successfully');
         fetchData();
         return toggleAddForm(false);

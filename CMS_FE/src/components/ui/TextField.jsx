@@ -22,7 +22,7 @@ const TextField = ({
           height: '35px',
           backgroundColor: backgroundColor,
           border: '1px solid rgb(196, 200, 203)',
-          boxShadow: error ? '0px 0px 5px rgba(228, 0, 0, 0.39)' : 'none',
+          boxShadow: 'none',
           outline: 'none',
           overflow: 'hidden',
           borderRadius: borderRadius,
@@ -42,7 +42,7 @@ const TextField = ({
             outline: 'none',
           }}
           onBlur={(e) => {
-            if (!error) {
+            if (error) {
               e.target.parentElement.style.border = ' 1px solid rgb(228, 0, 0) ';
               e.target.parentElement.style.boxShadow = ' 0px 0px 5px rgba(228, 0, 0, 0.39)';
             } else {

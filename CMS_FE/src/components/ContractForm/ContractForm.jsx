@@ -2,13 +2,12 @@ import { ContractContext } from '../../context/ContractContext';
 import TextField from '../ui/TextField';
 import Select from '../ui/Select';
 import Overlays from '../Overlays/Overlays';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import Button from '../ui/Button';
 import './contractForm.css';
 import { toast } from 'react-toastify';
 const isDateAfter = (after, before) =>
   after && before && new Date(after).setHours(0, 0, 0, 0) >= new Date(before).setHours(0, 0, 0, 0);
-
 const ContractForm = ({ contractData }) => {
   const {
     showAddForm,
@@ -31,7 +30,7 @@ const ContractForm = ({ contractData }) => {
   useEffect(() => {
     if (!isEdit) {
       setContractCreating({
-        title: null,
+        title: '',
         project_id: '',
         status: 'Draft',
         signed_date: '',
@@ -42,7 +41,6 @@ const ContractForm = ({ contractData }) => {
       });
     }
   }, [isEdit]);
-  const [setErrors] = useState({});
   useEffect(() => {
     if (accountSearchKeyword.trim() !== '') {
       handleSearchProjects();
@@ -65,27 +63,22 @@ const ContractForm = ({ contractData }) => {
     e.preventDefault();
     if (!contractCreating.title || !contractCreating.title.trim()) {
       toast.error('Title is required');
-      setErrors({ title: 'Title is required' });
       return;
     }
     if (!contractCreating.project_id || isNaN(contractCreating.project_id)) {
       toast.error('Invalid project ID');
-      setErrors({ project_id: 'Invalid project ID' });
       return;
     }
     if (!contractCreating.signed_date) {
       toast.error('Signed Date is required');
-      setErrors({ signed_date: 'Signed Date is required' });
       return;
     }
     if (!contractCreating.start_date) {
       toast.error('Start Date is required');
-      setErrors({ start_date: 'Start Date is required' });
       return;
     }
     if (!contractCreating.end_date) {
       toast.error('End Date is required');
-      setErrors({ end_date: 'End Date is required' });
       return;
     }
     if (
@@ -94,20 +87,16 @@ const ContractForm = ({ contractData }) => {
       new Date(contractCreating.start_date) > new Date(contractCreating.end_date)
     ) {
       toast.error('Start Date must be before End Date');
-      setErrors({ date: 'Start Date must be before End Date' });
       return;
     }
     if (contractCreating.working_days === '' || isNaN(contractCreating.working_days)) {
       toast.error('Working Days must be a number');
-      setErrors({ working_days: 'Working Days must be a number' });
       return;
     }
     if (contractCreating.total_amount === '' || isNaN(contractCreating.total_amount)) {
       toast.error('Total Amount must be a number');
-      setErrors({ total_amount: 'Total Amount must be a number' });
       return;
     }
-    setErrors({});
     if (isEdit) {
       updateContract(contractCreating.id, contractCreating);
     } else {
@@ -138,7 +127,7 @@ const ContractForm = ({ contractData }) => {
                 name={'title'}
                 borderRadius={3}
                 placeholder={'Contract title'}
-                error={contractCreating.title}
+                error={!contractCreating.title}
                 value={contractCreating.title}
                 onChange={(e) =>
                   setContractCreating({ ...contractCreating, title: e.target.value })
@@ -152,6 +141,10 @@ const ContractForm = ({ contractData }) => {
             <div className="project-inputs project-track-select">
               <div className="project-label-container">
                 <label>Status</label>
+                <label className="asterisk" title="Required field">
+                  {' '}
+                  *
+                </label>
               </div>
               <Select
                 className=" select-status"
@@ -170,11 +163,15 @@ const ContractForm = ({ contractData }) => {
             <div className="project-inputs project-date-picker">
               <div className="project-label-container">
                 <label>Signed Date</label>
+                <label className="asterisk" title="Required field">
+                  {' '}
+                  *
+                </label>
               </div>
               <TextField
                 name={'signed_date'}
                 type={'date'}
-                error={isDateAfter(contractCreating.signed_date, new Date().setHours(0, 0, 0, 0))}
+                error={!isDateAfter(contractCreating.signed_date, new Date().setHours(0, 0, 0, 0))}
                 borderRadius={3}
                 value={contractCreating.signed_date}
                 onChange={(e) =>
@@ -185,11 +182,15 @@ const ContractForm = ({ contractData }) => {
             <div className="project-inputs project-date-picker">
               <div className="project-label-container">
                 <label>Start Date</label>
+                <label className="asterisk" title="Required field">
+                  {' '}
+                  *
+                </label>
               </div>
               <TextField
                 name={'start_date'}
                 type={'date'}
-                error={isDateAfter(contractCreating.start_date, contractCreating.signed_date)}
+                error={!isDateAfter(contractCreating.start_date, contractCreating.signed_date)}
                 borderRadius={3}
                 value={contractCreating.start_date}
                 onChange={(e) =>
@@ -200,11 +201,15 @@ const ContractForm = ({ contractData }) => {
             <div className="project-inputs project-date-picker">
               <div className="project-label-container">
                 <label>End Date</label>
+                <label className="asterisk" title="Required field">
+                  {' '}
+                  *
+                </label>
               </div>
               <TextField
                 name={'end_date'}
                 type={'date'}
-                error={isDateAfter(contractCreating.end_date, contractCreating.start_date)}
+                error={!isDateAfter(contractCreating.end_date, contractCreating.start_date)}
                 borderRadius={3}
                 value={contractCreating.end_date}
                 onChange={(e) =>
@@ -218,12 +223,16 @@ const ContractForm = ({ contractData }) => {
             <div className="project-inputs project-description-input">
               <div className="project-label-container">
                 <label>Working Days</label>
+                <label className="asterisk" title="Required field">
+                  {' '}
+                  *
+                </label>
               </div>
               <TextField
                 name={'working_days'}
                 type={'number'}
                 borderRadius={3}
-                error={contractCreating.working_days > 0}
+                error={contractCreating.working_days <= 0}
                 value={contractCreating.working_days}
                 onChange={(e) =>
                   setContractCreating({ ...contractCreating, working_days: e.target.value })
@@ -233,11 +242,15 @@ const ContractForm = ({ contractData }) => {
             <div className="project-inputs project-description-input">
               <div className="project-label-container">
                 <label>Total Amount</label>
+                <label className="asterisk" title="Required field">
+                  {' '}
+                  *
+                </label>
               </div>
               <TextField
                 name={'total_amount'}
                 type={'number'}
-                error={contractCreating.total_amount > 0}
+                error={contractCreating.total_amount <= 0}
                 borderRadius={3}
                 value={contractCreating.total_amount}
                 onChange={(e) =>

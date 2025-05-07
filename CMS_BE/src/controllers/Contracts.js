@@ -25,8 +25,20 @@ export const createContract = async (req, res) => {
   }
 
   try {
+    const existing = await Contract.findOne({
+      where: {
+        title: title.trim(),
+        project_id,
+      },
+    });
+
+    if (existing) {
+      return res.status(400).json({
+        message: 'This project already has a contract with the same title.',
+      });
+    }
     const contract = await Contract.create({
-      title,
+      title: title.trim(),
       project_id,
       signed_date,
       total_amount,
@@ -72,7 +84,6 @@ export const updateContract = async (req, res) => {
   try {
     const { id } = req.params;
     const updateData = req.body;
-
     const contract = await Contract.findByPk(id);
     if (!contract) {
       return res.status(404).json({ message: 'Contract not found' });
@@ -81,9 +92,22 @@ export const updateContract = async (req, res) => {
     if (updateData.status && !validStatuses.includes(updateData.status.toLowerCase())) {
       return res.status(400).json({ message: 'Invalid status value' });
     }
+    if (updateData.title && updateData.project_id) {
+      const duplicate = await Contract.findOne({
+        where: {
+          title: updateData.title.trim(),
+          project_id: updateData.project_id,
+          id: { [Op.ne]: id },
+        },
+      });
 
+      if (duplicate) {
+        return res.status(400).json({
+          message: 'Another contract with this title already exists in the same project.',
+        });
+      }
+    }
     await contract.update(updateData);
-
     return res.status(200).json({
       message: 'Contract updated successfully',
       data: contract,

@@ -27,11 +27,10 @@ const Contract = () => {
     toggleAddForm,
     contractCreating,
     setEdit,
-    setContractCreating,
     deleteContract,
     setSelectContractId,
     selectContractId,
-    fetchContractDataById
+    fetchContractDataById,
   } = useContext(ContractContext);
   const [showDialog, setShowDialog] = useState(false);
 
@@ -52,21 +51,8 @@ const Contract = () => {
 
   const handleAddClick = () => {
     setEdit(false);
-    setContractCreating({
-      title: null,
-      project_id: Number(id),
-      signed_date: '',
-      total_amount: '',
-      working_days: '',
-      start_date: '',
-      end_date: '',
-      status: 'Draft',
-    });
     toggleAddForm(true);
   };
-
-
-
   const handleEditClick = (contractId) => {
     setEdit(true);
     setSelectContractId(contractId);
@@ -85,7 +71,7 @@ const Contract = () => {
         <div className="breadcrumbs-container">
           <BreadCrumbs />
         </div>
-        <div className="w-full max-h-[85%] flex flex-col lg:flex-row gap-[20px] mt-4 mb-20">
+        <div className="w-full max-h-[85%] flex flex-col lg:flex-row gap-[20px] mt-4 mb-20 pr-4 pb-4">
           <div className="detail-info-container w-[35%] rounded-[16px] border border-gray-200 shadow-md p-4">
             <h3 className="font-bold text-base">PROJECT INFORMATION</h3>
             <div className="grid gap-2">
@@ -106,7 +92,10 @@ const Contract = () => {
                 <div className="flex-1 grid gap-2 text-sm">
                   {[
                     { label: 'Account Company', value: projectDetail?.account?.company },
-                    { label: 'Account Contact Person', value: projectDetail?.account?.contact_person },
+                    {
+                      label: 'Account Contact Person',
+                      value: projectDetail?.account?.contact_person,
+                    },
                     { label: 'End date', value: formatDate(projectDetail?.end_date) },
                     { label: 'Last update', value: formatDate(projectDetail?.updated_at) },
                   ].map((item, i) => (
@@ -119,7 +108,8 @@ const Contract = () => {
               </div>
               <div key={9} className="flex flex-col w-full">
                 <label className="mb-1 text-sm text-gray-700 font-[550]">Description</label>
-                <div className="bg-gray-200 text-sm border border-gray-300 rounded-md p-2
+                <div
+                  className="bg-gray-200 text-sm border border-gray-300 rounded-md p-2
                whitespace-pre-wrap break-words w-full"
                 >
                   {projectDetail?.description}
@@ -148,13 +138,16 @@ const Contract = () => {
                     </thead>
                     <tbody>
                       {contractDatas.data.map((contract) => (
-                        <tr key={contract.id} className="table-row even:bg-[#fcfcfc] odd:bg-white hover:bg-[#f1f1f1]">
+                        <tr
+                          key={contract.id}
+                          className="table-row even:bg-[#fcfcfc] odd:bg-white hover:bg-[#f1f1f1]"
+                        >
                           <td className="p-2 border border-gray-300 text-center">
                             <a
                               href="#"
                               onClick={(e) => {
                                 e.preventDefault();
-                                nav(`/home/contracts/${contract.id}`); 
+                                nav(`/home/contracts/${contract.id}`);
                               }}
                               className="text-blue-600 underline hover:opacity-80 inline-flex items-center gap-1"
                             >
@@ -162,15 +155,34 @@ const Contract = () => {
                               <ArrowUpRightFromSquare size={14} />
                             </a>
                           </td>
-                          <td className="p-2 border border-gray-300 text-center">{formatDate(contract.signed_date)}</td>
-                          <td className="p-2 border border-gray-300 text-center">{formatCurrency(contract.total_amount)}</td>
-                          <td className="p-2 border border-gray-300 text-center">{contract.working_days}</td>
+                          <td className="p-2 border border-gray-300 text-center">
+                            {formatDate(contract.signed_date)}
+                          </td>
+                          <td className="p-2 border border-gray-300 text-center">
+                            {formatCurrency(contract.total_amount)} VNĐ
+                          </td>
+                          <td className="p-2 border border-gray-300 text-center">
+                            {contract.working_days}
+                          </td>
                           <td className="p-2 border border-gray-300 text-center">
                             <button onClick={() => handleEditClick(contract.id)}>
-                              <Edit className="bg-transparent m-[2px] edit-btn" color="var(--color-primary)" size={18} />
+                              <Edit
+                                className="bg-transparent m-[2px] edit-btn"
+                                color="var(--color-primary)"
+                                size={18}
+                              />
                             </button>
-                            <button onClick={() => { setSelectContractId(contract.id); setShowDialog(true); }}>
-                              <Trash className="bg-transparent m-[2px] delete-btn" color="#C73535" size={18} />
+                            <button
+                              onClick={() => {
+                                setSelectContractId(contract.id);
+                                setShowDialog(true);
+                              }}
+                            >
+                              <Trash
+                                className="bg-transparent m-[2px] delete-btn"
+                                color="#C73535"
+                                size={18}
+                              />
                             </button>
                           </td>
                         </tr>
@@ -184,8 +196,14 @@ const Contract = () => {
                 </>
               )}
               <div className="flex justify-end items-center p-2.5 gap-3">
-                <PageInput max={contractDatas.totalPages} onChange={(p) => setPage(p)} page={page} />
-                <span className="text-sm font-semibold">Total Pages: {contractDatas.totalPages}</span>
+                <PageInput
+                  max={contractDatas.totalPages}
+                  onChange={(p) => setPage(p)}
+                  page={page}
+                />
+                <span className="text-sm font-semibold">
+                  Total Pages: {contractDatas.totalPages}
+                </span>
                 <select
                   className="w-[70px] h-[24px] border border-gray-300 focus:outline-none rounded-md"
                   onChange={(e) => {
@@ -207,7 +225,6 @@ const Contract = () => {
         </div>
       </div>
     </>
-
   );
 };
 
