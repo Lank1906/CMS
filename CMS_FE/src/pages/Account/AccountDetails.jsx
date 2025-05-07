@@ -85,7 +85,7 @@ const AccountDetails = () => {
   }
 
   return (
-    <div className="w-auto h-screen pl-6 pt-2 bg-white">
+    <div className="w-auto h-screen pl-2 pt-2 bg-white">
       <ProjectForm forDetail={true} show={() => toggleAddForm(true)} />
       <ConfirmDialog
         open={showDialog}
@@ -97,7 +97,7 @@ const AccountDetails = () => {
       <div className="breadcrumbs-container">
         <BreadCrumbs />
       </div>
-      <div className="w-full max-h-[85%] flex flex-col lg:flex-row gap-[20px] mt-4 mb-20">
+      <div className="w-full max-h-[85%] flex flex-col lg:flex-row gap-[20px] mt-4 mb-20 p-3">
         <div className="w-[30%] rounded-[16px] border border-gray-300 p-4">
           <h3 className="font-bold text-base">ACCOUNT INFORMATION</h3>
           <div className="grid grid-cols-[auto_auto] gap-3 text-[14px]">
@@ -223,13 +223,13 @@ const AccountDetails = () => {
                 {' '}
                 <table className="text-sm w-full border-collapse">
                   <thead className="sticky top-0 bg-[var(--color-primary)] text-white z-10">
-                    <tr>
-                      <th className="p-4 border w-[25%]">Project Name</th>
-                      <th className="p-4 border">Status</th>
-                      <th className="p-4 border">Start Date</th>
-                      <th className="p-4 border">End Date</th>
-                      <th className="p-4 border w-[25%]">Description</th>
-                      <th className="p-4 border">Action</th>
+                    <tr className="h-[20%]">
+                      <th className="p-2.5 border">Project Name</th>
+                      <th className="p-2.5 border">Status</th>
+                      <th className="p-2.5 border">Start Date</th>
+                      <th className="p-2.5 border">End Date</th>
+                      <th className="description-header-cell p-2.5 border">Description</th>
+                      <th className="p-2.5 border">Action</th>
                     </tr>
                   </thead>
                 </table>

@@ -50,7 +50,7 @@ const ProjectDetails = () => {
   };
 
   return (
-    <div className="w-auto h-screen pl-6 pt-2 bg-white">
+    <div className="w-auto h-screen pl-2 pt-2 bg-white">
       <div className="breadcrumbs-container">
         <BreadCrumbs />
       </div>
