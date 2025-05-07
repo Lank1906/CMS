@@ -11,6 +11,7 @@ const Select = ({
   ref,
   children,
   name,
+  color,
 }) => {
   return (
     <>
@@ -36,7 +37,7 @@ const Select = ({
         <select
           style={{
             width: '100%',
-            color: 'black',
+            color: color || 'black',
             fontSize: '14px',
             border: 'none',
             outline: 'none',

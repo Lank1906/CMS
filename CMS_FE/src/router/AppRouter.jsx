@@ -8,7 +8,7 @@ import VerifySuccessPage from '../pages/RegisterPage/VerifySuccessPage';
 import VerifyFailedPage from '../pages/RegisterPage/VerifyFailedPage';
 import Accounts from '../pages/Account/Account';
 import Projects from '../pages/Projects/Projects';
-import  Contracts from '../pages/Contract/Contract';
+import Contracts from '../pages/Contract/Contract';
 import Home from '../pages/Home/Home';
 import MainLayout from '../pages/layout/MainLayout';
 import AccountDetails from '../pages/Account/AccountDetails';
@@ -17,6 +17,8 @@ import RegisterSuccessPage from '../pages/RegisterPage/RegisterSuccessPage';
 import { AccountProvider } from '../context/AccountContext';
 import { ContractProvider } from '../context/ContractContext';
 import ForgotPasswordPage from '../pages/LoginPage/ForgotPasswordSuccessPage';
+import { ProjectProvider } from '../context/ProjectContext';
+
 const AppRouter = () => {
   return (
     <Routes>
@@ -32,17 +34,31 @@ const AppRouter = () => {
             </AccountProvider>
           }
         />
-        <Route path="/home/accounts/:id" element={<AccountDetails />} />
-        <Route path="/home/projects" element={<Projects />} />
         <Route
-        path="/home/projects/:id"
-        element={
-          <ContractProvider>
-            <Contracts />
-          </ContractProvider>
-        }
-      />
-      <Route path="/home/contracts/:id" element={<ContractDetails />} />
+          path="/home/projects/:id"
+          element={
+            <ContractProvider>
+              <Contracts />
+            </ContractProvider>
+          }
+        />
+        <Route path="/home/contracts/:id" element={<ContractDetails />} />
+        <Route
+          path="/home/accounts/:id"
+          element={
+            <ProjectProvider>
+              <AccountDetails />
+            </ProjectProvider>
+          }
+        />
+        <Route
+          path="/home/projects"
+          element={
+            <ProjectProvider>
+              <Projects />
+            </ProjectProvider>
+          }
+        />
       </Route>
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />

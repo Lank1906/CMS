@@ -154,6 +154,9 @@ export const getAccountWithProjects = async (req, res) => {
           limit: parseInt(limit),
           offset: parseInt(offset),
           order: [['created_at', 'DESC']],
+          where: {
+            is_active: true,
+          },
         },
       ],
     });
