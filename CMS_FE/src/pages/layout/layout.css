@@ -1,6 +1,7 @@
 .main-layout-container {
   height: 100vh;
   background-color: var(--main-color);
+  display: flex;
 }
 
 .header-container {

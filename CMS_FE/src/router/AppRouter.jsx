@@ -14,6 +14,7 @@ import AccountDetails from '../pages/Account/AccountDetails';
 import RegisterSuccessPage from '../pages/RegisterPage/RegisterSuccessPage';
 import { AccountProvider } from '../context/AccountContext';
 import ForgotPasswordPage from '../pages/LoginPage/ForgotPasswordSuccessPage';
+import ContractDetails from '../pages/ContractDetailPage/ContractDetail';
 const AppRouter = () => {
   return (
     <Routes>
@@ -31,6 +32,7 @@ const AppRouter = () => {
         />
         <Route path="/home/accounts/:id" element={<AccountDetails />} />
         <Route path="/home/projects" element={<Projects />} />
+        <Route path="/home/contracts/:id" element={<ContractDetails />} />
       </Route>
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />

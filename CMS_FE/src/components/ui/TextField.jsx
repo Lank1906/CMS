@@ -19,7 +19,7 @@ const TextField = ({
         style={{
           width: width,
           backgroundColor: backgroundColor,
-          border: '1px solid rgb(172, 177, 181)',
+          border: 'var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important',
           outline: 'none',
           overflow: 'hidden',
           borderRadius: borderRadius,
@@ -37,6 +37,7 @@ const TextField = ({
             fontSize: '14px',
             border: 'none',
             outline: 'none',
+            backgroundColor: 'transparent',
           }}
           type={type || 'text'}
           placeholder={placeholder}

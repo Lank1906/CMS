@@ -43,9 +43,9 @@ export function validateRegisterFrontend({ fullName, password, email, phone, rol
     return 'Email must be valid and contain only letters, numbers, "@" and "."';
   }
 
-  const phoneRegex = /^[0-9]{10}$/;
+  const phoneRegex = /^[1-9]\d{9,14}$/;
   if (!phoneRegex.test(phone)) {
-    return 'Invalid phone number. Please enter exactly 10 digits.';
+    return 'Invalid phone number. Please enter the phone number in the proper national format';
   }
 
   const addressRegex = /^[\p{L}0-9\s,.\-]{5,100}$/u;
