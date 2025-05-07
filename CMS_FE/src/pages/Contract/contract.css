@@ -1,4 +1,4 @@
-.contract-container {
+.project-container {
   background-color: white;
   max-width: 100%;
   height: 100%;
@@ -12,12 +12,13 @@
   justify-content: space-between;
 }
 
-.data-container {
+.project-data-container {
   margin-top: 20px;
   width: 100%;
   max-height: 65%;
   overflow: hidden;
   overflow-y: auto;
+  border-bottom: 1px solid #eaeaea;
 
   table .table-row:nth-child(even) {
     background-color: #fcfcfc;
@@ -26,11 +27,11 @@
   table .table-row:nth-child(odd) {
     background-color: white;
   }
+
   table {
     font-size: 13px;
     width: 100%;
     border-collapse: collapse;
-
     .table-header {
       position: sticky;
       background-color: var(--color-primary);
@@ -42,6 +43,7 @@
         padding: 10px;
       }
     }
+
     .table-row:hover {
       background-color: #f1f1f1;
     }
@@ -71,6 +73,7 @@
         &:hover {
           transform: scale(1.1);
         }
+
         width: 18px;
         height: 18px;
       }
@@ -109,36 +112,9 @@
   }
 }
 
-.contract-add-form-container {
-  width: 100%;
-  max-width: 100%;
-  background-color: white;
-  padding: 10px;
-}
-
-.input-field-container {
-  max-width: 100%;
-  margin-bottom: 10px;
-
-  .label-container {
-    margin-bottom: 8px;
-    font-size: 14px;
-    font-weight: 600;
-  }
-}
-
-.phone-input {
-  width: 100%;
-  height: 30px;
-}
-
-.form-control-container {
-  display: flex;
-  justify-content: end;
-}
-
-.contract-detail-link {
+.project-detail-link {
   place-items: center;
+
   a {
     display: flex;
     color: #3d87e1 !important;
@@ -147,61 +123,7 @@
     cursor: pointer;
   }
 }
-.form-select {
-  border-radius: 3px;
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  width: 100%;
-  font-size: 14px;
-}
-.form-row {
-  display: flex;
-  gap: 15px;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-.form-row .input-field-container {
-  flex: 1 1 47%;
-}
-.currency-selector {
-  background-color: #2d3051;
-  color: white;
-  border-radius: 4px;
-  border: none;
-  padding: 2px 4px;
-  font-size: 0.75rem;
-  cursor: pointer;
-}
-
-.currency-selector option {
-  background-color: #2d3051;
-  color: white;
-  border: none;
-}
-.contract-detail-wrapper {
-  padding: 2rem;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  margin: 1rem;
-  max-width: 1000px;
-}
-
-.detail-title {
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--color-primary);
-}
-
-.contract-detail-grid {
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  row-gap: 1rem;
-  column-gap: 1rem;
-}
-
-.label {
-  font-weight: 700;
-  color: black;
+.project-helper-description {
+  font-size: 13px;
+  color: #515151;
 }

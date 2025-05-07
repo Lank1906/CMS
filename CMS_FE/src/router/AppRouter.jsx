@@ -8,8 +8,7 @@ import VerifySuccessPage from '../pages/RegisterPage/VerifySuccessPage';
 import VerifyFailedPage from '../pages/RegisterPage/VerifyFailedPage';
 import Accounts from '../pages/Account/Account';
 import Projects from '../pages/Projects/Projects';
-import Contracts from '../pages/Contract/Contract';
-import ProjectDetails from '../pages/Contract/contract_';
+import  Contracts from '../pages/Contract/Contract';
 import Home from '../pages/Home/Home';
 import MainLayout from '../pages/layout/MainLayout';
 import AccountDetails from '../pages/Account/AccountDetails';
@@ -36,14 +35,14 @@ const AppRouter = () => {
         <Route path="/home/accounts/:id" element={<AccountDetails />} />
         <Route path="/home/projects" element={<Projects />} />
         <Route
-          path="contracts"
-          element={
-            <ContractProvider>
-              <ProjectDetails />
-            </ContractProvider>
-          }
-        />
-        <Route path="/home/contracts/:id" element={<ContractDetails />} />
+        path="/home/projects/:id"
+        element={
+          <ContractProvider>
+            <Contracts />
+          </ContractProvider>
+        }
+      />
+      <Route path="/home/contracts/:id" element={<ContractDetails />} />
       </Route>
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />

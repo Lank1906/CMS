@@ -1,11 +1,8 @@
-export const formatCurrency = (amount, currency = 'VND') => {
-  const locales = {
-    VND: 'vi-VN',
-    USD: 'en-US',
-  };
-
-  return new Intl.NumberFormat(locales[currency] || 'en-US', {
-    style: 'currency',
-    currency,
-  }).format(amount || 0);
+import dayjs from 'dayjs';
+export const formatCurrency = (amount) => {
+  if (!amount) return '0';
+  return new Intl.NumberFormat('de-DE').format(amount);
+};
+export const formatDate = (dateStr) => {
+  return dateStr ? dayjs(dateStr).format('YYYY-MM-DD') : '';
 };

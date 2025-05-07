@@ -51,6 +51,7 @@ export const getContracts = async (req, res) => {
     const offset = (page - 1) * limit;
 
     const { rows, count } = await Contract.findAndCountAll({
+      where: { is_active: 1 },
       limit: parseInt(limit),
       offset: parseInt(offset),
       order: [['created_at', 'DESC']],
@@ -95,15 +96,15 @@ export const updateContract = async (req, res) => {
 export const deleteContract = async (req, res) => {
   try {
     const { id } = req.params;
-
     const contract = await Contract.findByPk(id);
+
     if (!contract) {
       return res.status(404).json({ message: 'Contract not found' });
     }
+    contract.is_active = 0;
+    await contract.save();
 
-    await contract.destroy();
-
-    return res.status(200).json({ message: 'Contract deleted successfully' });
+    return res.status(200).json({ message: 'Contract soft-deleted successfully' });
   } catch (error) {
     return res.status(500).json({ message: 'Server error', error: error.message });
   }

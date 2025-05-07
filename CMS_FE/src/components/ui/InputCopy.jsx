@@ -58,8 +58,6 @@ const InputCopy = ({ value = '', showButton = true }) => {
           <Files />
         </button>
       )}
-
-      <ToastContainer />
     </div>
   );
 };
