@@ -10,6 +10,9 @@ export const login = async (req, res) => {
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ message: 'Invalid Email or Password' });
     }
+    if (!user.is_active) {
+      return res.status(403).json({ message: 'Invalid Email or Password' });
+    }
     const token = jwt.sign(
       {
         user_id: user.id,
@@ -98,6 +101,15 @@ export const resetPassword = async (req, res) => {
     user.password = hashed;
     await user.save();
     return res.json({ message: 'Password updated successfully.' });
+  } catch {
+    return res.status(400).json({ message: 'Token is invalid or expired.' });
+  }
+};
+export const verifyResetToken = (req, res) => {
+  const { token } = req.body;
+  try {
+    jwt.verify(token, process.env.JWT_SECRET);
+    return res.json({ message: 'Valid token' });
   } catch {
     return res.status(400).json({ message: 'Token is invalid or expired.' });
   }

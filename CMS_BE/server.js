@@ -6,6 +6,7 @@ import contractRouter from './src/routers/Contracts.js';
 import projectRouter from './src/routers/Projects.js';
 import express from 'express';
 import authRouters from './src/routers/authRoutes.js';
+import userRoutes from './src/routers/userRouters.js';
 dotenv.config();
 const app = express();
 app.use(express.json());
@@ -25,6 +26,7 @@ app.use('/api/contract-detail', contractRoutes);
 
 app.use('/api/contracts', contractRouter);
 app.use('/api/projects', projectRouter);
+app.use('/api/users', userRoutes);
 app.listen(PORT, () => {
   process.stdout.write(`Server is running at http://localhost:${PORT}\n`);
 });

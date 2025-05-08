@@ -18,6 +18,7 @@ import { ContractProvider } from '../context/ContractContext';
 import ForgotPasswordPage from '../pages/LoginPage/ForgotPasswordSuccessPage';
 import ContractDetails from '../pages/ContractDetailPage/ContractDetail';
 import { ProjectProvider } from '../context/ProjectContext';
+import Users from '../pages/UserPage/UserPage';
 
 const AppRouter = () => {
   return (
@@ -26,6 +27,7 @@ const AppRouter = () => {
       <Route path="/login" element={<LoginForm />} />
       <Route path="/home" element={<MainLayout />}>
         <Route path="/home" index element={<Home />} />
+        <Route path="/home/users" element={<Users />} />
         <Route
           path="/home/accounts"
           element={

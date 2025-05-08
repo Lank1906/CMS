@@ -84,6 +84,7 @@ const Accounts = () => {
                   company: e.target.value,
                 })
               }
+              error={!accountCreating.company}
             />
           </div>
           <div className="input-field-container">
@@ -105,6 +106,7 @@ const Accounts = () => {
                   contact_person: e.target.value,
                 })
               }
+              error={!accountCreating.contact_person}
             />
           </div>
           <div className="input-field-container">
@@ -126,6 +128,9 @@ const Accounts = () => {
                   ...accountCreating,
                   email: e.target.value,
                 })
+              }
+              error={
+                !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(accountCreating.email)
               }
             />
           </div>
@@ -158,6 +163,7 @@ const Accounts = () => {
                   url: e.target.value,
                 })
               }
+              error={!accountCreating.url.startsWith('https://')}
             />
           </div>
           <div className="input-field-container">
@@ -174,6 +180,7 @@ const Accounts = () => {
                   address: e.target.value,
                 })
               }
+              error={!accountCreating.address}
             />
           </div>
           <div className="form-control-container">

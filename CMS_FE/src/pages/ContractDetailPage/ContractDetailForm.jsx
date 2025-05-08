@@ -175,7 +175,12 @@ const AddContractStaffOverlay = ({
 
         <div>
           <label className="block font-medium mb-1">Phone</label>
-          <PhoneInput country="vn" value={selectedUser?.phone || ''} disabled={isViewOnly} />
+          <PhoneInput
+            country="vn"
+            value={selectedUser?.phone || ''}
+            disabled={isViewOnly}
+            inputStyle={{ width: '225px' }}
+          />
         </div>
 
         <div className="col-span-2">

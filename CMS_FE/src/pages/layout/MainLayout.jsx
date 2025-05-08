@@ -10,6 +10,7 @@ import {
   ReceiptText,
   Sun,
   User,
+  CircleUser,
 } from 'lucide-react';
 import { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
@@ -30,15 +31,21 @@ const menuItems = [
     name: 'Projects',
   },
   {
-    page: '/home/timesheet',
+    page: '/home/users',
     id: 4,
+    icon: <CircleUser color="rgb(63, 63, 63)" size={24} />,
+    name: 'Users',
+  },
+  {
+    page: '/home/timesheet',
+    id: 5,
     icon: <CalendarRange color="rgb(63, 63, 63)" size={24} />,
     name: 'Timesheet',
   },
-  { page: '/', id: 5, icon: <Coins color="rgb(63, 63, 63)" size={24} />, name: 'Expense' },
+  { page: '/', id: 6, icon: <Coins color="rgb(63, 63, 63)" size={24} />, name: 'Expense' },
   {
     page: '/home/invoices',
-    id: 6,
+    id: 7,
     icon: <ReceiptText color="rgb(63, 63, 63)" size={24} />,
     name: 'Invoices',
   },
