@@ -40,7 +40,10 @@ export const ContractProvider = ({ children }) => {
   const fetchProjectDataById = async (id) => {
     setLoading(true);
     try {
-      const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/projects/${id}`, headerAPI);
+      const res = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/projects/get-by-id/${id}`,
+        headerAPI
+      );
       setProjectDetail(res.data.data);
       setLoading(false);
     } catch (err) {

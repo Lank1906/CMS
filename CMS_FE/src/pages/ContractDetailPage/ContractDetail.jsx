@@ -134,9 +134,9 @@ const ContractDetails = () => {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-[20px] h-[calc(100vh-100px)] pr-4 pb-4">
-          <div className="w-full lg:w-[40%] h-full rounded-[16px] border border-gray-300flex p-4  flex-col overflow-hidden">
+          <div className="w-full overflow-y-auto lg:w-[40%] h-full rounded-[16px] border border-gray-300flex p-4  flex-col overflow-hidden">
             <h3 className="font-bold text-base mb-3">CONTRACT INFORMATION</h3>
-            <div className="flex-1 overflow-auto pr-1">
+            <div className="flex-1 pr-1">
               <div className="grid grid-cols-[auto-auto] gap-3 text-[14px]">
                 <div className="col-span-2 flex flex-col">
                   <label className="mb-1 text-gray-700 font-[550]">Title</label>
