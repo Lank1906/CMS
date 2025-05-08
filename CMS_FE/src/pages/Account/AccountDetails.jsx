@@ -67,8 +67,6 @@ const AccountDetails = () => {
   useEffect(() => {
     if (!loading && !account) {
       toast.error('Account not found!');
-    } else if (loading) {
-      toast.info('Loading data...');
     }
   }, [loading, account]);
 
@@ -161,7 +159,7 @@ const AccountDetails = () => {
                         <td className="border border-gray-300 project-detail-link">
                           <a
                             onClick={() => {
-                              nav(`/home/Projects/${a.id}`);
+                              nav(`/home/projects/${a.id}`);
                             }}
                           >
                             {`${a.name} (${a.id})`}
