@@ -68,7 +68,6 @@ const AccountDetails = () => {
     if (!loading && !account) {
       toast.error('Account not found!');
     } else if (loading) {
-      toast.info('Loading data...');
     }
   }, [loading, account]);
 

@@ -23,6 +23,7 @@ export const ProjectProvider = ({ children }) => {
   const [accountDatas, setAccountDatas] = useState([]);
   const [newAccountDatas, setNewAccountDatas] = useState([]);
   const [showIsActiveItems, setShowIsActiveItems] = useState(1);
+  const [inactiveCount, setInactiveCount] = useState(0);
 
   const [accountSearchKeyword, setAccountSearchKeyword] = useState('');
 
@@ -35,7 +36,7 @@ export const ProjectProvider = ({ children }) => {
   const fetchDataById = async (id) => {
     setLoading(true);
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/projects/${id}`, headerAPI)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/projects/get-by-id/${id}`, headerAPI)
       .then((res) => {
         setProjectCreating(res.data.data);
         setLoading(false);
@@ -49,10 +50,40 @@ export const ProjectProvider = ({ children }) => {
   };
   const handleDelete = () => {
     axios
-      .delete(`${process.env.REACT_APP_BACKEND_URL}/projects/${selectProjectId}`, headerAPI)
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/projects/remove/${selectProjectId}`,
+        {},
+        headerAPI
+      )
       .then(() => {
         fetchData();
         toast.info('Project deleted!', { position: 'bottom-right' });
+      })
+      .catch((err) => {
+        toast.error(err.response?.data?.message || err.status + ': Project api error!');
+      });
+  };
+  const handleRestore = () => {
+    axios
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/projects/restore/${selectProjectId}`,
+        {},
+        headerAPI
+      )
+      .then(() => {
+        fetchData();
+        toast.success('Project restored!', { position: 'bottom-right' });
+      })
+      .catch((err) => {
+        toast.error(err.response?.data?.message || err.status + ': Project api error!');
+      });
+  };
+  const restoreProject = (id) => {
+    axios
+      .post(`${process.env.REACT_APP_BACKEND_URL}/projects/restore/${id}`, {}, headerAPI)
+      .then(() => {
+        fetchData();
+        toast.success('Project restored!', { position: 'bottom-right' });
       })
       .catch((err) => {
         toast.error(err.response?.data?.message || err.status + ': Project api error!');
@@ -105,7 +136,7 @@ export const ProjectProvider = ({ children }) => {
     setLoading(true);
     axios
       .get(
-        `${process.env.REACT_APP_BACKEND_URL}/projects?page=${page}&limit=${limit}&is_active=${showIsActiveItems}`,
+        `${process.env.REACT_APP_BACKEND_URL}/projects/get?page=${page}&limit=${limit}&is_active=${showIsActiveItems}`,
         headerAPI
       )
       .then((res) => {
@@ -139,7 +170,7 @@ export const ProjectProvider = ({ children }) => {
       delete projectCreating.id;
       axios
         .patch(
-          `${process.env.REACT_APP_BACKEND_URL}/projects/${selectProjectId}`,
+          `${process.env.REACT_APP_BACKEND_URL}/projects/update/${selectProjectId}`,
           projectCreating,
           headerAPI
         )
@@ -158,7 +189,7 @@ export const ProjectProvider = ({ children }) => {
       delete projectCreating.id;
       delete projectCreating.updated_at;
       axios
-        .post(`${process.env.REACT_APP_BACKEND_URL}/projects`, projectCreating, headerAPI)
+        .post(`${process.env.REACT_APP_BACKEND_URL}/projects/create`, projectCreating, headerAPI)
         .then(() => {
           toast.success('Project create successfully!', { position: 'bottom-right' });
           fetchData();
@@ -210,6 +241,10 @@ export const ProjectProvider = ({ children }) => {
         fetchNewAccountData,
         showIsActiveItems,
         setShowIsActiveItems,
+        inactiveCount,
+        setInactiveCount,
+        handleRestore,
+        restoreProject,
       }}
     >
       {children}

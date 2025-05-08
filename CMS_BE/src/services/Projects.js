@@ -47,6 +47,9 @@ class ProjectService {
       },
       include: [
         {
+          where: {
+            is_active: true,
+          },
           model: Account,
           as: 'account',
           attributes: [
@@ -62,9 +65,15 @@ class ProjectService {
         },
       ],
     });
+    const inactiveCount = await Project.count({
+      where: {
+        is_active: false,
+      },
+    });
 
     return {
       totalItems: count,
+      inactiveCount: inactiveCount,
       totalPages: Math.ceil(count / limit),
       currentPage: parseInt(page),
       data: rows,
@@ -137,11 +146,17 @@ class ProjectService {
       offset,
       order: [['created_at', 'DESC']],
     });
+    const inactiveCount = await Project.count({
+      where: {
+        is_active: false,
+      },
+    });
 
     return {
       data: results,
       total,
       currentPage: page,
+      inactiveCount: inactiveCount,
       totalPages: Math.ceil(total / limit),
     };
   }
@@ -160,6 +175,16 @@ class ProjectService {
     }
     await project.update({
       is_active: false,
+    });
+    return 'Project remove successfully';
+  }
+  static async restore(id) {
+    const project = await Project.findByPk(id);
+    if (!project) {
+      throw new Error('Project not found');
+    }
+    await project.update({
+      is_active: true,
     });
     return 'Project remove successfully';
   }
