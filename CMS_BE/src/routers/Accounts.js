@@ -1,9 +1,5 @@
 import express from 'express';
-import {
-  createAccountSchema,
-  updateAccountSchema,
-  validateRequest,
-} from '../validates/Accounts.js';
+import { createAccountSchema, updateAccountSchema } from '../validates/Accounts.js';
 import {
   createAccount,
   deleteAccount,
@@ -15,11 +11,12 @@ import {
 } from '../controllers/Accounts.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
 import { hasRoleAdmin } from '../middlewares/Role.js';
+import { validateRequest } from '../services/Validates.js';
 const router = express.Router();
 
 router.post('/', authMiddleware, hasRoleAdmin, validateRequest(createAccountSchema), createAccount);
 router.get('/', authMiddleware, hasRoleAdmin, getAccounts);
-router.get('/details/:id', authMiddleware, hasRoleAdmin, getAccountWithProjects);
+router.get('/details/:id', getAccountWithProjects);
 router.patch(
   '/:id',
   authMiddleware,

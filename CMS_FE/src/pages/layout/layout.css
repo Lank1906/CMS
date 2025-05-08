@@ -102,31 +102,6 @@
     cursor: pointer;
   }
 
-  .notification-container {
-    width: 40px;
-    height: 40px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-
-    .notification-amount {
-      width: 16px;
-      height: 16px;
-      background-color: rgb(213, 11, 11);
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: absolute;
-      font-size: 10px;
-      right: 0;
-      top: 0;
-    }
-  }
-
   .user-option {
     cursor: pointer;
     width: 35px;
@@ -138,6 +113,30 @@
     justify-content: center;
     font-weight: 550;
     color: rgb(88, 88, 88);
+  }
+}
+.notification-container {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  .notification-amount {
+    width: 16px;
+    height: 16px;
+    background-color: rgb(213, 11, 11);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    font-size: 10px;
+    right: 0;
+    top: 0;
   }
 }
 

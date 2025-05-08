@@ -29,7 +29,6 @@ const ResetPassword = () => {
       return;
     }
     const sqlInjectionPattern = /(')|(--)|(;)|(\*)|(\*)/;
-
     const match = newPassword.match(sqlInjectionPattern);
     if (match) {
       const bad = match[0];

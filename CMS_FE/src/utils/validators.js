@@ -11,7 +11,6 @@ export const validateEmail = (email) => {
   }
   return null;
 };
-
 export function validateRegisterFrontend({ fullName, password, email, phone, role, address }) {
   if (!fullName || !password || !email || !phone || !role || !address) {
     return 'Please fill in all information.';
