@@ -20,7 +20,6 @@ const TextField = ({
         ref={ref}
         onClick={onClick}
         style={{
-          height: '35px',
           width: width || '100%',
           backgroundColor: backgroundColor,
           border: 'var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important',
@@ -61,6 +60,7 @@ const TextField = ({
               fontSize: '14px',
               border: 'none',
               outline: 'none',
+              backgroundColor: 'transparent',
             }}
             name={name}
             type={type || 'text'}

@@ -26,7 +26,7 @@ router.post(
   createContract
 );
 
-router.get('/', authMiddleware, hasRoleAdmin, getContracts);
+router.get('/project/:id', authMiddleware, hasRoleAdmin, getContracts);
 
 router.get('/details/:id', authMiddleware, hasRoleAdmin, getContractWithProjects);
 

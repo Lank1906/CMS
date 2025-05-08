@@ -15,8 +15,6 @@ import ConfirmDialog from '../../components/Dialogs.jsx/ConfirmDialog';
 const Contract = () => {
   const nav = useNavigate();
   const { id } = useParams();
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
 
   const {
     fetchProjectDataById,
@@ -31,13 +29,22 @@ const Contract = () => {
     setSelectContractId,
     selectContractId,
     fetchContractDataById,
+    setContractCreating,
+    page,
+    setPage,
+    limit,
+    setLimit,
   } = useContext(ContractContext);
   const [showDialog, setShowDialog] = useState(false);
 
   useEffect(() => {
     if (!id || id === 0) return;
     fetchProjectDataById(id);
-    fetchContractsByProject(id, page, limit);
+    setContractCreating({
+      ...contractCreating,
+      project_id: id,
+    });
+    fetchContractsByProject(id);
   }, [id, page, limit]);
 
   useEffect(() => {
@@ -51,6 +58,7 @@ const Contract = () => {
 
   const handleAddClick = () => {
     setEdit(false);
+    setSelectContractId();
     toggleAddForm(true);
   };
   const handleEditClick = (contractId) => {
@@ -122,7 +130,7 @@ const Contract = () => {
               <h3 className="font-bold text-base">CONTRACTS</h3>
               <Button value="ADD" backgroundColor="var(--color-primary)" onClick={handleAddClick} />
             </div>
-            <ContractForm contractData={contractCreating} />
+            <ContractForm />
             <div className="bg-white max-w-full h-[85%] mt-6">
               {contractDatas.data && contractDatas.data.length > 0 ? (
                 <div className="w-full max-h-[100%] overflow-y-auto">

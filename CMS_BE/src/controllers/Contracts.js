@@ -63,7 +63,7 @@ export const getContracts = async (req, res) => {
     const offset = (page - 1) * limit;
 
     const { rows, count } = await Contract.findAndCountAll({
-      where: { is_active: 1 },
+      where: { is_active: 1, project_id: req.params.id },
       limit: parseInt(limit),
       offset: parseInt(offset),
       order: [['created_at', 'DESC']],
