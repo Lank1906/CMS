@@ -111,6 +111,7 @@ export const AccountProvider = ({ children }) => {
     if (isEdit) {
       delete accountCreating.created_at;
       delete accountCreating.id;
+      delete accountCreating.is_active;
       axios
         .patch(
           `${process.env.REACT_APP_BACKEND_URL}/accounts/${selectAccountId}`,
@@ -132,6 +133,7 @@ export const AccountProvider = ({ children }) => {
       delete accountCreating.id;
       delete accountCreating.status;
       delete accountCreating.updated_at;
+      delete accountCreating.is_active;
       axios
         .post(`${process.env.REACT_APP_BACKEND_URL}/accounts`, accountCreating, headerAPI)
         .then(() => {

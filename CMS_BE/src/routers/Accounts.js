@@ -16,7 +16,7 @@ const router = express.Router();
 
 router.post('/', authMiddleware, hasRoleAdmin, validateRequest(createAccountSchema), createAccount);
 router.get('/', authMiddleware, hasRoleAdmin, getAccounts);
-router.get('/details/:id', authMiddleware, hasRoleAdmin, getAccountWithProjects);
+router.get('/details/:id', getAccountWithProjects);
 router.patch(
   '/:id',
   authMiddleware,

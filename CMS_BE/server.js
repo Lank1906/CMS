@@ -1,6 +1,8 @@
 import dotenv from 'dotenv';
 import cors from 'cors';
 import accountRouter from './src/routers/Accounts.js';
+import contractRoutes from './src/routers/ContractDetails.js';
+import contractRouter from './src/routers/Contracts.js';
 import projectRouter from './src/routers/Projects.js';
 import express from 'express';
 import authRouters from './src/routers/authRoutes.js';
@@ -19,8 +21,10 @@ app.use(
 );
 app.use('/api', authRouters);
 app.use('/api/accounts', accountRouter);
-app.use('/api/projects', projectRouter);
+app.use('/api/contract-detail', contractRoutes);
 
+app.use('/api/contracts', contractRouter);
+app.use('/api/projects', projectRouter);
 app.listen(PORT, () => {
   process.stdout.write(`Server is running at http://localhost:${PORT}\n`);
 });

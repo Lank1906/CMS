@@ -20,6 +20,7 @@ const Select = ({
         onClick={onClick}
         style={{
           width: width || '100%',
+          height: '35px',
           backgroundColor: backgroundColor,
           border: '1px solid rgb(196, 200, 203)',
           outline: 'none',

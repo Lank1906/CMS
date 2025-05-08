@@ -60,6 +60,7 @@ const TextField = ({
               fontSize: '14px',
               border: 'none',
               outline: 'none',
+              backgroundColor: 'transparent',
             }}
             name={name}
             type={type || 'text'}

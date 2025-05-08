@@ -87,8 +87,15 @@ const LoginForm = () => {
           <label htmlFor="password">Password</label>
           <span className="password-toggle" onClick={toggleShow}></span>
         </div>
-        <button className="btn-primary-login btn-lg w-100 mb-3" onClick={handleLogin}>
-          Login
+        <button
+          onClick={handleLogin}
+          className="btn-primary-login btn-lg w-100 mb-3"
+          disabled={isSubmitting}
+        >
+          <span className={`button-content ${isSubmitting ? 'loading' : ''}`}>
+            {isSubmitting && <span className="loadingSpinner"></span>}
+            {isSubmitting ? 'Submitting...' : 'Login'}
+          </span>
         </button>
         <div className="d-flex justify-content-center mb-3">
           <Link to="/forgot-password" className="text-nowrap ">
