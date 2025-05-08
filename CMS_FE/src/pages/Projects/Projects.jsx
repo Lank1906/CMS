@@ -13,7 +13,7 @@ import BreadCrumbs from '../../components/BreadCrumbs';
 import Button from '../../components/ui/Button';
 import './projects.css';
 import TextField from '../../components/ui/TextField';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import PageInput from '../../components/ui/PageInput';
 import 'react-phone-input-2/lib/style.css';
 import ConfirmDialog from '../../components/Dialogs.jsx/ConfirmDialog';
@@ -21,7 +21,6 @@ import { useNavigate } from 'react-router-dom';
 import { ProjectContext } from '../../context/ProjectContext';
 import ProjectForm from '../../components/ProjectForm/ProjectForm';
 import { getBackgroundColor } from '../../services/HelpersService';
-import Select from '../../components/ui/Select';
 
 const Projects = () => {
   const nav = useNavigate();
@@ -46,6 +45,7 @@ const Projects = () => {
     setAccountSearchKeyword,
     setShowIsActiveItems,
     showIsActiveItems,
+    restoreProject,
   } = useContext(ProjectContext);
 
   useEffect(() => {
@@ -55,7 +55,6 @@ const Projects = () => {
   useEffect(() => {
     searchData();
   }, [keyword]);
-  const [sortFilter, setSortFilter] = useState('newest');
   return (
     <>
       <ProjectForm show={() => toggleAddForm(true)} />
@@ -72,70 +71,36 @@ const Projects = () => {
           <BreadCrumbs />
         </div>
         <div className="controls-container">
-          <Button
-            value={'ADD'}
-            onClick={() => {
-              setProjectCreating({
-                name: '',
-                account_id: '',
-                description: '',
-                start_date: null,
-                end_date: null,
-                track: 'Planning',
-              });
-              setAccountSearchKeyword('');
-              setEdit(false);
-              toggleAddForm(true);
-            }}
-            backgroundColor="var(--color-primary)"
-            iconLeft={
-              <>
-                <Plus size={15} />
-              </>
-            }
-          />
-          <div className="flex gap-2 items-center">
-            <label className="text-sm">Show by</label>
-            <div className="project-list-controls flex gap-2 items-center">
-              <Select borderRadius={50} backgroundColor={'var(--color-primary)'} color={'white'}>
-                <option className="text-black" value={'Default'}>
-                  Default
-                </option>
-                <option className="text-black" value={'Planning'}>
-                  Planning
-                </option>
-                <option className="text-black" value={'Completed'}>
-                  Completed
-                </option>
-                <option className="text-black" value={'InProgress'}>
-                  InProgress
-                </option>
-                <option className="text-black" value={'Cancelled'}>
-                  Cancelled
-                </option>
-                <option className="text-black" value={'Overdue'}>
-                  Overdue
-                </option>
-              </Select>
-              <div className="filter-bar flex gap-1">
-                <div
-                  className={`filter-radio latest-container ${sortFilter === 'newest' ? 'checked' : ''}`}
-                  onClick={() => {
-                    setSortFilter('newest');
-                  }}
-                >
-                  Latest
-                </div>
-                <div
-                  className={`filter-radio oldest-container ${sortFilter === 'oldest' ? 'checked' : ''}`}
-                  onClick={() => {
-                    setSortFilter('oldest');
-                  }}
-                >
-                  Oldest
-                </div>
-              </div>
+          {showIsActiveItems ? (
+            <Button
+              value={'ADD'}
+              onClick={() => {
+                setProjectCreating({
+                  name: '',
+                  account_id: '',
+                  description: '',
+                  start_date: null,
+                  end_date: null,
+                  track: 'Planning',
+                });
+                setAccountSearchKeyword('');
+                setEdit(false);
+                toggleAddForm(true);
+              }}
+              backgroundColor="var(--color-primary)"
+              iconLeft={
+                <>
+                  <Plus size={15} />
+                </>
+              }
+            />
+          ) : (
+            <div className="flex items-center gap-2 text-[100] font-[550] text-gray-700">
+              <Trash2 color="gray" /> PROJECT RECYCLING BIN
             </div>
+          )}
+
+          <div className="flex gap-2 items-center">
             <TextField
               type={'search'}
               placeholder={'Search by Name...'}
@@ -155,19 +120,30 @@ const Projects = () => {
             >
               <div className="notification-icon">
                 {showIsActiveItems == 1 ? (
-                  <Trash2 color="rgb(88, 88, 88)" />
+                  <>
+                    <Trash2 color="rgb(88, 88, 88)" />
+                    <div className="notification-amount">
+                      {projectDatas.inactiveCount > 99 ? '99+' : projectDatas.inactiveCount}
+                    </div>
+                  </>
                 ) : (
                   <SquareArrowUpLeft color="rgb(57, 56, 64)" />
                 )}
               </div>
-              <div className="notification-amount">1</div>
             </div>
           </div>
         </div>
         <div className="project-data-container">
           <table>
             <thead>
-              <tr className="table-header">
+              <tr
+                className="table-header"
+                style={{
+                  backgroundColor: showIsActiveItems
+                    ? 'var(--color-primary)'
+                    : 'rgb(134, 134, 134)',
+                }}
+              >
                 <th>Project Name</th>
                 <th>Contact Person Account</th>
                 <th>Project Track</th>
@@ -182,26 +158,32 @@ const Projects = () => {
               {projectDatas.data ? (
                 projectDatas.data.map((item) => (
                   <tr
-                    className="table-row"
+                    className={`table-row ${showIsActiveItems ? 'normal' : 'trashbin'}`}
                     key={item.id}
-                    style={{ color: showIsActiveItems ? 'black' : 'rgb(153, 0, 0)' }}
                   >
                     <td className="project-detail-link">
-                      <a
-                        onClick={() => {
-                          nav(`/home/projects/${item.id}`);
-                        }}
-                      >
-                        {`${item.name} (${item.id})`}
-                        <ArrowUpRightFromSquare size={15} />
-                      </a>
+                      {showIsActiveItems ? (
+                        <a
+                          onClick={() => {
+                            nav(`/home/Projects/${item.id}`);
+                          }}
+                        >
+                          {`${item.name} (${item.id})`}
+                          <ArrowUpRightFromSquare size={15} />
+                        </a>
+                      ) : (
+                        `${item.name} (${item.id})`
+                      )}
                     </td>
                     <td>{`${item.account.contact_person} (${item.account.company})`}</td>
                     <td>
                       <div
-                        className="text-white rounded-2xl py-0.5 font-semibold"
+                        className="rounded-2xl py-0.5 font-semibold"
                         style={{
-                          backgroundColor: getBackgroundColor(item.track),
+                          backgroundColor: showIsActiveItems
+                            ? getBackgroundColor(item.track)
+                            : '#CCC',
+                          color: showIsActiveItems ? 'white' : '#888',
                         }}
                       >
                         {item.track}
@@ -222,10 +204,14 @@ const Projects = () => {
                     <td className="action-cell">
                       <button
                         onClick={() => {
-                          setEdit(true);
-                          fetchDataById(item.id);
-                          setSelectProjectId(item.id);
-                          toggleAddForm(true);
+                          if (!showIsActiveItems) {
+                            restoreProject(item.id);
+                          } else {
+                            setEdit(true);
+                            fetchDataById(item.id);
+                            setSelectProjectId(item.id);
+                            toggleAddForm(true);
+                          }
                         }}
                       >
                         {showIsActiveItems ? (

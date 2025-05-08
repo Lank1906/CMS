@@ -1,6 +1,7 @@
 import { Op } from 'sequelize';
 import Account from '../models/Accounts.js';
 import Project from '../models/Projects.js';
+import AccountServce from '../services/Accounts.js';
 
 export const createAccount = async (req, res) => {
   if (!req.body)
@@ -34,17 +35,25 @@ export const createAccount = async (req, res) => {
 
 export const getAccounts = async (req, res) => {
   try {
-    const { page = 1, limit = 10 } = req.query;
+    const { page = 1, limit = 10, is_active = 1 } = req.query;
     const offset = (page - 1) * limit;
 
     const { rows, count } = await Account.findAndCountAll({
+      where: {
+        is_active: is_active == 1 ? true : false,
+      },
       limit: parseInt(limit),
       offset: parseInt(offset),
       order: [['created_at', 'DESC']],
     });
-
+    const inactiveCount = await Account.count({
+      where: {
+        is_active: false,
+      },
+    });
     return res.status(200).json({
       totalItems: count,
+      inactiveCount: inactiveCount,
       totalPages: Math.ceil(count / limit),
       currentPage: parseInt(page),
       data: rows,
@@ -76,17 +85,21 @@ export const updateAccount = async (req, res) => {
 export const deleteAccount = async (req, res) => {
   try {
     const { id } = req.params;
-
-    const account = await Account.findByPk(id);
-    if (!account) {
-      return res.status(404).json({ message: 'Account not found' });
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: 'Missing \'id\' parameter in request',
+      });
     }
-
-    await account.destroy();
-
-    return res.status(200).json({ message: 'Account deleted successfully' });
-  } catch (error) {
-    return res.status(500).json({ message: 'Server error', error: error.message });
+    const message = await AccountServce.softRemove(id);
+    return res.status(200).json({
+      message: message,
+    });
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      message: err.message,
+    });
   }
 };
 export const getAccountById = async (req, res) => {

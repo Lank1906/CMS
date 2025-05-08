@@ -77,6 +77,26 @@ export const deleteProject = async (req, res) => {
     });
   }
 };
+export const restoreProject = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: 'Missing \'id\' parameter in request',
+      });
+    }
+    const message = await ProjectService.restore(id);
+    return res.status(200).json({
+      message: message,
+    });
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
 export const getProjectById = async (req, res) => {
   try {
     const { id } = req.params;
