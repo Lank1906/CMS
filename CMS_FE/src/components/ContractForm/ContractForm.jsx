@@ -12,13 +12,10 @@ const ContractForm = ({ contractData }) => {
   const {
     showAddForm,
     toggleAddForm,
-    setLoading,
     loading,
     isEdit,
     addContract,
     updateContract,
-    accountSearchKeyword,
-    setProjectList,
     contractCreating,
     setContractCreating,
   } = useContext(ContractContext);
@@ -41,24 +38,7 @@ const ContractForm = ({ contractData }) => {
       });
     }
   }, [isEdit]);
-  useEffect(() => {
-    if (accountSearchKeyword.trim() !== '') {
-      handleSearchProjects();
-    }
-  }, [accountSearchKeyword]);
 
-  const handleSearchProjects = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(`/api/projects?search=${accountSearchKeyword}`);
-      const data = await response.json();
-      setProjectList(data.projects);
-    } catch {
-      toast.error('Error fetching project data');
-    } finally {
-      setLoading(false);
-    }
-  };
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!contractCreating.title || !contractCreating.title.trim()) {
