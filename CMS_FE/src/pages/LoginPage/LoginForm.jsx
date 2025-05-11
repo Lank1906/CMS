@@ -97,6 +97,20 @@ const LoginForm = () => {
             {isSubmitting ? 'Submitting...' : 'Login'}
           </span>
         </button>
+        <button
+          className="btn-primary-login btn-lg w-100 mb-3"
+          style={{
+            background: 'transparent',
+            color: '#2d3052',
+            border: '1px solid #2d3052',
+            borderRadius: '4px',
+          }}
+          onClick={() => {
+            window.location.href = process.env.REACT_APP_BACKEND_URL + '/auth/google';
+          }}
+        >
+          Login with Google
+        </button>
         <div className="d-flex justify-content-center mb-3">
           <Link to="/forgot-password" className="text-nowrap ">
             Forgot password?

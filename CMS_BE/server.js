@@ -7,11 +7,23 @@ import projectRouter from './src/routers/Projects.js';
 import express from 'express';
 import authRouters from './src/routers/authRoutes.js';
 import userRoutes from './src/routers/userRouters.js';
+import passport from 'passport';
+import session from 'express-session';
+import './passport.js';
+
 dotenv.config();
 const app = express();
 app.use(express.json());
 const PORT = process.env.PORT || 5000;
-
+app.use(
+  session({
+    secret: 'yourSecret',
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(
   cors({
     origin: process.env.FRONTEND_URL,
@@ -20,6 +32,7 @@ app.use(
     credentials: true,
   })
 );
+
 app.use('/api', authRouters);
 app.use('/api/accounts', accountRouter);
 app.use('/api/contract-detail', contractRoutes);

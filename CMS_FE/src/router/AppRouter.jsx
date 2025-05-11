@@ -19,12 +19,14 @@ import ForgotPasswordPage from '../pages/LoginPage/ForgotPasswordSuccessPage';
 import ContractDetails from '../pages/ContractDetailPage/ContractDetail';
 import { ProjectProvider } from '../context/ProjectContext';
 import Users from '../pages/UserPage/UserPage';
+import LoginCallback from '../pages/LoginPage/LoginCallBack';
 
 const AppRouter = () => {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/login" />} />
       <Route path="/login" element={<LoginForm />} />
+      <Route path="/login/callback" element={<LoginCallback />} />
       <Route path="/home" element={<MainLayout />}>
         <Route path="/home" index element={<Home />} />
         <Route path="/home/users" element={<Users />} />

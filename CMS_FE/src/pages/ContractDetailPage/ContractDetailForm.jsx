@@ -102,8 +102,12 @@ const AddContractStaffOverlay = ({
   };
 
   const roleHistory = async (id) => {
-    const res = await getUserLatestRole(id);
-    setHistoryRole(res?.role || null);
+    try {
+      const res = await getUserLatestRole(id);
+      setHistoryRole(res?.role || null);
+    } catch {
+      setHistoryRole(null);
+    }
   };
 
   useEffect(() => {
@@ -158,7 +162,7 @@ const AddContractStaffOverlay = ({
                     className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
                     onClick={() => handleUserClick(user)}
                   >
-                    {user.full_name} - {user.email} - {user.phone}
+                    {user.full_name} ({user.email} - {user.phone})
                   </div>
                 ))
               ) : (
